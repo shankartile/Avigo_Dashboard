@@ -1,0 +1,21 @@
+
+
+{
+  "compilerOptions": {
+    "allowImportingTsExtensions": true,
+    "moduleResolution": "bundler",        // Modern bundler-style module resolution
+    "noEmit": true,                       // No JS output from TypeScript
+    "strict": true,                       // Enable all strict type checks
+    "module": "esnext",                   // Modern ES modules
+    "target": "esnext",                   // Compile to latest JavaScript
+    "jsx": "react-jsx",                   // React 17+ JSX transform
+    "skipLibCheck": true,                 // Skip checking .d.ts files in node_modules for faster builds
+    "esModuleInterop": true               // Allow smooth importing of CommonJS modules
+  },
+  "exclude": [
+    "**/*.spec.ts",                       // Exclude test files
+    "**/*.spec.tsx",                      // (also exclude test files with .tsx extension)
+    "node_modules",                       // Exclude dependencies
+    "dist"                                // Exclude output folder
+  ]
+}

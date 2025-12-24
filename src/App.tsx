@@ -18,6 +18,10 @@ const NotAuthorized = React.lazy(() => import("./pages/OtherPage/NotAuthorized")
 // Staff Dashboard Sidebar Menuitem
 const StaffDashboard = React.lazy(() => import("./pages/staff/Dashboard"));
 
+//Admin Dashboard
+const AdminDashboard = React.lazy(() => import("./pages/societyadmin/SocietyAdminDashboard"));
+
+
 
 // Super Admin Dashboard Sidebar Menuitem
 const Dashboard = React.lazy(() => import("./pages/superadmin/Dashboard"));
@@ -114,14 +118,14 @@ const App: React.FC = () => {
             <Routes>
               {/* Staff Routes */}
               <Route
-                path="/staff"
+                path="/admin"
                 element={<ProtectedRoute allowedRoles={["admin", "staff"]}><AppLayout /></ProtectedRoute>}
               >
                 <Route
                   path="dashboard"
                   element={
                     <ProtectedRoute allowedRoles={["admin", "staff"]} requiredPermission="dashboard">
-                      <StaffDashboard />
+                      <AdminDashboard />
                     </ProtectedRoute>
                   }
                 />

@@ -3,20 +3,20 @@
 // import { ChevronDown, ChevronRight } from "lucide-react"; // optional
 
 // import {
-//   HorizontaLDots,
-//   UserCircleIcon,
-//   DocsIcon,
-//   MailIcon,
-//   CouponIcon,
-//   TableIcon,
-//   GroupIcon,
-//   ProductListIcon,
-//   PaymentIcon,
-//   CategoryIcon,
-//   MenuIcon,
-//   OtherChargesIcon,
-//   AppFeedbackIcon,
-//   OrderIcon,
+  // HorizontaLDots,
+  // UserCircleIcon,
+  // DocsIcon,
+  // MailIcon,
+  // CouponIcon,
+  // TableIcon,
+  // GroupIcon,
+  // ProductListIcon,
+  // PaymentIcon,
+  // CategoryIcon,
+  // MenuIcon,
+  // OtherChargesIcon,
+  // AppFeedbackIcon,
+  // OrderIcon,
 // } from "../icons";
 // import { useSidebar } from "../context/SidebarContext";
 // import SidebarWidget from "./SidebarWidget";
@@ -712,14 +712,12 @@
 
 
 
-
-
-
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router";
 import { useState } from "react";
-import { ChevronDown, ChevronRight } from "lucide-react";
+import { ChevronDown, ChevronRight, Users } from "lucide-react"; // optional
 
 import {
+  HorizontaLDots,
   UserCircleIcon,
   DocsIcon,
   MailIcon,
@@ -727,24 +725,23 @@ import {
   TableIcon,
   GroupIcon,
   ProductListIcon,
+  PaymentIcon,
   CategoryIcon,
+  MenuIcon,
+  OtherChargesIcon,
   AppFeedbackIcon,
-
-
-
-
+  OrderIcon,
+  
 } from "../icons";
 import ApartmentIcon from "@mui/icons-material/Apartment";
 import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
-
 import { useSidebar } from "../context/SidebarContext";
 import SidebarWidget from "./SidebarWidget";
-import { useAuth } from "../context/AuthContext";
+import { getActiveUser } from "../utility/Cookies";
+import { Typography } from "@mui/material";
 
-/* =========================
-   TYPES
-========================= */
+
 type NavItem = {
   name: string;
   icon: React.ReactNode;
@@ -753,42 +750,29 @@ type NavItem = {
   key?: string;
 };
 
-/* =========================
-   STAFF MENU
-========================= */
 const adminNavItems: NavItem[] = [
   {
     icon: <TableIcon />,
     name: "Dashboard",
-    path: "/staff/dashboard",
+    path: "/admin/dashboard",
     key: "dashboard",
   },
-  {
-    icon: <GroupIcon />,
-    name: "User Management",
-    key: "usermanagement",
-    children: [
-      {
-        icon: <AppFeedbackIcon />,
-        name: "Dealer Management",
-        path: "/staff/dealermanagment",
-        key: "usermanagement",
-      },
-      {
-        icon: <AppFeedbackIcon />,
-        name: "Buyer Management",
-        path: "/staff/buyermanagment",
-        key: "usermanagement",
-      },
-    ],
-  },
+
+
+{
+  icon: <Users />,
+  name: "Member And Unit Management Module",
+  path: "/admin/membermanagement",
+  key: "dashboard",
+}
+  
 ];
 
-/* =========================
-   SUPER ADMIN MENU
-========================= */
+
+
+
 const superAdminNavItems: NavItem[] = [
-  {
+    {
     icon: <TableIcon />,
     name: "Dashboard",
     path: "/superadmin/dashboard",
@@ -847,73 +831,88 @@ const superAdminNavItems: NavItem[] = [
     name: "Society Feedback Management",
     path: "/superadmin/society-feedback-management",
   },
-
 ];
 
-/* =========================
-   SIDEBAR COMPONENT
-========================= */
 const AppSidebar: React.FC = () => {
   const { isExpanded, isMobileOpen, isHovered, setIsHovered } = useSidebar();
   const location = useLocation();
-  const { role: userRole } = useAuth(); //  FIXED SOURCE
+  const cookiesData = getActiveUser();
+  const userRole = cookiesData?.role;
+  const permissionsArray = cookiesData?.permissions || [];
 
-  const [openDropdowns, setOpenDropdowns] = useState<Record<string, boolean>>(
-    {}
-  );
+  const allowedKeys = permissionsArray
+    .filter((perm: any) => perm.allowed)
+    .map((perm: any) => perm.key);
 
-  const isActive = (path?: string) =>
-    path ? location.pathname === path : false;
+  //  Recursively filter by allowed keys
+  const filterMenuByPermission = (items: NavItem[], allowed: string[]): NavItem[] =>
+    items
+      .map(item => {
+        // If the item has children, recursively filter them
+        if (item.children) {
+          const filteredChildren = filterMenuByPermission(item.children, allowed);
+          // Only include parent if at least one child is allowed
+          if (filteredChildren.length > 0) {
+            return { ...item, children: filteredChildren };
+          }
+          return null; // No visible children, skip entire section
+        }
+
+        // For non-parent item: show only if allowed or has no key
+        if (!item.key || allowed.includes(item.key)) {
+          return item;
+        }
+
+        return null;
+      })
+      .filter(Boolean) as NavItem[];
+
+
+  const navItemsToRender = userRole === "admin"
+    ? superAdminNavItems
+    : filterMenuByPermission(adminNavItems, allowedKeys);
+
+  const isActive = (path: string) => location.pathname === path;
+
+  const [openDropdowns, setOpenDropdowns] = useState<{ [key: string]: boolean }>({});
 
   const toggleDropdown = (name: string) => {
-    setOpenDropdowns((prev) => ({
-      [name]: !prev[name],
-    }));
+    setOpenDropdowns(prev => {
+      const isCurrentlyOpen = prev[name];
+      return isCurrentlyOpen ? {} : { [name]: true };
+    });
   };
 
+
   const renderMenuItems = (items: NavItem[]) => (
-    <ul className="flex flex-col gap-3">
+    <ul className="flex flex-col gap-4">
       {items.map((nav) => (
         <li key={nav.name}>
           {nav.children ? (
             <>
-              <div
-                onClick={() => toggleDropdown(nav.name)}
-                className="menu-item group flex cursor-pointer items-center justify-between"
-              >
+              <div onClick={() => toggleDropdown(nav.name)}
+                className={`menu-item group cursor-pointer flex items-center justify-between ${openDropdowns[nav.name] ? "menu-item-active" : "menu-item-inactive"}`}>
                 <div className="flex items-center gap-3">
                   <span className="menu-item-icon-size">{nav.icon}</span>
                   {(isExpanded || isHovered || isMobileOpen) && (
-                    <span>{nav.name}</span>
+                    <span className="menu-item-text">{nav.name}</span>
                   )}
                 </div>
                 {(isExpanded || isHovered || isMobileOpen) && (
-                  <span>
-                    {openDropdowns[nav.name] ? (
-                      <ChevronDown size={14} />
-                    ) : (
-                      <ChevronRight size={14} />
-                    )}
+                  <span className="pr-2 transition-transform duration-200">
+                    {openDropdowns[nav.name] ? <ChevronDown size={14} /> : <ChevronRight size={14} />}
                   </span>
                 )}
               </div>
-
               {openDropdowns[nav.name] && (
-                <ul className="ml-6 mt-2 flex flex-col gap-2">
+                <ul className={`${isExpanded ? 'ml-8' : ''} mt-2 flex flex-col gap-2`}>
                   {nav.children.map((child) => (
                     <li key={child.name}>
-                      <Link
-                        to={child.path ?? "#"}
-                        className={`menu-item ${isActive(child.path)
-                          ? "menu-item-active"
-                          : "menu-item-inactive"
-                          }`}
-                      >
-                        <span className="menu-item-icon-size">
-                          {child.icon}
-                        </span>
+                      <Link to={child.path ?? "#"}
+                        className={`menu-item group ${isActive(child.path || "") ? "menu-item-active" : "menu-item-inactive"}`}>
+                        <span className="menu-item-icon-size">{child.icon ?? <span className="pl-4">•</span>}</span>
                         {(isExpanded || isHovered || isMobileOpen) && (
-                          <span>{child.name}</span>
+                          <span className="menu-item-text">{child.name}</span>
                         )}
                       </Link>
                     </li>
@@ -922,16 +921,11 @@ const AppSidebar: React.FC = () => {
               )}
             </>
           ) : (
-            <Link
-              to={nav.path ?? "#"}
-              className={`menu-item ${isActive(nav.path)
-                ? "menu-item-active"
-                : "menu-item-inactive"
-                }`}
-            >
+            <Link to={nav.path ?? "#"}
+              className={`menu-item group ${isActive(nav.path || "") ? "menu-item-active" : "menu-item-inactive"}`}>
               <span className="menu-item-icon-size">{nav.icon}</span>
               {(isExpanded || isHovered || isMobileOpen) && (
-                <span>{nav.name}</span>
+                <span className="menu-item-text">{nav.name}</span>
               )}
             </Link>
           )}
@@ -940,36 +934,34 @@ const AppSidebar: React.FC = () => {
     </ul>
   );
 
-  const navItemsToRender =
-    userRole === "admin" ? superAdminNavItems : adminNavItems;
-
   return (
-    <aside
-      className={`fixed left-0 top-0 z-50 h-screen bg-white border-r transition-all duration-300
-      ${isMobileOpen ? "block w-[280px]" : "hidden"}
-      lg:block ${isExpanded || isHovered ? "lg:w-[280px]" : "lg:w-[80px]"}`}
+    <aside className={`
+      fixed top-0 left-0 z-50 h-screen bg-white dark:bg-gray-900 text-gray-900 border-r border-gray-200 transition-all duration-300 ease-in-out mt-16 px-4 lg:mt-0
+      ${isMobileOpen ? "block w-[290px]" : "hidden"}
+      lg:block lg:translate-x-0 ${isExpanded || isHovered ? "lg:w-[290px]" : ""}
+    `}
       onMouseEnter={() => !isExpanded && setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <div className="flex justify-center py-4">
-        <Link
-          to={
-            userRole === "admin"
-              ? "/superadmin/dashboard"
-              : "/staff/dashboard"
-          }
-        >
-          <img
-            src="/images/logo/Avigo.png"
-            alt="Logo"
-            width={isExpanded || isHovered ? 150 : 60}
-          />
+      <div className={`py-4 flex ${!isExpanded && !isHovered ? "lg:justify-center" : "justify-center"}`}>
+        <Link to={userRole === "admin" ? "/superadmin/dashboard" : "/staff/dashboard"}>
+          {isExpanded || isHovered || isMobileOpen ? (
+            <img src="/images/logo/Avigo.png" alt="Logo" width={150} height={20} />
+          ) : (
+            <img src="/images/logo/Avigo.png" alt="Logo" width={60} height={32} />
+          )}
         </Link>
       </div>
 
-      <nav className="px-4">{renderMenuItems(navItemsToRender)}</nav>
-
-      {(isExpanded || isHovered || isMobileOpen) && <SidebarWidget />}
+      <div className={`flex flex-col ${isExpanded || isHovered || isMobileOpen ? "overflow-y-auto pr-2" : "overflow-hidden"} h-[calc(100vh-12rem)]`}>
+        <nav className="mb-6">
+          <h2 className={`mb-4 text-xs uppercase text-gray-400 ${!isExpanded && !isHovered ? "lg:justify-center" : "justify-start"}`}>
+            {isExpanded || isHovered || isMobileOpen ? "Menu" : "Menu"}
+          </h2>
+          {renderMenuItems(navItemsToRender)}
+        </nav>
+        {(isExpanded || isHovered || isMobileOpen) && <SidebarWidget />}
+      </div>
     </aside>
   );
 };

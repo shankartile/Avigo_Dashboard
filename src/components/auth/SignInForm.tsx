@@ -402,32 +402,25 @@
 
 
 
+
+
 import { useState, useEffect, useRef } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import Label from "../form/Label";
 import Input from "../form/input/InputField";
 import Button from "../ui/button/Button";
-import { useDispatch, useSelector } from "react-redux";
-import { requestOtp, verifyOtp } from "../../store/AuthManagement/authSlice";
-import type { RootState, AppDispatch } from "../../store/store";
 import Alert from "../ui/alert/Alert";
 import ReCAPTCHA from "react-google-recaptcha";
+import { saveCookies } from "../../utility/Cookies";
 import OTPInput from "../form/input/OTPInput";
 
-//  DEV FLAG — TURN OFF WHEN BACKEND IS READY
-const DEV_BYPASS_LOGIN = true;
-
 export default function SignInForm() {
-  const navigate = useNavigate();
   const location = useLocation();
-  const dispatch = useDispatch<AppDispatch>();
+  const navigate = useNavigate();
 
-  const { loading, phone } = useSelector((state: RootState) => state.auth);
-
-  const [showOtp, setShowOtp] = useState(false);
+  const [showOtp, setShowOtp] = useState(false); // kept for structure
   const [otp, setOtp] = useState("");
-  const [timer, setTimer] = useState(60);
-  const [canResend, setCanResend] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -448,145 +441,167 @@ export default function SignInForm() {
     }
   }, [location.state]);
 
-  // Auto-hide alert
+  // Auto hide alert
   useEffect(() => {
     if (alert) {
-      const t = setTimeout(() => setAlert(null), 1500);
-      return () => clearTimeout(t);
+      const timer = setTimeout(() => setAlert(null), 1500);
+      return () => clearTimeout(timer);
     }
   }, [alert]);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // ===============================
-    // 🚧 FRONTEND LOGIN BYPASS
-    // ===============================
-    if (DEV_BYPASS_LOGIN) {
-      const role = "admin"; // change to "staff" if needed
-
-      sessionStorage.setItem("activeRole", role);
-
-      navigate(
-        role === "admin"
-          ? "/superadmin/dashboard"
-          : "/staff/dashboard",
-        {
-          replace: true,
-          state: {
-            alert: {
-              type: "success",
-              title: "Login Successful",
-              message: `Welcome ${role}! (Bypassed Login)`,
-            },
-          },
-        }
-      );
-      return;
-    }
-
-    // ===============================
-    // REAL LOGIN FLOW (BACKEND READY)
-    // ===============================
-    if (!showOtp) {
-      if (!email || !password) {
-        setAlert({
-          type: "error",
-          title: "Missing Fields",
-          message: "Email and password are required.",
-        });
-        return;
-      }
-
-      if (!isCaptchaVerified) {
-        setAlert({
-          type: "error",
-          title: "Captcha Required",
-          message: "Please verify captcha.",
-        });
-        return;
-      }
-
-      const res = await dispatch(requestOtp({ email, password })).unwrap();
-      if (res?.phone) {
-        setShowOtp(true);
-        setTimer(60);
-        setCanResend(false);
-      }
-      return;
-    }
-
-    if (!otp) {
+    if (!email || !password) {
       setAlert({
         type: "error",
-        title: "Missing OTP",
-        message: "Enter OTP.",
+        title: "Missing Fields",
+        message: "Please enter email and password",
       });
       return;
     }
 
-    const result = await dispatch(
-      verifyOtp({ phone: phone ?? "", enteredOtp: otp })
-    ).unwrap();
+    if (!isCaptchaVerified) {
+      setAlert({
+        type: "error",
+        title: "CAPTCHA Required",
+        message: "Please verify captcha",
+      });
+      return;
+    }
 
-    const role = result?.data?.role;
-    sessionStorage.setItem("activeRole", role);
+    // 🔹 Dummy credentials
+    const admin = {
+      email: "admin@avigo.com",
+      password: "Admin@123",
+      role: "admin",
+      permissions: [],
+    };
+
+    const staff = {
+      email: "staff@avigo.com",
+      password: "Staff@123",
+      role: "staff",
+      permissions: [
+        { key: "dashboard", allowed: true },
+        { key: "generalmaster", allowed: true },
+      ],
+    };
+
+    let user = null;
+
+    if (email === admin.email && password === admin.password) {
+      user = admin;
+    } else if (email === staff.email && password === staff.password) {
+      user = staff;
+    }
+
+    if (!user) {
+      setAlert({
+        type: "error",
+        title: "Invalid Credentials",
+        message: "Email or password is incorrect",
+      });
+      return;
+    }
+
+    // Save role + user
+    saveCookies(user);
+    sessionStorage.setItem("activeRole", user.role);
 
     navigate(
-      role === "admin"
+      user.role === "admin"
         ? "/superadmin/dashboard"
-        : "/staff/dashboard"
+        : "/admin/dashboard",
+      {
+        state: {
+          alert: {
+            type: "success",
+            title: "Login Successful",
+            message: `Welcome ${user.role}!`,
+          },
+        },
+      }
     );
   };
 
   return (
     <>
+      {/* Alert */}
       {alert && (
         <div className="absolute top-10 left-5 z-10">
-          <Alert {...alert} variant="filled" />
+          <div className="max-w-sm w-full">
+            <Alert
+              type={alert.type}
+              title={alert.title}
+              message={alert.message}
+              variant="filled"
+              showLink={false}
+              linkHref=""
+              linkText=""
+              onClose={() => setAlert(null)}
+            />
+          </div>
         </div>
       )}
 
-      <div className="flex flex-col justify-center flex-1 w-full max-w-md mx-auto">
-        <h1 className="mb-4 text-xl font-semibold">Sign In</h1>
+      <div className="flex flex-col flex-1">
+        <div className="w-full max-w-md pt-10 mx-auto" />
 
-        <form onSubmit={handleLogin} className="space-y-6">
-          {!showOtp && (
-            <>
-              <div>
-                <Label>Email</Label>
-                <Input value={email} onChange={(e) => setEmail(e.target.value)} />
+        <div className="flex flex-col justify-center flex-1 w-full max-w-md mx-auto">
+          <div>
+            <div className="mb-5 sm:mb-8">
+              <h1 className="mb-2 font-semibold text-gray-800 text-title-sm sm:text-title-md">
+                Sign In
+              </h1>
+              <p className="text-sm text-gray-500">
+                Enter your email and password to sign in!
+              </p>
+            </div>
+
+            <form onSubmit={handleLogin}>
+              <div className="space-y-6">
+                <div>
+                  <Label>
+                    Email ID <span className="text-error-500">*</span>
+                  </Label>
+                  <Input
+                    placeholder="admin@avigo.com / staff@avigo.com"
+                    value={email}
+                    name="email"
+                    onChange={(e) => setEmail(e.target.value)}
+                  />
+                </div>
+
+                <div>
+                  <Label>
+                    Password <span className="text-error-500">*</span>
+                  </Label>
+                  <Input
+                    placeholder="Enter your password"
+                    value={password}
+                    name="signin_password"
+                    type={showPassword ? "text" : "password"}
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
+                </div>
+
+                <div>
+                  <ReCAPTCHA
+                    ref={captchaRef}
+                    sitekey={import.meta.env.VITE_CAPTCHA_KEY}
+                    onChange={() => setCaptchaVerified(true)}
+                  />
+                </div>
+
+                <Button variant="customBlue" className="w-full group">
+                  Sign In
+                </Button>
               </div>
+            </form>
 
-              <div>
-                <Label>Password</Label>
-                <Input
-                  type="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                />
-              </div>
-
-              <ReCAPTCHA
-                ref={captchaRef}
-                sitekey={import.meta.env.VITE_CAPTCHA_KEY}
-                onChange={() => setCaptchaVerified(true)}
-              />
-            </>
-          )}
-
-          {showOtp && (
-            <OTPInput showOtp onChangeOtp={(v) => setOtp(v)} />
-          )}
-
-          <Button className="w-full">
-            {DEV_BYPASS_LOGIN
-              ? "Login (Bypass)"
-              : showOtp
-              ? "Verify OTP"
-              : "Request OTP"}
-          </Button>
-        </form>
+          </div>
+        </div>
       </div>
     </>
   );

@@ -53,6 +53,8 @@ import societySupportTicketReducer from './SocietySupportTicketManagement/Societ
 import societyFeedbackManagementReducer from './SocietyFeedbackManagement/SocietyFeedbackManagementSlice';
 
 
+import societydashboardSlice from './SocietyAdminDashboard/societyAdminDashboardSlice';
+
 
 
 export const store = configureStore({
@@ -120,6 +122,10 @@ export const store = configureStore({
     superadmindashboard: superAdminSocietyDashboardReducer,
     societysupportticket: societySupportTicketReducer,
     societyfeedback: societyFeedbackManagementReducer,
+
+
+    admindashboard: societydashboardSlice,
+
   },
 });
 

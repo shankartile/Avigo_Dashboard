@@ -735,11 +735,13 @@ import {
 } from "../icons";
 import ApartmentIcon from "@mui/icons-material/Apartment";
 import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
+import ReceiptLongIcon from "@mui/icons-material/ReceiptLong";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import { useSidebar } from "../context/SidebarContext";
 import SidebarWidget from "./SidebarWidget";
 import { getActiveUser } from "../utility/Cookies";
 import { Typography } from "@mui/material";
+import { Receipt } from "@mui/icons-material";
 
 
 type NavItem = {
@@ -763,7 +765,19 @@ const adminNavItems: NavItem[] = [
   icon: <Users />,
   name: "Member And Unit Management Module",
   path: "/admin/membermanagement",
-  key: "dashboard",
+},
+
+{
+  icon: <Receipt />,
+  name: "Billing And Charge Management Module",
+  path: "/admin/billingmanagement",
+},
+
+
+{
+  icon: <ReceiptLongIcon />,
+  name: "Society Ledger Management Module",
+  path: "/admin/society-ledgermanagement",
 }
   
 ];

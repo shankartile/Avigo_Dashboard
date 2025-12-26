@@ -112,8 +112,55 @@
 
 
 
+// import React, { createContext, useContext, useEffect, useState } from "react";
+// import { clearCookies } from "../utility/Cookies";
+
+// type AuthContextType = {
+//   role: string | null;
+//   login: (role: string) => void;
+//   logout: () => void;
+// };
+
+// const AuthContext = createContext<AuthContextType>({
+//   role: null,
+//   login: () => {},
+//   logout: () => {},
+// });
+
+// export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+//   const [role, setRole] = useState<string | null>(null);
+
+//   useEffect(() => {
+//     const storedRole = sessionStorage.getItem("activeRole");
+//     if (storedRole) setRole(storedRole);
+//   }, []);
+
+//   const login = (userRole: string) => {
+//     sessionStorage.setItem("activeRole", userRole);
+//     setRole(userRole);
+//   };
+
+//   const logout = () => {
+//     clearCookies();
+//     setRole(null);
+//   };
+
+//   return (
+//     <AuthContext.Provider value={{ role, login, logout }}>
+//       {children}
+//     </AuthContext.Provider>
+//   );
+// };
+
+// export const useAuth = () => useContext(AuthContext);
+
+
+
+
+
+
 import React, { createContext, useContext, useEffect, useState } from "react";
-import { clearCookies } from "../utility/Cookies";
+import { clearAllAuthCookies } from "../utility/Cookies";
 
 type AuthContextType = {
   role: string | null;
@@ -127,12 +174,16 @@ const AuthContext = createContext<AuthContextType>({
   logout: () => {},
 });
 
-export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => {
   const [role, setRole] = useState<string | null>(null);
 
   useEffect(() => {
     const storedRole = sessionStorage.getItem("activeRole");
-    if (storedRole) setRole(storedRole);
+    if (storedRole) {
+      setRole(storedRole);
+    }
   }, []);
 
   const login = (userRole: string) => {
@@ -141,7 +192,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const logout = () => {
-    clearCookies();
+    clearAllAuthCookies();
     setRole(null);
   };
 

@@ -65,6 +65,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(({
       case "brand":
       case "fueltype":
       case "ownership":
+      case "residentName":
 
         if (!value.trim()) return "Name must contain only letters";
         if (!/^[A-Za-z\s]+$/
@@ -353,6 +354,46 @@ const Input = forwardRef<HTMLInputElement, InputProps>(({
         return "";
 
 
+      case "residentFlatsize":
+        if (!value) return "Flat size is required";
+        if (!/^\d+(\.\d+)?$/.test(value))
+          return "Flat size must be a valid number";
+        if (Number(value) <= 0)
+          return "Flat size must be greater than 0";
+        return "";
+
+      case "residentFlatarea":
+        if (!value) return "Flat area is required";
+        if (!/^[a-zA-Z0-9\s]+$/.test(value))
+          return "Flat area must be valid";
+        return "";
+
+      case "residentParkingname":
+        if (!value) return "Parking name is required";
+        if (!/^[a-zA-Z\s]+$/.test(value))
+          return "Parking name must contain only letters";
+        return "";
+
+      case "secondresidentName":
+        if (!value) return "Second resident name is required";
+        if (!/^[a-zA-Z\s]+$/.test(value))
+          return "Name must contain only letters";
+        return "";
+
+      case "secondresidentMobile":
+        if (!value) return "Mobile number is required";
+        if (!/^[6-9]\d{9}$/.test(value))
+          return "Enter a valid 10-digit mobile number";
+        return "";
+
+      case "secondresidentEmail":
+        if (!value) return "Email is required";
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value))
+          return "Enter a valid email address";
+        return "";
+
+
+
 
 
 
@@ -602,6 +643,47 @@ const Input = forwardRef<HTMLInputElement, InputProps>(({
           .slice(0, 50);
       }
 
+      // Flat size (numbers + decimal only)
+      if (name === "residentFlatsize") {
+        sanitizedValue = sanitizedValue
+          .replace(/[^0-9.]/g, '')
+          .slice(0, 10);
+      }
+
+      // Flat area (alphanumeric + space)
+      if (name === "residentFlatarea") {
+        sanitizedValue = sanitizedValue
+          .replace(/[^A-Za-z0-9\s]/g, '')
+          .slice(0, 50);
+      }
+
+      // Parking name (letters + spaces)
+      if (name === "residentParkingname") {
+        sanitizedValue = sanitizedValue
+          .replace(/[^A-Za-z\s]/g, '')
+          .slice(0, 30);
+      }
+
+      // Second resident name (letters + spaces)
+      if (name === "secondresidentName") {
+        sanitizedValue = sanitizedValue
+          .replace(/[^A-Za-z\s]/g, '')
+          .slice(0, 50);
+      }
+
+      // Second resident mobile (numbers only, max 10 digits)
+      if (name === "secondresidentMobile") {
+        sanitizedValue = sanitizedValue
+          .replace(/[^0-9]/g, '')
+          .slice(0, 10);
+      }
+
+      // Second resident email (basic safe chars only)
+      if (name === "secondresidentEmail") {
+        sanitizedValue = sanitizedValue
+          .replace(/[^a-zA-Z0-9@._-]/g, '')
+          .slice(0, 100);
+      }
 
 
 

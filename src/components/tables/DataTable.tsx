@@ -25,6 +25,7 @@ import DateTimeField from '../form/input/DateTimeField';
 import SearchIcon from '@mui/icons-material/Search';
 import CloseIcon from '@mui/icons-material/Close';
 import FileDownloadIcon from '@mui/icons-material/FileDownload';
+import FileUploadIcon from '@mui/icons-material/FileUpload';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import Skeleton from "react-loading-skeleton";
@@ -62,6 +63,8 @@ type DataTableProps<T extends Record<string, any>> = {
   enableColumnFilters?: boolean;
   customTopLeftContent?: React.ReactNode;
   productTypeValue?: string;
+  onFileUpload?: (rows: any[]) => void;
+
 
 
 };
@@ -99,7 +102,9 @@ const DataTable = <T extends Record<string, any>>({
   columnFilters,
   onColumnFiltersChange,
   customTopLeftContent,
-  productTypeValue
+  productTypeValue,
+  onFileUpload,
+
 
 }: DataTableProps<T>) => {
 
@@ -112,6 +117,8 @@ const DataTable = <T extends Record<string, any>>({
   const [internalSearch, setInternalSearch] = useState('');
   const [showDateFilter, setShowDateFilter] = useState(false);
   const [showSkeleton, setShowSkeleton] = useState(true);
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
+
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -214,6 +221,24 @@ const DataTable = <T extends Record<string, any>>({
   };
 
 
+  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+
+    reader.onload = (evt) => {
+      const data = evt.target?.result;
+      const workbook = XLSX.read(data, { type: 'binary' });
+      const sheetName = workbook.SheetNames[0];
+      const sheet = workbook.Sheets[sheetName];
+      const jsonData = XLSX.utils.sheet_to_json(sheet);
+
+      onFileUpload?.(jsonData);
+    };
+
+    reader.readAsBinaryString(file);
+  };
 
 
 
@@ -695,7 +720,37 @@ const DataTable = <T extends Record<string, any>>({
           )
         }
 
+        <>
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept=".xlsx,.xls,.csv"
+            style={{ display: 'none' }}
+            onChange={handleFileUpload}
+          />
 
+          <Tooltip title="Upload Excel">
+            <IconButton
+              size="small"
+              onClick={() => fileInputRef.current?.click()}
+              sx={{
+                height: 40,
+                width: 40,
+                alignItems: 'center',
+              }}
+            >
+              <FileUploadIcon
+                sx={{
+                  
+                  color: 'gray',
+                 
+                  fontSize: '28px',
+                  marginBottom: '-8px',
+                }}
+              />
+            </IconButton>
+          </Tooltip>
+        </>
 
         {
           exportType &&

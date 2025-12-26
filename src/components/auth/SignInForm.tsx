@@ -399,6 +399,276 @@
 
 
 
+// import { useState, useEffect, useRef } from "react";
+// import { useNavigate, useLocation } from "react-router-dom";
+// import Label from "../form/Label";
+// import Input from "../form/input/InputField";
+// import Button from "../ui/button/Button";
+// import Alert from "../ui/alert/Alert";
+// import ReCAPTCHA from "react-google-recaptcha";
+// import { saveCookies } from "../../utility/Cookies";
+// import OTPInput from "../form/input/OTPInput";
+// import { dummyUsers } from "../../config/dummyUsers";
+
+// export default function SignInForm() {
+//   const location = useLocation();
+//   const navigate = useNavigate();
+
+//   const [showOtp, setShowOtp] = useState(false);
+//   const [otp, setOtp] = useState("");
+//   const [timer, setTimer] = useState(60);
+//   const [canResend, setCanResend] = useState(false);
+//   const [showPassword, setShowPassword] = useState(false);
+
+//   const [email, setEmail] = useState("");
+//   const [password, setPassword] = useState("");
+//   const [isCaptchaVerified, setCaptchaVerified] = useState(false);
+
+//   const [alert, setAlert] = useState<{
+//     type: "success" | "error" | "warning" | "info";
+//     title: string;
+//     message: string;
+//   } | null>(location.state?.alert || null);
+
+//   const captchaRef = useRef<any>(null);
+
+//   // Clear alert after refresh
+//   useEffect(() => {
+//     if (location.state?.alert) {
+//       window.history.replaceState({}, document.title);
+//     }
+//   }, [location.state]);
+
+//   // Auto hide alert
+//   useEffect(() => {
+//     if (alert) {
+//       const timer = setTimeout(() => setAlert(null), 1500);
+//       return () => clearTimeout(timer);
+//     }
+//   }, [alert]);
+
+//   // Countdown for OTP resend
+//   useEffect(() => {
+//     if (showOtp && timer > 0) {
+//       const countdown = setInterval(() => {
+//         setTimer((prev) => {
+//           if (prev === 1) {
+//             clearInterval(countdown);
+//             setCanResend(true);
+//           }
+//           return prev - 1;
+//         });
+//       }, 1000);
+//       return () => clearInterval(countdown);
+//     }
+//   }, [showOtp, timer]);
+
+//   const handleLogin = (e: React.FormEvent) => {
+//     e.preventDefault();
+
+//     if (!showOtp) {
+//       // Step 1: validate credentials
+//       if (!email || !password) {
+//         setAlert({
+//           type: "error",
+//           title: "Missing Fields",
+//           message: "Please enter email and password",
+//         });
+//         return;
+//       }
+
+//       if (!isCaptchaVerified) {
+//         setAlert({
+//           type: "error",
+//           title: "CAPTCHA Required",
+//           message: "Please verify captcha",
+//         });
+//         return;
+//       }
+
+//       // Check dummy users
+//       const user =
+//         email === dummyUsers.admin.email && password === dummyUsers.admin.password
+//           ? dummyUsers.admin
+//           : email === dummyUsers.staff.email && password === dummyUsers.staff.password
+//           ? dummyUsers.staff
+//           : null;
+
+//       if (!user) {
+//         setAlert({
+//           type: "error",
+//           title: "Invalid Credentials",
+//           message: "Email or password is incorrect",
+//         });
+//         return;
+//       }
+
+//       // Show OTP input
+//       setShowOtp(true);
+//       setTimer(60);
+//       setCanResend(false);
+
+//       setAlert({
+//         type: "info",
+//         title: "OTP Sent",
+//         message: "A dummy OTP has been sent: 1234",
+//       });
+//       return;
+//     }
+
+//     // Step 2: verify OTP
+//    // Step 2: verify OTP
+// if (otp !== "1234") {
+//   setAlert({
+//     type: "error",
+//     title: "Invalid OTP",
+//     message: "Please enter the correct OTP",
+//   });
+//   return;
+// }
+
+// // Determine role
+// const role = email === dummyUsers.admin.email ? "admin" : "staff";
+// const userData = dummyUsers[role];
+
+// // Save user with permissions in cookies
+// saveCookies(role, {
+//   email: userData.email,
+//   role: userData.role,
+//   permissions: userData.permissions, // <- important
+// });
+
+// sessionStorage.setItem("activeRole", role);
+
+// // Navigate according to role
+// navigate(role === "admin" ? "/superadmin/dashboard" : "/admin/dashboard", {
+//   state: {
+//     alert: {
+//       type: "success",
+//       title: "Login Successful",
+//       message: `Welcome ${role}!`,
+//     },
+//   },
+// });
+
+
+//   };
+
+//   const handleResendOtp = () => {
+//     setOtp("");
+//     setTimer(60);
+//     setCanResend(false);
+//     setAlert({
+//       type: "info",
+//       title: "OTP Resent",
+//       message: "A dummy OTP has been sent: 1234",
+//     });
+//   };
+
+//   return (
+//     <>
+//       {/* Alert */}
+//       {alert && (
+//         <div className="absolute top-10 left-5 z-10">
+//           <div className="max-w-sm w-full">
+//             <Alert
+//               type={alert.type}
+//               title={alert.title}
+//               message={alert.message}
+//               variant="filled"
+//               showLink={false}
+//               linkHref=""
+//               linkText=""
+//               onClose={() => setAlert(null)}
+//             />
+//           </div>
+//         </div>
+//       )}
+
+//       <div className="flex flex-col flex-1">
+//         <div className="w-full max-w-md pt-10 mx-auto" />
+
+//         <div className="flex flex-col justify-center flex-1 w-full max-w-md mx-auto">
+//           <div>
+//             <div className="mb-5 sm:mb-8">
+//               <h1 className="mb-2 font-semibold text-gray-800 text-title-sm sm:text-title-md">
+//                 Sign In
+//               </h1>
+//               <p className="text-sm text-gray-500">
+//                 {showOtp ? "Verify OTP & Sign In" : "Enter your email and password to sign in!"}
+//               </p>
+//             </div>
+
+//             <form onSubmit={handleLogin}>
+//               <div className="space-y-6">
+//                 {!showOtp && (
+//                   <>
+//                     <div>
+//                       <Label>Email ID <span className="text-error-500">*</span></Label>
+//                       <Input
+//                         placeholder="admin@avigo.com / staff@avigo.com"
+//                         value={email}
+//                         name="email"
+//                         onChange={(e) => setEmail(e.target.value)}
+//                       />
+//                     </div>
+
+//                     <div>
+//                       <Label>Password <span className="text-error-500">*</span></Label>
+//                       <Input
+//                         placeholder="Enter your password"
+//                         value={password}
+//                         name="signin_password"
+//                         type={showPassword ? "text" : "password"}
+//                         onChange={(e) => setPassword(e.target.value)}
+//                       />
+//                     </div>
+
+//                     <div>
+//                       <ReCAPTCHA
+//                         ref={captchaRef}
+//                         sitekey={import.meta.env.VITE_CAPTCHA_KEY}
+//                         onChange={() => setCaptchaVerified(true)}
+//                       />
+//                     </div>
+//                   </>
+//                 )}
+
+//                 {showOtp && (
+//                   <>
+//                     <OTPInput showOtp={showOtp} onChangeOtp={(val) => setOtp(val)} />
+//                     <div className="flex justify-between items-center">
+//                       <p className={`text-sm ${canResend ? "text-blue-600" : "text-red-500"}`}>
+//                         {canResend ? (
+//                           <button
+//                             type="button"
+//                             className="text-blue-600 hover:underline"
+//                             onClick={handleResendOtp}
+//                           >
+//                             Resend OTP
+//                           </button>
+//                         ) : (
+//                           `OTP Expires in ${timer} sec`
+//                         )}
+//                       </p>
+//                     </div>
+//                   </>
+//                 )}
+
+//                 <Button variant="customBlue" className="w-full group">
+//                   {showOtp ? "Verify OTP & Sign In" : "Request OTP"}
+//                 </Button>
+//               </div>
+//             </form>
+//           </div>
+//         </div>
+//       </div>
+//     </>
+//   );
+// }
+
+
+
 
 
 
@@ -506,8 +776,9 @@ export default function SignInForm() {
     }
 
     // Save role + user
-    saveCookies(user);
-    sessionStorage.setItem("activeRole", user.role);
+   saveCookies(user.role, user);
+sessionStorage.setItem("activeRole", user.role);
+
 
     navigate(
       user.role === "admin"

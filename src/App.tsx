@@ -20,6 +20,9 @@ const StaffDashboard = React.lazy(() => import("./pages/staff/Dashboard"));
 
 //Admin Dashboard
 const AdminDashboard = React.lazy(() => import("./pages/societyadmin/SocietyAdminDashboard"));
+const MemberandUnitManagement = React.lazy(() => import("./pages/societyadmin/MemberandUnitManagement"));
+const BillingManagement = React.lazy(() => import("./pages/societyadmin/BillingManagemet"));
+const SocietyLedgerManagement = React.lazy(() => import("./pages/societyadmin/SocietyLedgerManagement"))
 
 
 
@@ -140,6 +143,11 @@ const App: React.FC = () => {
                 />
 
 
+                <Route path="membermanagement" element={<ProtectedRoute allowedRoles={["staff"]} requiredPermission="dashboard"><MemberandUnitManagement/></ProtectedRoute>} />
+                <Route path="billingmanagement" element={<ProtectedRoute allowedRoles={["staff"]} requiredPermission="dashboard"><BillingManagement/></ProtectedRoute>} />
+                <Route path="society-ledgermanagement" element={<ProtectedRoute allowedRoles={["staff"]} requiredPermission="dashboard"><SocietyLedgerManagement/></ProtectedRoute>} />
+
+
                 <Route path="categorymasters" element={<ProtectedRoute allowedRoles={["staff"]} requiredPermission="generalmaster"><CategoryMasters /></ProtectedRoute>} />
                 <Route path="countrymasters" element={<ProtectedRoute allowedRoles={["staff"]} requiredPermission="generalmaster"><CountryMasters /></ProtectedRoute>} />
                 <Route path="statemasters" element={<ProtectedRoute allowedRoles={["staff"]} requiredPermission="generalmaster"><StateMasters /></ProtectedRoute>} />
@@ -232,7 +240,7 @@ const App: React.FC = () => {
                 <Route path="society-notifications" element={<SocietyNotifications />} />
                 <Route path="society-supportticket-management" element={<SocietySupportticketManagement />} />
                 <Route path="society-supportticketmanagement/:id" element={<SocietySupportticketDetails />} />
-                <Route path="society-feedback-management" element={<SocietyFeedbackManagement/>} />
+                <Route path="society-feedback-management" element={<SocietyFeedbackManagement />} />
 
 
 

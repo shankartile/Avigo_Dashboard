@@ -21,7 +21,7 @@ import Button from "../../ui/button/Button";
 import SweetAlert from "../../ui/alert/SweetAlert";
 import ToggleSwitch from "../../ui/toggleswitch/ToggleSwitch";
 
-import AddResident from "./AddResident";
+import AddResident from "../MemberandUnitManagement/AddResident";
 
 import { RootState, AppDispatch } from "../../../store/store";
 import {
@@ -32,7 +32,7 @@ import {
 
 
 
-const MemberandUnitManagement = () => {
+const SocietyLedgerManagement = () => {
     const dispatch = useDispatch<AppDispatch>();
 
     /*  FIX: use resident slice */
@@ -350,7 +350,7 @@ const MemberandUnitManagement = () => {
                 <>
                     <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
                         <Typography variant="h5" fontWeight={500} className="font-outfit">
-                            Member And Unit Management Module
+                            Society Ledger Management Module
                             <Tooltip title="This module allows the Society Admin to manage all flats/units and residents." arrow>
                                 <InfoIcon sx={{ color: "#245492", ml: 1 }} />
                             </Tooltip>
@@ -403,4 +403,4 @@ const MemberandUnitManagement = () => {
     );
 };
 
-export default MemberandUnitManagement;
+export default SocietyLedgerManagement;

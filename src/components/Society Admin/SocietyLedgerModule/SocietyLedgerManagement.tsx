@@ -351,19 +351,19 @@ const SocietyLedgerManagement = () => {
                     <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
                         <Typography variant="h5" fontWeight={500} className="font-outfit">
                             Society Ledger Management Module
-                            <Tooltip title="This module allows the Society Admin to manage all flats/units and residents." arrow>
+                            <Tooltip title="The Society Ledger Module provides the admin with a complete financial record of all society income and expenses." arrow>
                                 <InfoIcon sx={{ color: "#245492", ml: 1 }} />
                             </Tooltip>
                         </Typography>
 
-                        <Button
+                        {/* <Button
                             onClick={() => {
                                 setSelectedResident(null);
                                 setShowForm(true);
                             }}
                         >
                             <AddIcon /> Add Resident
-                        </Button>
+                        </Button> */}
                     </Box>
 
 

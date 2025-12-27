@@ -20,44 +20,34 @@ import DataTable from "../../tables/DataTable";
 import Button from "../../ui/button/Button";
 import SweetAlert from "../../ui/alert/SweetAlert";
 import ToggleSwitch from "../../ui/toggleswitch/ToggleSwitch";
-
-import AddResident from "./AddResident";
-import ViewResident from "./ViewResident";
+import ViewNotice from "./ViewNotice";
+import AddNotice from "./CreateNotice";
 
 import { RootState, AppDispatch } from "../../../store/store";
 import {
-    fetchResidents,
-    deleteResident,
-    toggleResidentStatus,
-} from "../../../store/SocietyMemberAndUnitManagement/AddResidentSlice";
+    fetchNotices,
+    deleteNotice,
+    toggleNoticeStatus,
+} from "../../../store/NoticesandAnnouncementManagementModule/NoticeandAnnouncementSlice";
 
-
-
-const MemberandUnitManagement = () => {
+const NoticesandAnnouncementManagement = () => {
     const dispatch = useDispatch<AppDispatch>();
 
-    /*  FIX: use resident slice */
-    const { residents, totalItems } = useSelector(
-        (state: RootState) => state.adminresident
+    const { notices, totalItems } = useSelector(
+        (state: RootState) => state.noticesandannouncement
     );
-
 
     const [pageIndex, setPageIndex] = useState(0);
     const [pageSize, setPageSize] = useState(10);
 
     const [showForm, setShowForm] = useState(false);
-    const [selectedResident, setSelectedResident] = useState<any>(null);
-    const [showView, setShowView] = useState(false);
-    const [selectedSociety, setSelectedSociety] = useState<any>(null);
+    const [selectedNotice, setSelectedNotice] = useState<any>(null);
 
     const [deleteId, setDeleteId] = useState<string | null>(null);
     const [toggleId, setToggleId] = useState<string | null>(null);
     const [toggleValue, setToggleValue] = useState<boolean>(false);
-    const [viewOnly, setViewOnly] = useState(false);
-
-
-
-
+    const [isViewMode, setIsViewMode] = useState(false);
+    const [showView, setShowView] = useState(false);
 
 
     const [searchTerm, setSearchTerm] = useState("");
@@ -67,9 +57,8 @@ const MemberandUnitManagement = () => {
 
     const [fromDate, setFromDate] = useState("");
     const [toDate, setToDate] = useState("");
+
     const debounceRef = useRef<NodeJS.Timeout | null>(null);
-
-
 
 
     const handleColumnFilterChange = (
@@ -89,7 +78,7 @@ const MemberandUnitManagement = () => {
 
         debounceRef.current = setTimeout(() => {
             dispatch(
-                fetchResidents({
+                fetchNotices({
                     search: searchTerm,
                     filters: filterParams,
                     fromDate: fromDate || undefined,
@@ -101,12 +90,11 @@ const MemberandUnitManagement = () => {
         }, 500);
     };
 
-
     useEffect(() => {
         if ((fromDate && !toDate) || (!fromDate && toDate)) return;
 
         dispatch(
-            fetchResidents({
+            fetchNotices({
                 fromDate: fromDate || undefined,
                 toDate: toDate || undefined,
                 page: 0,
@@ -124,7 +112,7 @@ const MemberandUnitManagement = () => {
         setPageIndex(0);
 
         await dispatch(
-            fetchResidents({
+            fetchNotices({
                 search: text,
                 fromDate,
                 toDate,
@@ -136,116 +124,50 @@ const MemberandUnitManagement = () => {
     };
 
 
-    const handleResidentExcelData = (rows: any[]) => {
-        if (!rows || !rows.length) {
-            console.error("Excel file is empty");
-            return;
-        }
-
-        const errors: { row: number; message: string }[] = [];
-        const validRows: any[] = [];
-
-        rows.forEach((row, index) => {
-            const rowNumber = index + 2; // Excel header = row 1
-
-            // ---------- REQUIRED FIELDS ----------
-            if (!row.residentName) {
-                errors.push({ row: rowNumber, message: "Resident Name is required" });
-                return;
-            }
-
-            if (!row.residentType) {
-                errors.push({ row: rowNumber, message: "Resident Type is required" });
-                return;
-            }
-
-            if (!row.mobile || !/^[6-9]\d{9}$/.test(String(row.mobile))) {
-                errors.push({ row: rowNumber, message: "Invalid mobile number" });
-                return;
-            }
-
-            // ---------- OPTIONAL EMAIL ----------
-            if (
-                row.email &&
-                !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(row.email))
-            ) {
-                errors.push({ row: rowNumber, message: "Invalid email format" });
-                return;
-            }
-
-            // ---------- OPTIONAL FLAT SIZE ----------
-            if (
-                row.residentFlatsize &&
-                (isNaN(row.residentFlatsize) || Number(row.residentFlatsize) <= 0)
-            ) {
-                errors.push({ row: rowNumber, message: "Invalid flat size" });
-                return;
-            }
-
-            // ---------- SANITIZE DATA ----------
-            validRows.push({
-                residentName: String(row.residentName).trim(),
-                residentType: String(row.residentType).trim(),
-                email: row.email ? String(row.email).trim() : "",
-                mobile: String(row.mobile).trim(),
-                residentFlatsize: row.residentFlatsize
-                    ? Number(row.residentFlatsize)
-                    : null,
-                residentFlatarea: row.residentFlatarea
-                    ? String(row.residentFlatarea).trim()
-                    : "",
-                residentParkingname: row.residentParkingname
-                    ? String(row.residentParkingname).trim()
-                    : "",
-                secondresidentName: row.secondresidentName
-                    ? String(row.secondresidentName).trim()
-                    : "",
-                secondresidentEmail: row.secondresidentEmail
-                    ? String(row.secondresidentEmail).trim()
-                    : "",
-                secondresidentMobile: row.secondresidentMobile
-                    ? String(row.secondresidentMobile).trim()
-                    : "",
-            });
-        });
-
-        // ---------- ERROR HANDLING ----------
-        if (errors.length) {
-            console.error("Excel Validation Errors:", errors);
-
-            /*
-              Example:
-              Row 3 → Invalid mobile number
-              Row 5 → Resident Name is required
-            */
-
-            return;
-        }
-
-        // ---------- FINAL PAYLOAD ----------
-        console.log("Validated Excel Data:", validRows);
-
-        //  FINAL STEP: API CALL
-        // dispatch(uploadResidentsExcel(validRows));
-    };
-
-
-
-
-
-
     const columns: MRT_ColumnDef<any>[] = [
-        { accessorKey: "residentName", header: "Resident Name", filterVariant: "text" },
-        { accessorKey: "residentType", header: "Resident Type", filterVariant: "text" },
-        { accessorKey: "email", header: "Email", filterVariant: "text" },
-        { accessorKey: "mobile", header: "Mobile", filterVariant: "text" },
-        { accessorKey: "societyName", header: "Society", filterVariant: "text" },
-        { accessorKey: "residentFlatsize", header: "Resident Flat Size", filterVariant: "text" },
-        { accessorKey: "residentFlatarea", header: "Resident Flat Area", filterVariant: "text" },
-        { accessorKey: "residentParkingname", header: "Parking Name", filterVariant: "text" },
-        { accessorKey: "secondresidentName", header: "Secondary Resident Name", filterVariant: "text" },
-        { accessorKey: "secondresidentEmail", header: "Secondary Resident Email", filterVariant: "text" },
-        { accessorKey: "secondresidentMobile", header: "Secondary Resident Mobile", filterVariant: "text" },
+        { accessorKey: "title", header: "Title", filterVariant: "text" },
+        {
+            accessorKey: "category",
+            header: "Category",
+            filterVariant: "select",
+            filterSelectOptions: ["General", "Emergency", "Finance", "Event"],
+        },
+        {
+            accessorKey: "createdAt",
+            header: "Created Date",
+            filterVariant: "text",
+        },
+        {
+            accessorKey: "readCount",
+            header: "Read Count",
+            filterVariant: "text",
+            muiTableBodyCellProps: {
+                align: "center",
+            },
+            muiTableHeadCellProps: {
+                align: "center",
+            },
+            Cell: ({ cell }) => (
+                <Box
+                    sx={{
+                        width: 32,
+                        height: 32,
+                        borderRadius: "50%",
+                        backgroundColor: "#ff9800",
+                        color: "#fff",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        fontSize: "14px",
+                        fontWeight: 600,
+                        mx: "auto",
+                    }}
+                >
+                    {cell.getValue<number>()}
+                </Box>
+            ),
+        },
+
         {
             accessorKey: "isActive",
             header: "Status",
@@ -262,23 +184,37 @@ const MemberandUnitManagement = () => {
             header: "Actions",
             Cell: ({ row }) => (
                 <Box display="flex" gap={1}>
+                    {/* <Tooltip title="View">
+                        <IconButton
+                            onClick={() => {
+                                setSelectedNotice(row.original);
+                                setIsViewMode(true);
+                                setShowForm(true);
+                            }}
+                        >
+                            <VisibilityIcon />
+                        </IconButton>
+                    </Tooltip> */}
+
                     <Tooltip title="View">
                         <IconButton
                             onClick={() => {
-                                setSelectedResident(row.original);
+                                setSelectedNotice(row.original);
                                 setShowView(true);
                             }}
                         >
                             <VisibilityIcon />
                         </IconButton>
-
                     </Tooltip>
+
+
+
 
                     <Tooltip title="Edit">
                         <IconButton
                             onClick={() => {
-                                setSelectedResident(row.original);
-                                setViewOnly(false);
+                                setSelectedNotice(row.original);
+                                setIsViewMode(false);
                                 setShowForm(true);
                             }}
                         >
@@ -303,7 +239,6 @@ const MemberandUnitManagement = () => {
                             setToggleValue(!row.original.isActive);
                         }}
                     />
-
                 </Box>
             ),
         },
@@ -312,7 +247,7 @@ const MemberandUnitManagement = () => {
 
     const confirmDelete = async () => {
         if (!deleteId) return;
-        await dispatch(deleteResident(deleteId));
+        await dispatch(deleteNotice(deleteId));
         setDeleteId(null);
     };
 
@@ -321,8 +256,8 @@ const MemberandUnitManagement = () => {
             <SweetAlert
                 show={Boolean(deleteId)}
                 type="error"
-                title="Delete Resident"
-                message="Are you sure you want to delete this resident?"
+                title="Delete Notice"
+                message="Are you sure you want to delete this notice?"
                 onConfirm={confirmDelete}
                 onCancel={() => setDeleteId(null)}
             />
@@ -330,67 +265,82 @@ const MemberandUnitManagement = () => {
             <SweetAlert
                 show={Boolean(toggleId)}
                 type="warning"
-                title="Change Resident Status"
+                title="Change Notice Status"
                 message={`Are you sure you want to ${toggleValue ? "activate" : "deactivate"
-                    } this resident?`}
+                    } this notice?`}
                 confirmText={toggleValue ? "Activate" : "Deactivate"}
                 cancelText="Cancel"
                 onConfirm={() => {
                     if (toggleId) {
-                        dispatch(toggleResidentStatus(toggleId));
+                        dispatch(toggleNoticeStatus(toggleId));
                     }
                     setToggleId(null);
                 }}
                 onCancel={() => setToggleId(null)}
             />
 
-            <ViewResident
+            {/* {showForm ? (
+                <AddNotice
+                    editData={selectedNotice}
+                    isEditMode={!isViewMode && Boolean(selectedNotice)}
+                    isViewMode={isViewMode}
+                    onCancel={() => {
+                        setShowForm(false);
+                        setSelectedNotice(null);
+                        setIsViewMode(false);
+                    }}
+                /> */}
+
+            {/* VIEW POPUP (always mounted) */}
+            <ViewNotice
                 open={showView}
-                data={selectedResident}
+                data={selectedNotice}
                 onClose={() => {
                     setShowView(false);
-                    setSelectedResident(null);
+                    setSelectedNotice(null);
                 }}
             />
 
-
+            {/* EDIT / CREATE */}
             {showForm ? (
-                <AddResident
-                    society={selectedSociety}
-                    editData={selectedResident}
-                    isEditMode={!viewOnly && Boolean(selectedResident)} // ✏️ edit only
-                    viewOnly={viewOnly}                                  // 👁️ view only
+                <AddNotice
+                    editData={selectedNotice}
+                    isEditMode={Boolean(selectedNotice)}
                     onCancel={() => {
                         setShowForm(false);
-                        setSelectedResident(null);
-                        setViewOnly(false);
+                        setSelectedNotice(null);
                     }}
                 />
-
             ) : (
                 <>
-                    <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
+                    <Box
+                        display="flex"
+                        justifyContent="space-between"
+                        alignItems="center"
+                        mb={2}
+                    >
                         <Typography variant="h5" fontWeight={500} className="font-outfit">
-                            Member And Unit Management Module
-                            <Tooltip title="This module allows the Society Admin to manage all flats/units and residents." arrow>
+                            Notices & Announcements Management Module
+                            <Tooltip
+                                title="Create, publish and manage society notices and announcements."
+                                arrow
+                            >
                                 <InfoIcon sx={{ color: "#245492", ml: 1 }} />
                             </Tooltip>
                         </Typography>
 
                         <Button
                             onClick={() => {
-                                setSelectedResident(null);
+                                setSelectedNotice(null);
                                 setShowForm(true);
                             }}
                         >
-                            <AddIcon /> Add Resident
+                            <AddIcon /> Create Notice
                         </Button>
                     </Box>
 
-
-
                     <DataTable
-                        data={residents}
+                        data={notices}
                         columns={columns}
                         rowCount={totalItems}
                         pageIndex={pageIndex}
@@ -408,20 +358,19 @@ const MemberandUnitManagement = () => {
                             setPageIndex(pageIndex);
                             setPageSize(pageSize);
                             dispatch(
-                                fetchResidents({
+                                fetchNotices({
                                     search: searchTerm,
                                     page: pageIndex,
                                     limit: pageSize,
                                 })
                             );
                         }}
-                        onFileUpload={handleResidentExcelData}
                     />
-
                 </>
             )}
+
         </>
     );
 };
 
-export default MemberandUnitManagement;
+export default NoticesandAnnouncementManagement;

@@ -18,6 +18,7 @@ interface Props {
   onCancel: () => void;
   editData?: any;
   isEditMode: boolean;
+   viewOnly?: boolean;
   isViewMode?: boolean;
 }
 

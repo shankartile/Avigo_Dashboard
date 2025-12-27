@@ -65,7 +65,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(({
       case "brand":
       case "fueltype":
       case "ownership":
-      case "residentName":
+  
 
         if (!value.trim()) return "Name must contain only letters";
         if (!/^[A-Za-z\s]+$/

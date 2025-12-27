@@ -535,10 +535,15 @@ const DataTable = <T extends Record<string, any>>({
         }}
       >
         {customTopLeftContent && (
-          <Box sx={{ ml: 10, alignItems: 'center', fontFamily: 'Outfit', fontWeight: 500, fontSize: '15px' }}>
+          <Box
+            sx={{
+            minWidth: 160, mt: 1
+            }}
+          >
             {customTopLeftContent}
           </Box>
         )}
+
         {enableUserTypeFilter && (
           <FormControl size="small" sx={{ minWidth: 160, mt: 1 }} >
             <InputLabel className="font-outfit">User Type</InputLabel>
@@ -579,26 +584,44 @@ const DataTable = <T extends Record<string, any>>({
         )}
 
         {enableProducttypeFilter && (
+          // <FormControl size="small" sx={{ minWidth: 160, mt: 1 }}>
+          //   <InputLabel className="font-outfit">Type</InputLabel>
+          //   <Select
+          //     className="font-outfit"
+          //     label="Feedback type"
+          //     value={productTypeValue || 'car'} //  make it controlled
+          //     onChange={(e) => onProducttypeChange?.(e.target.value)}
+          //   >
+          //     <MenuItem className="font-outfit" value="car">
+          //       Car
+          //     </MenuItem>
+          //     <MenuItem className="font-outfit" value="bike">
+          //       Bike
+          //     </MenuItem>
+          //     <MenuItem className="font-outfit" value="sparepart">
+          //       Spare Parts & Accessories
+          //     </MenuItem>
+          //   </Select>
+          // </FormControl>
+
           <FormControl size="small" sx={{ minWidth: 160, mt: 1 }}>
-            <InputLabel className="font-outfit">Type</InputLabel>
+            <InputLabel className="font-outfit">Visitor Type</InputLabel>
             <Select
               className="font-outfit"
-              label="Feedback type"
-              value={productTypeValue || 'car'} //  make it controlled
+              label="Visitor Type"
+              value={productTypeValue || 'all'}
               onChange={(e) => onProducttypeChange?.(e.target.value)}
             >
-              <MenuItem className="font-outfit" value="car">
-                Car
-              </MenuItem>
-              <MenuItem className="font-outfit" value="bike">
-                Bike
-              </MenuItem>
-              <MenuItem className="font-outfit" value="sparepart">
-                Spare Parts & Accessories
-              </MenuItem>
+              <MenuItem className="font-outfit" value="all">All</MenuItem>
+              <MenuItem className="font-outfit" value="Guest">Guest</MenuItem>
+              <MenuItem className="font-outfit" value="Delivery">Delivery</MenuItem>
+              <MenuItem className="font-outfit" value="Vendor">Vendor</MenuItem>
             </Select>
           </FormControl>
+
         )}
+
+
 
 
 
@@ -741,9 +764,9 @@ const DataTable = <T extends Record<string, any>>({
             >
               <FileUploadIcon
                 sx={{
-                  
+
                   color: 'gray',
-                 
+
                   fontSize: '28px',
                   marginBottom: '-8px',
                 }}

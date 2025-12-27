@@ -56,6 +56,8 @@ import societyFeedbackManagementReducer from './SocietyFeedbackManagement/Societ
 import societydashboardSlice from './SocietyAdminDashboard/societyAdminDashboardSlice';
 import addadminResidentReducer from './SocietyMemberAndUnitManagement/AddResidentSlice';
 import billingManagementReducer from './Billing&ChargeManagementModule/BillingSlice';
+import noticesandAnnouncementReducer from './NoticesandAnnouncementManagementModule/NoticeandAnnouncementSlice';
+import visitorLogsReducer from './VisitorLogModule/visitorLogsSlice';
 
 
 
@@ -129,6 +131,8 @@ export const store = configureStore({
     admindashboard: societydashboardSlice,
     adminresident:  addadminResidentReducer,
     billing : billingManagementReducer,
+    noticesandannouncement : noticesandAnnouncementReducer,
+    visitorLogs : visitorLogsReducer,
 
   },
 });

@@ -742,6 +742,13 @@ import SidebarWidget from "./SidebarWidget";
 import { getActiveUser } from "../utility/Cookies";
 import { Typography } from "@mui/material";
 import { Receipt } from "@mui/icons-material";
+import CampaignIcon from "@mui/icons-material/Campaign";
+import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
+import SupportAgentIcon from "@mui/icons-material/SupportAgent";
+import FolderZipIcon from "@mui/icons-material/FolderZip";
+import NotificationsActiveIcon from "@mui/icons-material/NotificationsActive";
+import SettingsIcon from "@mui/icons-material/Settings";
+import ContactsIcon from "@mui/icons-material/Contacts";
 
 
 type NavItem = {
@@ -767,18 +774,67 @@ const adminNavItems: NavItem[] = [
   path: "/admin/membermanagement",
 },
 
+// {
+//   icon: <Receipt />,
+//   name: "Billing And Charge Management Module",
+//   path: "/admin/billingmanagement",
+// },
+
+
+// {
+//   icon: <ReceiptLongIcon />,
+//   name: "Society Ledger Management Module",
+//   path: "/admin/society-ledgermanagement",
+// },
+
 {
-  icon: <Receipt />,
-  name: "Billing And Charge Management Module",
-  path: "/admin/billingmanagement",
+  icon: <CampaignIcon />,
+  name: "Notices & Announcements Management Module",
+  path: "/admin/notice-management",
 },
 
+{
+  icon: <PeopleAltIcon />,
+  name: "Visitor Logs Management Module",
+  path: "/admin/visitor-log-management",
+},
 
 {
-  icon: <ReceiptLongIcon />,
-  name: "Society Ledger Management Module",
-  path: "/admin/society-ledgermanagement",
-}
+  icon: <AdminPanelSettingsIcon />,
+  name: "Role-Based Access Management Module",
+  path: "/admin/rolebase-access-management",
+},
+
+{
+  icon: <SupportAgentIcon />,
+  name: "Support Ticket Management Module",
+  path: "/admin/supportticket-management",
+},
+
+{
+  icon: <FolderZipIcon />,
+  name: "Document Vault Management Module",
+  path: "/admin/document-vault-management",
+},
+
+{
+  icon: <NotificationsActiveIcon />,
+  name: "Notification Management Module",
+  path: "/admin/notification-management",
+},
+
+{
+  icon: <SettingsIcon />,
+  name: "Master Management Module",
+  path: "/admin/master-management",
+},
+
+{
+  icon: <ContactsIcon />,
+  name: "Directory Management Module",
+  path: "/admin/directory-management",
+},
+
   
 ];
 

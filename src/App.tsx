@@ -22,7 +22,9 @@ const StaffDashboard = React.lazy(() => import("./pages/staff/Dashboard"));
 const AdminDashboard = React.lazy(() => import("./pages/societyadmin/SocietyAdminDashboard"));
 const MemberandUnitManagement = React.lazy(() => import("./pages/societyadmin/MemberandUnitManagement"));
 const BillingManagement = React.lazy(() => import("./pages/societyadmin/BillingManagemet"));
-const SocietyLedgerManagement = React.lazy(() => import("./pages/societyadmin/SocietyLedgerManagement"))
+const SocietyLedgerManagement = React.lazy(() => import("./pages/societyadmin/SocietyLedgerManagement"));
+const NoticesandAnnouncementManagement = React.lazy(() => import("./pages/societyadmin/NoticesandAnnouncementManagement"));
+const VisitorLogsManagement = React.lazy(() => import("./pages/societyadmin/VisitorLogsManagement"));
 
 
 
@@ -143,9 +145,12 @@ const App: React.FC = () => {
                 />
 
 
-                <Route path="membermanagement" element={<ProtectedRoute allowedRoles={["staff"]} requiredPermission="dashboard"><MemberandUnitManagement/></ProtectedRoute>} />
-                <Route path="billingmanagement" element={<ProtectedRoute allowedRoles={["staff"]} requiredPermission="dashboard"><BillingManagement/></ProtectedRoute>} />
-                <Route path="society-ledgermanagement" element={<ProtectedRoute allowedRoles={["staff"]} requiredPermission="dashboard"><SocietyLedgerManagement/></ProtectedRoute>} />
+                <Route path="membermanagement" element={<ProtectedRoute allowedRoles={["staff"]} requiredPermission="dashboard"><MemberandUnitManagement /></ProtectedRoute>} />
+                <Route path="billingmanagement" element={<ProtectedRoute allowedRoles={["staff"]} requiredPermission="dashboard"><BillingManagement /></ProtectedRoute>} />
+                <Route path="society-ledgermanagement" element={<ProtectedRoute allowedRoles={["staff"]} requiredPermission="dashboard"><SocietyLedgerManagement /></ProtectedRoute>} />
+                <Route path="notice-management" element={<ProtectedRoute allowedRoles={["staff"]} requiredPermission="dashboard"><NoticesandAnnouncementManagement /></ProtectedRoute>} />
+                <Route path="visitor-log-management" element={<ProtectedRoute allowedRoles={["staff"]} requiredPermission="dashboard"><VisitorLogsManagement/></ProtectedRoute>} />
+
 
 
                 <Route path="categorymasters" element={<ProtectedRoute allowedRoles={["staff"]} requiredPermission="generalmaster"><CategoryMasters /></ProtectedRoute>} />

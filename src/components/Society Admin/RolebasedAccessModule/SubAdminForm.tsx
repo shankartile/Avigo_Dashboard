@@ -271,7 +271,7 @@ const SubAdminForm: React.FC<StaffFormProps> = ({ onCancel, editData, isEditMode
                     }}
                 >
                     <Typography className="font-outfit" variant="h6">
-                        {isEditMode ? 'Update Society Staff Role' : 'Assign Society Staff Role'}
+                        {isEditMode ? 'Update Society User Role' : 'Assign Society User Role'}
                     </Typography>
                     <IconButton sx={{ color: 'white' }} onClick={onCancel}>
                         <CloseIcon />
@@ -280,8 +280,8 @@ const SubAdminForm: React.FC<StaffFormProps> = ({ onCancel, editData, isEditMode
 
                 {isEditMode && (
                     <Tabs value={activeTab} onChange={handleTabChange} variant="fullWidth">
-                        <Tab className="font-outfit" label="Update Staff Details" />
-                        <Tab className="font-outfit" label="Change Staff Password" />
+                        <Tab className="font-outfit" label="Update User Details" />
+                        <Tab className="font-outfit" label="Change User Password" />
                     </Tabs>
                 )}
 
@@ -298,7 +298,7 @@ const SubAdminForm: React.FC<StaffFormProps> = ({ onCancel, editData, isEditMode
                                     onChange={handleChange}
                                 />
                                 <TextField
-                                    label="Society Staff Name"
+                                    label="Society User Name"
                                     name="name"
                                     value={formData.name}
                                     onChange={handleChange}
@@ -380,7 +380,7 @@ const SubAdminForm: React.FC<StaffFormProps> = ({ onCancel, editData, isEditMode
                             <Button disabled={!isFormValid || isSubmitting}>
                                 {isSubmitting
                                     ? (isEditMode ? 'Updating...' : 'Creating...')
-                                    : (isEditMode ? 'Update Society Staff' : 'Create Society Staff')}
+                                    : (isEditMode ? 'Update Society User' : 'Create Society User')}
                             </Button>
 
                         ) : (

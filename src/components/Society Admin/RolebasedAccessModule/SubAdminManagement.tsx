@@ -876,7 +876,7 @@ const SubAdminManagement = () => {
   /* ===================== COLUMNS ===================== */
 
   const userColumns: MRT_ColumnDef<any>[] = [
-    { accessorKey: 'name', header: 'Society Staff Name', filterVariant: 'text' },
+    { accessorKey: 'name', header: 'Society User Name', filterVariant: 'text' },
     { accessorKey: 'phone', header: 'Mobile No', filterVariant: 'text' },
     { accessorKey: 'email', header: 'Email ID', filterVariant: 'text' },
     { accessorKey: 'role', header: 'Role', filterVariant: 'text' },
@@ -961,7 +961,7 @@ const SubAdminManagement = () => {
         <>
           <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
             <Typography variant="h5" fontWeight={500}>
-              Role & Permission Management{' '}
+              Role-Based Access Management Module{' '}
               <Tooltip title="Manage society staff">
                 <InfoIcon sx={{ color: '#245492' }} />
               </Tooltip>

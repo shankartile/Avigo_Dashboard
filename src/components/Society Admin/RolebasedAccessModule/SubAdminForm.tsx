@@ -17,7 +17,7 @@ import {
     updateStaff,
     changeStaffPassword,
     fetchPermissions
-} from '../../../store/SocietyStaffManagement/SocietyStaffManagementSlice';
+} from '../../../store/SubAdminManagement/SubAdminManagementSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState, AppDispatch } from '../../../store/store';
 import Alert from '../../ui/alert/Alert';

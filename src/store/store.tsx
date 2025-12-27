@@ -58,6 +58,7 @@ import addadminResidentReducer from './SocietyMemberAndUnitManagement/AddResiden
 import billingManagementReducer from './Billing&ChargeManagementModule/BillingSlice';
 import noticesandAnnouncementReducer from './NoticesandAnnouncementManagementModule/NoticeandAnnouncementSlice';
 import visitorLogsReducer from './VisitorLogModule/visitorLogsSlice';
+import subAdminManagementReducer from './SubAdminManagement/SubAdminManagementSlice';
 
 
 
@@ -133,6 +134,7 @@ export const store = configureStore({
     billing : billingManagementReducer,
     noticesandannouncement : noticesandAnnouncementReducer,
     visitorLogs : visitorLogsReducer,
+    subadmin : subAdminManagementReducer,
 
   },
 });

@@ -25,6 +25,7 @@ const BillingManagement = React.lazy(() => import("./pages/societyadmin/BillingM
 const SocietyLedgerManagement = React.lazy(() => import("./pages/societyadmin/SocietyLedgerManagement"));
 const NoticesandAnnouncementManagement = React.lazy(() => import("./pages/societyadmin/NoticesandAnnouncementManagement"));
 const VisitorLogsManagement = React.lazy(() => import("./pages/societyadmin/VisitorLogsManagement"));
+const SubAdminManagement = React.lazy(() => import("./pages/societyadmin/SubAdminManagement"));
 
 
 
@@ -149,7 +150,8 @@ const App: React.FC = () => {
                 <Route path="billingmanagement" element={<ProtectedRoute allowedRoles={["staff"]} requiredPermission="dashboard"><BillingManagement /></ProtectedRoute>} />
                 <Route path="society-ledgermanagement" element={<ProtectedRoute allowedRoles={["staff"]} requiredPermission="dashboard"><SocietyLedgerManagement /></ProtectedRoute>} />
                 <Route path="notice-management" element={<ProtectedRoute allowedRoles={["staff"]} requiredPermission="dashboard"><NoticesandAnnouncementManagement /></ProtectedRoute>} />
-                <Route path="visitor-log-management" element={<ProtectedRoute allowedRoles={["staff"]} requiredPermission="dashboard"><VisitorLogsManagement/></ProtectedRoute>} />
+                <Route path="visitor-log-management" element={<ProtectedRoute allowedRoles={["staff"]} requiredPermission="dashboard"><VisitorLogsManagement /></ProtectedRoute>} />
+                <Route path="rolebase-access-management" element={<ProtectedRoute allowedRoles={["staff"]} requiredPermission="dashboard"><SubAdminManagement /></ProtectedRoute>} />
 
 
 

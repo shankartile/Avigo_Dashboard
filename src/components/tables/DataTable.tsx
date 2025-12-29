@@ -40,8 +40,10 @@ type DataTableProps<T extends Record<string, any>> = {
   enableUserTypeFilter?: boolean;
   enableProducttypeFilter?: boolean;
   enableTicketTypeFilter?: boolean;
+  enableDocumenttypeFilter?: boolean;
   onProducttypeChange?: (status: string) => void;
   onTickettypeChange?: (status: string) => void;
+  onDocumenttypeChange?: (status: string) => void;
   enablefeedbacktypeFilter?: boolean;
   onUserTypeChange?: (status: string) => void;
   onFeedbacktypeChange?: (status: string) => void;
@@ -66,6 +68,7 @@ type DataTableProps<T extends Record<string, any>> = {
   customTopLeftContent?: React.ReactNode;
   productTypeValue?: string;
   ticketTypeValue?: string;
+  documentTypeValue?: string;
   onFileUpload?: (rows: any[]) => void;
 
 
@@ -84,8 +87,10 @@ const DataTable = <T extends Record<string, any>>({
   enablefeedbacktypeFilter,
   enableProducttypeFilter,
   enableTicketTypeFilter,
+  enableDocumenttypeFilter,
   onProducttypeChange,
   onTickettypeChange,
+  onDocumenttypeChange,
   onUserTypeChange,
   onFeedbacktypeChange,
   fromDate,
@@ -109,6 +114,7 @@ const DataTable = <T extends Record<string, any>>({
   customTopLeftContent,
   productTypeValue,
   ticketTypeValue,
+  documentTypeValue,
   onFileUpload,
 
 
@@ -692,6 +698,29 @@ const DataTable = <T extends Record<string, any>>({
             </Select>
           </FormControl>
         )}
+
+
+        {enableDocumenttypeFilter && (
+
+          <FormControl size="small" sx={{ minWidth: 160, mt: 1 }}>
+            <InputLabel className="font-outfit">Document Type</InputLabel>
+            <Select
+              className="font-outfit"
+              label="Document Type"
+              value={documentTypeValue || 'all'}
+              onChange={(e) => onDocumenttypeChange?.(e.target.value)}
+            >
+              <MenuItem className="font-outfit" value="all">All</MenuItem>
+              <MenuItem className="font-outfit" value="Bylaws">Bylaws</MenuItem>
+              <MenuItem className="font-outfit" value="Circulars">Circulars</MenuItem>
+              <MenuItem className="font-outfit" value="Certificates">Certificates</MenuItem>
+              <MenuItem className="font-outfit" value="Agreements">Agreements</MenuItem>
+            </Select>
+          </FormControl>
+
+        )}
+
+
 
 
 

@@ -335,7 +335,7 @@ const DUMMY_DOCUMENTS: Document[] = [
     _id: "1",
     title: "Society Bylaws 2024",
     category: "Bylaws",
-    description: "Official society bylaws document",
+    description: "Official society bylaws document Official society bylaws document Official society bylaws document Official society bylaws document Official society bylaws document Official society bylaws document Official society bylaws document Official society bylaws document Official society bylaws document",
     attachments: ["bylaws.pdf"],
     isActive: true,
     isDeleted: false,

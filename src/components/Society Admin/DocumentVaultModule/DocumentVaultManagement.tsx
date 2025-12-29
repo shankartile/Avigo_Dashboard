@@ -59,6 +59,9 @@ const DocumentVaultManagement = () => {
     const [toDate, setToDate] = useState("");
 
     const debounceRef = useRef<NodeJS.Timeout | null>(null);
+    const [filterType, setFilterType] = useState<
+        'all' | 'Bylaws' | 'Circulars' | 'Certificates' | 'Agreements'
+    >('all');
 
 
     const handleColumnFilterChange = (
@@ -126,20 +129,118 @@ const DocumentVaultManagement = () => {
 
     const columns: MRT_ColumnDef<any>[] = [
         { accessorKey: "title", header: "Document Title", filterVariant: "text" },
-        { accessorKey: "description", header: "Description", filterVariant: "text" },
-        { accessorKey: "attchments", header: "File Upload", filterVariant: "text" },
+        {
+            accessorKey: "description",
+            header: "Description",
+            filterVariant: "text",
+            Cell: ({ cell }) => {
+                const value = cell.getValue<string>() || "";
+                const limit = 60; // 🔹 change length if needed
+
+                return (
+                    <span title={value}>
+                        {value.length > limit
+                            ? `${value.substring(0, limit)}...`
+                            : value}
+                    </span>
+                );
+            },
+        },
+        {
+            accessorKey: "attachments",
+            header: "File Upload",
+            filterVariant: "text",
+            muiTableBodyCellProps: {
+                align: "center",
+            },
+            muiTableHeadCellProps: {
+                align: "center",
+            },
+
+            Cell: ({ row }) => {
+                const files: string[] = row.original.attachments || [];
+
+                if (!files.length) return <span>-</span>;
+
+                return (
+                    <div
+                        style={{
+                            display: "flex",
+                            flexDirection: "column",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            gap: "6px",
+                        }}
+                    >
+                        {files.map((file, index) => {
+                            const fileName = file.split("/").pop(); // extract name
+
+                            return (
+                                <span
+                                    key={index}
+                                    title={fileName}
+                                    onClick={() => window.open(file, "_blank")}
+                                    style={{
+                                        cursor: "pointer",
+                                        color: "#1976d2",
+                                        fontSize: "13px",
+                                        textDecoration: "underline",
+                                        textAlign: "center",
+                                        wordBreak: "break-all",
+                                    }}
+                                >
+                                    {fileName}
+                                </span>
+                            );
+                        })}
+                    </div>
+                );
+            },
+        },
+        // {
+        //     accessorKey: "category",
+        //     header: "Category",
+        //     filterVariant: "select",
+        //     filterSelectOptions: ["Bylaws", "Circulars", "Certificates", "Agreements"],
+        // },
         {
             accessorKey: "category",
             header: "Category",
             filterVariant: "select",
-            filterSelectOptions: ["Bylaws", "Circulars", "Certificates", "Agreements"],
+            filterSelectOptions: [
+                "Bylaws",
+                "Circulars",
+                "Certificates",
+                "Agreements",
+            ],
+            Cell: ({ cell }) => {
+                const value = cell.getValue<string>();
+
+                return (
+                    <Chip
+                        label={cell.getValue<string>()}
+
+                        color={
+                            cell.getValue() === "Bylaws"
+                                ? "primary"
+                                : cell.getValue() === "Circulars"
+                                    ? "secondary"
+                                    : cell.getValue() === "Certificates"
+                                        ? "success"
+                                        : "warning"
+                        }
+                        size="small"
+                    />
+                );
+            },
         },
+
         {
             accessorKey: "createdAt",
             header: "Created Date",
             filterVariant: "text",
         },
-        
+
         // {
         //     accessorKey: "readCount",
         //     header: "Read Count",
@@ -343,6 +444,7 @@ const DocumentVaultManagement = () => {
                     </Box>
 
                     <DataTable
+                        key={filterType}
                         data={documents}
                         columns={columns}
                         rowCount={totalItems}
@@ -353,6 +455,23 @@ const DocumentVaultManagement = () => {
                         onColumnFiltersChange={handleColumnFilterChange}
                         exportType
                         clickHandler={handleSearchAndDownload}
+                        enableDocumenttypeFilter
+                        documentTypeValue={filterType}
+                        onDocumenttypeChange={(category: string) => {
+                            setFilterType(category as any);
+                            setPageIndex(0);
+
+                            dispatch(
+                                fetchDocuments({
+                                    search: searchTerm,
+                                    filters: category !== "all" ? { category } : undefined,
+                                    fromDate,
+                                    toDate,
+                                    page: 0,
+                                    limit: pageSize,
+                                })
+                            );
+                        }}
                         fromDate={fromDate}
                         toDate={toDate}
                         onFromDateChange={setFromDate}
@@ -363,6 +482,8 @@ const DocumentVaultManagement = () => {
                             dispatch(
                                 fetchDocuments({
                                     search: searchTerm,
+                                    filters:
+                                        filterType !== "all" ? { category: filterType } : undefined,
                                     page: pageIndex,
                                     limit: pageSize,
                                 })

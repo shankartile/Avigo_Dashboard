@@ -274,7 +274,7 @@ const UploadDocument: React.FC<Props> = ({
                                         : "Publishing..."
                                     : isEditMode
                                         ? "Update Document"
-                                        : "Publish Document"}
+                                        : "Save Document"}
                             </Button>
                         )}
 

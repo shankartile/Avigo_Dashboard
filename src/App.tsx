@@ -26,6 +26,9 @@ const SocietyLedgerManagement = React.lazy(() => import("./pages/societyadmin/So
 const NoticesandAnnouncementManagement = React.lazy(() => import("./pages/societyadmin/NoticesandAnnouncementManagement"));
 const VisitorLogsManagement = React.lazy(() => import("./pages/societyadmin/VisitorLogsManagement"));
 const SubAdminManagement = React.lazy(() => import("./pages/societyadmin/SubAdminManagement"));
+const AdminSocietySupportticketManagement = React.lazy(() => import("./pages/societyadmin/AdminSupportTicketManagement"));
+const AdminSocietySupportticketDetails = React.lazy(() => import("./pages/societyadmin/AdminSupportTicketDetails"));
+const DocumentVaultManagement = React.lazy(() => import("./pages/societyadmin/DocumentVaultManagement"));
 
 
 
@@ -152,6 +155,9 @@ const App: React.FC = () => {
                 <Route path="notice-management" element={<ProtectedRoute allowedRoles={["staff"]} requiredPermission="dashboard"><NoticesandAnnouncementManagement /></ProtectedRoute>} />
                 <Route path="visitor-log-management" element={<ProtectedRoute allowedRoles={["staff"]} requiredPermission="dashboard"><VisitorLogsManagement /></ProtectedRoute>} />
                 <Route path="rolebase-access-management" element={<ProtectedRoute allowedRoles={["staff"]} requiredPermission="dashboard"><SubAdminManagement /></ProtectedRoute>} />
+                <Route path="supportticket-management" element={<ProtectedRoute allowedRoles={["staff"]} requiredPermission="dashboard"><AdminSocietySupportticketManagement /></ProtectedRoute>} />
+                <Route path="supportticket-management/:id" element={<ProtectedRoute allowedRoles={["staff"]} requiredPermission="dashboard"><AdminSocietySupportticketDetails /></ProtectedRoute>} />
+                <Route path="document-vault-management" element={<ProtectedRoute allowedRoles={["staff"]} requiredPermission="dashboard"><DocumentVaultManagement /></ProtectedRoute>} />
 
 
 

@@ -39,7 +39,9 @@ type DataTableProps<T extends Record<string, any>> = {
   onSearchMessage?: (message: string) => void;
   enableUserTypeFilter?: boolean;
   enableProducttypeFilter?: boolean;
+  enableTicketTypeFilter?: boolean;
   onProducttypeChange?: (status: string) => void;
+  onTickettypeChange?: (status: string) => void;
   enablefeedbacktypeFilter?: boolean;
   onUserTypeChange?: (status: string) => void;
   onFeedbacktypeChange?: (status: string) => void;
@@ -63,6 +65,7 @@ type DataTableProps<T extends Record<string, any>> = {
   enableColumnFilters?: boolean;
   customTopLeftContent?: React.ReactNode;
   productTypeValue?: string;
+  ticketTypeValue?: string;
   onFileUpload?: (rows: any[]) => void;
 
 
@@ -80,7 +83,9 @@ const DataTable = <T extends Record<string, any>>({
   enableUserTypeFilter,
   enablefeedbacktypeFilter,
   enableProducttypeFilter,
+  enableTicketTypeFilter,
   onProducttypeChange,
+  onTickettypeChange,
   onUserTypeChange,
   onFeedbacktypeChange,
   fromDate,
@@ -103,6 +108,7 @@ const DataTable = <T extends Record<string, any>>({
   onColumnFiltersChange,
   customTopLeftContent,
   productTypeValue,
+  ticketTypeValue,
   onFileUpload,
 
 
@@ -537,7 +543,7 @@ const DataTable = <T extends Record<string, any>>({
         {customTopLeftContent && (
           <Box
             sx={{
-            minWidth: 160, mt: 1
+              minWidth: 160, mt: 1
             }}
           >
             {customTopLeftContent}
@@ -620,6 +626,73 @@ const DataTable = <T extends Record<string, any>>({
           </FormControl>
 
         )}
+
+
+        {/* {enableTicketTypeFilter && (
+          <FormControl size="small" sx={{ minWidth: 160, mt: 1 }}>
+            <InputLabel className="font-outfit">Support-Ticket Type</InputLabel>
+            <Select
+              className="font-outfit"
+              label="Support-Ticket Type"
+              value={ticketTypeValue || 'all'}
+              onChange={(e) => onTickettypeChange?.(e.target.value)}
+            >
+              <MenuItem className="font-outfit" value="all">All</MenuItem>
+              <MenuItem className="font-outfit" value="Resident">Resident</MenuItem>
+              <MenuItem className="font-outfit" value="Treasurer">Treasurer</MenuItem>
+              <MenuItem className="font-outfit" value="Security">Secuirty</MenuItem>
+            </Select>
+          </FormControl>
+
+        )} */}
+
+        {enableTicketTypeFilter && (
+          <FormControl size="small" sx={{ minWidth: 160, mt: 1 }} >
+            <InputLabel className="font-outfit">User Type</InputLabel>
+            <Select
+              className='font-outfit'
+              label="User Type"
+              defaultValue="all"
+              value={ticketTypeValue || 'All'} //  make it controlled
+              onChange={(e) => onTickettypeChange?.(e.target.value)}
+            >
+              <MenuItem className='font-outfit'
+                value="all">All</MenuItem>
+              <MenuItem className='font-outfit'
+                value="resident">Resident</MenuItem>
+              <MenuItem className='font-outfit'
+                value="treasurer">Treasurer</MenuItem>
+              <MenuItem className='font-outfit'
+                value="security">Security</MenuItem>
+
+            </Select>
+          </FormControl>
+        )}
+
+        {enableTicketTypeFilter && (
+          <FormControl size="small" sx={{ minWidth: 160, mt: 1 }}>
+            <InputLabel className="font-outfit">Type</InputLabel>
+            <Select
+              className='font-outfit'
+              label="Ticket type"
+              defaultValue="all"
+              value={ticketTypeValue || 'all'} //  make it controlled
+              onChange={(e) => onTickettypeChange?.(e.target.value)}
+            >
+              <MenuItem className='font-outfit'
+                value="all">All</MenuItem>
+              <MenuItem className='font-outfit'
+                value="resident">Resident</MenuItem>
+              <MenuItem className='font-outfit'
+                value="treasurer">Treasurer</MenuItem>
+              <MenuItem className='font-outfit'
+                value="security">Security</MenuItem>
+
+
+            </Select>
+          </FormControl>
+        )}
+
 
 
 

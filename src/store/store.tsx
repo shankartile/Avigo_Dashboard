@@ -59,6 +59,8 @@ import billingManagementReducer from './Billing&ChargeManagementModule/BillingSl
 import noticesandAnnouncementReducer from './NoticesandAnnouncementManagementModule/NoticeandAnnouncementSlice';
 import visitorLogsReducer from './VisitorLogModule/visitorLogsSlice';
 import subAdminManagementReducer from './SubAdminManagement/SubAdminManagementSlice';
+import adminSupportTicketManagementReducer from './AdminSupportTicketManagementModule/AdminSupportTicketManagementSlice'
+import documentVaultManagementReducer from './DocumentVaultManagement/DocumentVaultManagementSlice'
 
 
 
@@ -135,6 +137,8 @@ export const store = configureStore({
     noticesandannouncement : noticesandAnnouncementReducer,
     visitorLogs : visitorLogsReducer,
     subadmin : subAdminManagementReducer,
+    adminsupportticket : adminSupportTicketManagementReducer,
+    documentvaultmanagement : documentVaultManagementReducer
 
   },
 });

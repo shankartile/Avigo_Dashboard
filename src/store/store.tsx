@@ -59,8 +59,16 @@ import billingManagementReducer from './Billing&ChargeManagementModule/BillingSl
 import noticesandAnnouncementReducer from './NoticesandAnnouncementManagementModule/NoticeandAnnouncementSlice';
 import visitorLogsReducer from './VisitorLogModule/visitorLogsSlice';
 import subAdminManagementReducer from './SubAdminManagement/SubAdminManagementSlice';
-import adminSupportTicketManagementReducer from './AdminSupportTicketManagementModule/AdminSupportTicketManagementSlice'
-import documentVaultManagementReducer from './DocumentVaultManagement/DocumentVaultManagementSlice'
+import adminSupportTicketManagementReducer from './AdminSupportTicketManagementModule/AdminSupportTicketManagementSlice';
+import documentVaultManagementReducer from './DocumentVaultManagement/DocumentVaultManagementSlice';
+import diectoryManagementReducer from './DirectoryManagement/DirectoryManagementSlice';
+
+//master
+import expenseNameMasterReducer from './SocietyAdminMaster/ExpenseNameMasterSlice';
+import expenseCategoryMasterReducer from './SocietyAdminMaster/ExpenseCategoryMasterSlice';
+import incomeNameMasterReducer from './SocietyAdminMaster/IncomeNameMasterSlice';
+import incomeCategoryMasterReducer from './SocietyAdminMaster/IncomeCategoryMasterSlice';
+
 
 
 
@@ -138,7 +146,18 @@ export const store = configureStore({
     visitorLogs : visitorLogsReducer,
     subadmin : subAdminManagementReducer,
     adminsupportticket : adminSupportTicketManagementReducer,
-    documentvaultmanagement : documentVaultManagementReducer
+    documentvaultmanagement : documentVaultManagementReducer,
+    directorymanagement : diectoryManagementReducer,
+
+
+    //Society Admin Master
+    ExpenseNameMasters : expenseNameMasterReducer,
+    ExpenseTypeMaster : expenseNameMasterReducer,
+    ExpenseCategoryMasters : expenseCategoryMasterReducer,
+    IncomeNameMasters : incomeNameMasterReducer,
+    IncomeTypeMaster : incomeNameMasterReducer,
+    IncomeCategoryMasters : incomeCategoryMasterReducer
+    
 
   },
 });

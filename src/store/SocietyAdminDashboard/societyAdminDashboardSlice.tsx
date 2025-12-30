@@ -2,23 +2,21 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { httpinstance } from '../../axios/api';
 
 type DashboardSummary = {
-  totalDealers: number;
-  totalBuyers: number;
-  totalListings: number;
-  totalCars: number;
-  totalBikes: number;
-  totalSpareParts: number;
-  totalLeads: number;
-  totalViews: number;
-  totalSubscribedUsers: number;
+  numberResident: number;
+  numberTenants: number;
+  numberPending: number;
+  numberSolved: number;
+  numberPaid: number;
+  numberUnpaid: number;
+  totalExpenses: number;
+  totalVisitor: number;
   totalSupportTickets: number;
-  openBuyerTickets: number;
-  openDealerTickets: number;
-  buyerFeedbackCount: number;
-  dealerFeedbackCount: number;
-  categoryWiseSubscribedUsers: { count: number; category_id: string; category_name: string; }[];
-  categoryWiseLeads: { count: number; category_id: string; category_name: string; }[];
-  categoryWiseViews: { count: number; category_id: string; category_name: string; }[];
+  totalNoticesToday: number;
+  totalNoticesMonth: number;
+  // dealerFeedbackCount: number;
+  // categoryWiseSubscribedUsers: { count: number; category_id: string; category_name: string; }[];
+  // categoryWiseLeads: { count: number; category_id: string; category_name: string; }[];
+  // categoryWiseViews: { count: number; category_id: string; category_name: string; }[];
 };
 
 interface NotificationItem {
@@ -103,18 +101,22 @@ export const fetchDashboardSummary = createAsyncThunk(
 
 
 export const fetchnotification = createAsyncThunk(
-  'dashboard/fetchnotification',
+  'dashboard/notificationsfilter',
   async (
-    { page = 1, type }: { page?: number; type?: string },
+    { page = 1, moduleKes }: { page?: number; moduleKes?: string },
     { rejectWithValue }
   ) => {
     try {
       const queryParams = new URLSearchParams();
       queryParams.append('page', page.toString());
-      if (type) queryParams.append('type', type); // 👈 add type if present
+
+      //  backend-driven filtering
+      if (moduleKes && moduleKes !== 'all') {
+        queryParams.append('moduleKes', moduleKes);
+      }
 
       const response = await httpinstance.get(
-        `notificationroute/adminnotificatinRoute/notifications?${queryParams.toString()}`
+        `notificationroute/adminnotificatinRoute/notificationsfilter?${queryParams.toString()}`
       );
 
       return {
@@ -128,6 +130,7 @@ export const fetchnotification = createAsyncThunk(
     }
   }
 );
+
 
 
 
@@ -212,7 +215,7 @@ const societydashboardSlice = createSlice({
         state.loading = false;
         state.error = action.payload as string;
       })
-      
+
 
       // .addCase(fetchnotification.fulfilled, (state, action) => {
       //   state.loading = false;
@@ -222,31 +225,26 @@ const societydashboardSlice = createSlice({
       //   state.pagination = action.payload.pagination;
       // })
 
-      .addCase(fetchnotification.pending, (state, action) => {
-        state.loading = true; // ✅ always set loading true, regardless of page
+      .addCase(fetchnotification.pending, (state) => {
+        state.loading = true;
       })
-      
+
       .addCase(fetchnotification.fulfilled, (state, action) => {
         state.loading = false;
-        const page = action.payload.currentPage || 1;
-        if (page === 1) {
-          state.Notifications = action.payload.notifications;
-        } else {
-          const newItems = action.payload.notifications.filter(
-            (n) => !state.Notifications.some((existing) => existing._id === n._id)
-          );
-          state.Notifications = [...state.Notifications, ...newItems];
-        }
+
+        state.Notifications = action.payload.notifications; //  ALWAYS replace
         state.unreadCount = action.payload.unreadCount;
+
         state.pagination = action.payload.pagination;
-        state.loadedPages = [...(state.loadedPages || []), page];
+
+        // ❌ remove these (not needed for pagination)
+        state.loadedPages = [];
       })
 
       .addCase(fetchnotification.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
       })
-
 
       .addCase(markNotificationAsRead.fulfilled, (state, action) => {
         const index = state.Notifications.findIndex(n => n._id === action.payload._id);

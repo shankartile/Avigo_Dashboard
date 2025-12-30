@@ -286,6 +286,7 @@ const DocumentVaultManagement = () => {
         },
         {
             header: "Actions",
+            
             Cell: ({ row }) => (
                 <Box display="flex" gap={1}>
                     {/* <Tooltip title="View">

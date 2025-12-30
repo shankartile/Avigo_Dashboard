@@ -3,20 +3,20 @@
 // import { ChevronDown, ChevronRight } from "lucide-react"; // optional
 
 // import {
-  // HorizontaLDots,
-  // UserCircleIcon,
-  // DocsIcon,
-  // MailIcon,
-  // CouponIcon,
-  // TableIcon,
-  // GroupIcon,
-  // ProductListIcon,
-  // PaymentIcon,
-  // CategoryIcon,
-  // MenuIcon,
-  // OtherChargesIcon,
-  // AppFeedbackIcon,
-  // OrderIcon,
+// HorizontaLDots,
+// UserCircleIcon,
+// DocsIcon,
+// MailIcon,
+// CouponIcon,
+// TableIcon,
+// GroupIcon,
+// ProductListIcon,
+// PaymentIcon,
+// CategoryIcon,
+// MenuIcon,
+// OtherChargesIcon,
+// AppFeedbackIcon,
+// OrderIcon,
 // } from "../icons";
 // import { useSidebar } from "../context/SidebarContext";
 // import SidebarWidget from "./SidebarWidget";
@@ -354,48 +354,48 @@
 //     ]
 //   },
 
-//   {
-//     icon: <AppFeedbackIcon />,
-//     name: "Bike Masters",
-//     children: [
-//       {
-//         icon: <AppFeedbackIcon />,
-//         name: "Bike Brand",
-//         path: "/superadmin/bikebrandmasters"
-//       },
-//       {
-//         icon: <AppFeedbackIcon />,
-//         name: "Bike Name",
-//         path: "/superadmin/bikenamemasters"
-//       },
-//       {
-//         icon: <AppFeedbackIcon />,
-//         name: "Bike Fuel Type",
-//         path: "/superadmin/bikefueltypemasters"
-//       },
-//       {
-//         icon: <AppFeedbackIcon />,
-//         name: "Bike Ownership",
-//         path: "/superadmin/bikeownershipmasters"
-//       },
-//       {
-//         icon: <AppFeedbackIcon />,
-//         name: "Bike Color",
-//         path: "/superadmin/bikecolormasters"
-//       },
-//       {
-//         icon: <AppFeedbackIcon />,
-//         name: "Year",
-//         path: "/superadmin/bikeyearmasters"
-//       },
-//       {
-//         icon: <AppFeedbackIcon />,
-//         name: "Kilometer",
-//         path: "/superadmin/bikekilometermasters"
-//       },
+// {
+//   icon: <AppFeedbackIcon />,
+//   name: "Bike Masters",
+//   children: [
+//     {
+//       icon: <AppFeedbackIcon />,
+//       name: "Bike Brand",
+//       path: "/superadmin/bikebrandmasters"
+//     },
+//     {
+//       icon: <AppFeedbackIcon />,
+//       name: "Bike Name",
+//       path: "/superadmin/bikenamemasters"
+//     },
+//     {
+//       icon: <AppFeedbackIcon />,
+//       name: "Bike Fuel Type",
+//       path: "/superadmin/bikefueltypemasters"
+//     },
+//     {
+//       icon: <AppFeedbackIcon />,
+//       name: "Bike Ownership",
+//       path: "/superadmin/bikeownershipmasters"
+//     },
+//     {
+//       icon: <AppFeedbackIcon />,
+//       name: "Bike Color",
+//       path: "/superadmin/bikecolormasters"
+//     },
+//     {
+//       icon: <AppFeedbackIcon />,
+//       name: "Year",
+//       path: "/superadmin/bikeyearmasters"
+//     },
+//     {
+//       icon: <AppFeedbackIcon />,
+//       name: "Kilometer",
+//       path: "/superadmin/bikekilometermasters"
+//     },
 
-//     ]
-//   },
+//   ]
+// },
 //   //  {
 //   //     icon: <AppFeedbackIcon />,
 //   //     name: "Spareparts Masters",
@@ -731,8 +731,19 @@ import {
   OtherChargesIcon,
   AppFeedbackIcon,
   OrderIcon,
-  
+
 } from "../icons";
+import {
+  WalletIcon,
+  IndianRupeeIcon,
+  AlertTriangleIcon,
+  MegaphoneIcon,
+  TruckIcon,
+  UserIcon,
+  FileTextIcon,
+  ListIcon,
+} from "lucide-react";
+
 import ApartmentIcon from "@mui/icons-material/Apartment";
 import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
 import ReceiptLongIcon from "@mui/icons-material/ReceiptLong";
@@ -768,81 +779,129 @@ const adminNavItems: NavItem[] = [
   },
 
 
-{
-  icon: <Users />,
-  name: "Member And Unit Management Module",
-  path: "/admin/membermanagement",
-},
+  {
+    icon: <Users />,
+    name: "Member And Unit Management Module",
+    path: "/admin/membermanagement",
+  },
 
-// {
-//   icon: <Receipt />,
-//   name: "Billing And Charge Management Module",
-//   path: "/admin/billingmanagement",
-// },
+  // {
+  //   icon: <Receipt />,
+  //   name: "Billing And Charge Management Module",
+  //   path: "/admin/billingmanagement",
+  // },
 
 
-// {
-//   icon: <ReceiptLongIcon />,
-//   name: "Society Ledger Management Module",
-//   path: "/admin/society-ledgermanagement",
-// },
+  // {
+  //   icon: <ReceiptLongIcon />,
+  //   name: "Society Ledger Management Module",
+  //   path: "/admin/society-ledgermanagement",
+  // },
 
-{
-  icon: <CampaignIcon />,
-  name: "Notices & Announcements Management Module",
-  path: "/admin/notice-management",
-},
+  {
+    icon: <CampaignIcon />,
+    name: "Notices & Announcements Management Module",
+    path: "/admin/notice-management",
+  },
 
-{
-  icon: <PeopleAltIcon />,
-  name: "Visitor Logs Management Module",
-  path: "/admin/visitor-log-management",
-},
+  {
+    icon: <PeopleAltIcon />,
+    name: "Visitor Logs Management Module",
+    path: "/admin/visitor-log-management",
+  },
 
-{
-  icon: <AdminPanelSettingsIcon />,
-  name: "Role-Based Access Management Module",
-  path: "/admin/rolebase-access-management",
-},
+  {
+    icon: <AdminPanelSettingsIcon />,
+    name: "Role-Based Access Management Module",
+    path: "/admin/rolebase-access-management",
+  },
 
-{
-  icon: <SupportAgentIcon />,
-  name: "Support Ticket Management Module",
-  path: "/admin/supportticket-management",
-},
+  {
+    icon: <SupportAgentIcon />,
+    name: "Support Ticket Management Module",
+    path: "/admin/supportticket-management",
+  },
 
-{
-  icon: <FolderZipIcon />,
-  name: "Document Vault Management Module",
-  path: "/admin/document-vault-management",
-},
+  {
+    icon: <FolderZipIcon />,
+    name: "Document Vault Management Module",
+    path: "/admin/document-vault-management",
+  },
 
-{
-  icon: <NotificationsActiveIcon />,
-  name: "Notification Management Module",
-  path: "/admin/notification-management",
-},
+  {
+    icon: <NotificationsActiveIcon />,
+    name: "Notification Management Module",
+    path: "/admin/notification-management",
+  },
 
-{
-  icon: <SettingsIcon />,
-  name: "Master Management Module",
-  path: "/admin/master-management",
-},
+  // {
+  //   icon: <SettingsIcon />,
+  //   name: "Master Management Module",
+  //   path: "/admin/master-management",
+  // },
+  {
+    icon: <SettingsIcon />,
+    name: "Master Management Module",
+    key:"expensecategorymaster",
+    children: [
+      {
+        icon: <WalletIcon size={18} />,
+        name: "Expense Category Master",
+        path: "/admin/expensecategorymaster",
+      },
+      {
+        icon: <IndianRupeeIcon size={18} />,
+        name: "Income Category Master",
+        path: "/admin/incomecategorymaster",
+      },
+      {
+        icon: <AlertTriangleIcon size={18} />,
+        name: "Complaint Category Master",
+        path: "/admin/complaintcategorymaster",
+      },
+      {
+        icon: <MegaphoneIcon size={18} />,
+        name: "Notice Category Master",
+        path: "/admin/noticecategorymaster",
+      },
+      {
+        icon: <TruckIcon size={18} />,
+        name: "Vendor Master",
+        path: "/admin/vendormaster",
+      },
+      {
+        icon: <UserIcon size={18} />,
+        name: "Visitor Purpose Master",
+        path: "/admin/visitorpurposemaster",
+      },
+      {
+        icon: <FileTextIcon size={18} />,
+        name: "Document Category Master",
+        path: "/admin/documentcategorymaster",
+      },
+      {
+        icon: <ListIcon size={18} />,
+        name: "Other Drop-down Masters",
+        path: "/admin/otherdropdownmaster",
+      },
+    ]
 
-{
-  icon: <ContactsIcon />,
-  name: "Directory Management Module",
-  path: "/admin/directory-management",
-},
+  },
 
-  
+  {
+    icon: <ContactsIcon />,
+    name: "Directory Management Module",
+    path: "/admin/directory-management",
+  },
+
+
 ];
 
 
 
 
 const superAdminNavItems: NavItem[] = [
-    {
+  {
     icon: <TableIcon />,
     name: "Dashboard",
     path: "/superadmin/dashboard",

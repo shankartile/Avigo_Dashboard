@@ -29,6 +29,11 @@ const SubAdminManagement = React.lazy(() => import("./pages/societyadmin/SubAdmi
 const AdminSocietySupportticketManagement = React.lazy(() => import("./pages/societyadmin/AdminSupportTicketManagement"));
 const AdminSocietySupportticketDetails = React.lazy(() => import("./pages/societyadmin/AdminSupportTicketDetails"));
 const DocumentVaultManagement = React.lazy(() => import("./pages/societyadmin/DocumentVaultManagement"));
+const DirectoryManagement = React.lazy(() => import("./pages/societyadmin/DirectoryManagement"));
+const Notification = React.lazy(() => import("./pages/societyadmin/Notification"));
+
+const ExpenseCategoryMaster = React.lazy(() => import("./pages/societyadmin/ExpenseCategoryMaster"));
+const IncomeCategoryMaster = React.lazy(() => import("./pages/societyadmin/IncomeCategoryMaster"));
 
 
 
@@ -145,10 +150,11 @@ const App: React.FC = () => {
                     <ProtectedRoute allowedRoles={["admin", "staff"]} requiredPermission="dashboard">
                       <SocietyNotifications />
                     </ProtectedRoute>
+
                   }
                 />
 
-
+                {/* Society Admin Path */}
                 <Route path="membermanagement" element={<ProtectedRoute allowedRoles={["staff"]} requiredPermission="dashboard"><MemberandUnitManagement /></ProtectedRoute>} />
                 <Route path="billingmanagement" element={<ProtectedRoute allowedRoles={["staff"]} requiredPermission="dashboard"><BillingManagement /></ProtectedRoute>} />
                 <Route path="society-ledgermanagement" element={<ProtectedRoute allowedRoles={["staff"]} requiredPermission="dashboard"><SocietyLedgerManagement /></ProtectedRoute>} />
@@ -158,6 +164,12 @@ const App: React.FC = () => {
                 <Route path="supportticket-management" element={<ProtectedRoute allowedRoles={["staff"]} requiredPermission="dashboard"><AdminSocietySupportticketManagement /></ProtectedRoute>} />
                 <Route path="supportticket-management/:id" element={<ProtectedRoute allowedRoles={["staff"]} requiredPermission="dashboard"><AdminSocietySupportticketDetails /></ProtectedRoute>} />
                 <Route path="document-vault-management" element={<ProtectedRoute allowedRoles={["staff"]} requiredPermission="dashboard"><DocumentVaultManagement /></ProtectedRoute>} />
+                <Route path="directory-management" element={<ProtectedRoute allowedRoles={["staff"]} requiredPermission="dashboard"><DirectoryManagement /></ProtectedRoute>} />
+                <Route path="notification-management" element={<ProtectedRoute allowedRoles={["staff"]} requiredPermission="dashboard"><Notification /></ProtectedRoute>} />
+
+                {/*Society Admin Master */}
+                <Route path="expensecategorymaster" element={<ProtectedRoute allowedRoles={["staff"]} requiredPermission="dashboard"><ExpenseCategoryMaster /></ProtectedRoute>} />
+                <Route path="incomecategorymaster" element={<ProtectedRoute allowedRoles={["staff"]} requiredPermission="dashboard"><IncomeCategoryMaster /></ProtectedRoute>} />
 
 
 

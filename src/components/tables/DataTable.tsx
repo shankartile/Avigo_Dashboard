@@ -41,9 +41,11 @@ type DataTableProps<T extends Record<string, any>> = {
   enableProducttypeFilter?: boolean;
   enableTicketTypeFilter?: boolean;
   enableDocumenttypeFilter?: boolean;
+  enableDirectorytypeFilter?: boolean;
   onProducttypeChange?: (status: string) => void;
   onTickettypeChange?: (status: string) => void;
   onDocumenttypeChange?: (status: string) => void;
+  onDirectorytypeChange?: (status: string) => void;
   enablefeedbacktypeFilter?: boolean;
   onUserTypeChange?: (status: string) => void;
   onFeedbacktypeChange?: (status: string) => void;
@@ -69,6 +71,7 @@ type DataTableProps<T extends Record<string, any>> = {
   productTypeValue?: string;
   ticketTypeValue?: string;
   documentTypeValue?: string;
+  directoryTypeValue?: string;
   onFileUpload?: (rows: any[]) => void;
 
 
@@ -88,9 +91,11 @@ const DataTable = <T extends Record<string, any>>({
   enableProducttypeFilter,
   enableTicketTypeFilter,
   enableDocumenttypeFilter,
+  enableDirectorytypeFilter,
   onProducttypeChange,
   onTickettypeChange,
   onDocumenttypeChange,
+  onDirectorytypeChange,
   onUserTypeChange,
   onFeedbacktypeChange,
   fromDate,
@@ -115,6 +120,7 @@ const DataTable = <T extends Record<string, any>>({
   productTypeValue,
   ticketTypeValue,
   documentTypeValue,
+  directoryTypeValue,
   onFileUpload,
 
 
@@ -721,7 +727,26 @@ const DataTable = <T extends Record<string, any>>({
         )}
 
 
+        
+        {enableDirectorytypeFilter && (
 
+          <FormControl size="small" sx={{ minWidth: 160, mt: 1 }}>
+            <InputLabel className="font-outfit">Directory Type</InputLabel>
+            <Select
+              className="font-outfit"
+              label="Directory Type"
+              value={directoryTypeValue || 'all'}
+              onChange={(e) => onDirectorytypeChange?.(e.target.value)}
+            >
+              <MenuItem className="font-outfit" value="all">All</MenuItem>
+              <MenuItem className="font-outfit" value="Committee">Committee</MenuItem>
+              <MenuItem className="font-outfit" value="Emergency">Emergency</MenuItem>
+              <MenuItem className="font-outfit" value="Vendor">Vendor</MenuItem>
+              <MenuItem className="font-outfit" value="Utility">Utility</MenuItem>
+            </Select>
+          </FormControl>
+
+        )}
 
 
 

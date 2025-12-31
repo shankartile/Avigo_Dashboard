@@ -34,6 +34,9 @@ const Notification = React.lazy(() => import("./pages/societyadmin/Notification"
 
 const ExpenseCategoryMaster = React.lazy(() => import("./pages/societyadmin/ExpenseCategoryMaster"));
 const IncomeCategoryMaster = React.lazy(() => import("./pages/societyadmin/IncomeCategoryMaster"));
+const ComplaintCategoryMaster = React.lazy(() => import("./pages/societyadmin/ComplaintCategoryMaster"));
+const NoticeCategoryMaster = React.lazy(() => import("./pages/societyadmin/NoticeCategoryMaster"));
+const VendorMaster = React.lazy(() => import("./pages/societyadmin/VendorMaster"));
 
 
 
@@ -170,6 +173,9 @@ const App: React.FC = () => {
                 {/*Society Admin Master */}
                 <Route path="expensecategorymaster" element={<ProtectedRoute allowedRoles={["staff"]} requiredPermission="dashboard"><ExpenseCategoryMaster /></ProtectedRoute>} />
                 <Route path="incomecategorymaster" element={<ProtectedRoute allowedRoles={["staff"]} requiredPermission="dashboard"><IncomeCategoryMaster /></ProtectedRoute>} />
+                <Route path="complaintcategorymaster" element={<ProtectedRoute allowedRoles={["staff"]} requiredPermission="dashboard"><ComplaintCategoryMaster /></ProtectedRoute>} />
+                <Route path="noticecategorymaster" element={<ProtectedRoute allowedRoles={["staff"]} requiredPermission="dashboard"><NoticeCategoryMaster /></ProtectedRoute>} />
+                <Route path="vendormaster" element={<ProtectedRoute allowedRoles={["staff"]} requiredPermission="dashboard"><VendorMaster /></ProtectedRoute>} />
 
 
 

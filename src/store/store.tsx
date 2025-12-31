@@ -63,11 +63,19 @@ import adminSupportTicketManagementReducer from './AdminSupportTicketManagementM
 import documentVaultManagementReducer from './DocumentVaultManagement/DocumentVaultManagementSlice';
 import diectoryManagementReducer from './DirectoryManagement/DirectoryManagementSlice';
 
-//master
+//Society master
 import expenseNameMasterReducer from './SocietyAdminMaster/ExpenseNameMasterSlice';
 import expenseCategoryMasterReducer from './SocietyAdminMaster/ExpenseCategoryMasterSlice';
 import incomeNameMasterReducer from './SocietyAdminMaster/IncomeNameMasterSlice';
 import incomeCategoryMasterReducer from './SocietyAdminMaster/IncomeCategoryMasterSlice';
+import complaintNameMasterReducer from './SocietyAdminMaster/ComplaintNameMasterSlice';
+import complaintCategoryMasterReducer from './SocietyAdminMaster/ComplaintCategoryMasterSlice';
+import noticeNameMasterReducer from './SocietyAdminMaster/NoticeNameMasterSlice';
+import noticeCategoryMasterReducer from './SocietyAdminMaster/NoticeCategoryMasterSlice';
+import vendorNameMasterReducer from './SocietyAdminMaster/VendorNameMasterSlice';
+import vendorCategoryMasterReducer from './SocietyAdminMaster/VendorCategoryMasterSlice';
+import visitorNameMasterReducer from './SocietyAdminMaster/VisitorNameMasterSlice';
+import visitorCategoryMasterReducer from './SocietyAdminMaster/VisitorCategoryMasterSlice';
 
 
 
@@ -140,24 +148,36 @@ export const store = configureStore({
 
 
     admindashboard: societydashboardSlice,
-    adminresident:  addadminResidentReducer,
-    billing : billingManagementReducer,
-    noticesandannouncement : noticesandAnnouncementReducer,
-    visitorLogs : visitorLogsReducer,
-    subadmin : subAdminManagementReducer,
-    adminsupportticket : adminSupportTicketManagementReducer,
-    documentvaultmanagement : documentVaultManagementReducer,
-    directorymanagement : diectoryManagementReducer,
+    adminresident: addadminResidentReducer,
+    billing: billingManagementReducer,
+    noticesandannouncement: noticesandAnnouncementReducer,
+    visitorLogs: visitorLogsReducer,
+    subadmin: subAdminManagementReducer,
+    adminsupportticket: adminSupportTicketManagementReducer,
+    documentvaultmanagement: documentVaultManagementReducer,
+    directorymanagement: diectoryManagementReducer,
 
 
     //Society Admin Master
-    ExpenseNameMasters : expenseNameMasterReducer,
-    ExpenseTypeMaster : expenseNameMasterReducer,
-    ExpenseCategoryMasters : expenseCategoryMasterReducer,
-    IncomeNameMasters : incomeNameMasterReducer,
-    IncomeTypeMaster : incomeNameMasterReducer,
-    IncomeCategoryMasters : incomeCategoryMasterReducer
-    
+    ExpenseNameMasters: expenseNameMasterReducer,
+    ExpenseTypeMaster: expenseNameMasterReducer,
+    ExpenseCategoryMasters: expenseCategoryMasterReducer,
+    IncomeNameMasters: incomeNameMasterReducer,
+    IncomeTypeMaster: incomeNameMasterReducer,
+    IncomeCategoryMasters: incomeCategoryMasterReducer,
+    ComplaintNameMasters: complaintNameMasterReducer,
+    ComplaintTypeMaster: complaintNameMasterReducer,
+    ComplaintCategoryMasters: complaintCategoryMasterReducer,
+    NoticeNameMasters: noticeNameMasterReducer,
+    NoticeTypeMaster: noticeNameMasterReducer,
+    NoticeCategoryMasters: noticeCategoryMasterReducer,
+    VendorNameMasters: vendorNameMasterReducer,
+    VendorTypeMaster: vendorNameMasterReducer,
+    VendorCategoryMasters: vendorCategoryMasterReducer,
+    VisitorNameMasters: visitorNameMasterReducer,
+    VisitorTypeMaster: visitorNameMasterReducer,
+    VisitorCategoryMasters: visitorCategoryMasterReducer,
+
 
   },
 });

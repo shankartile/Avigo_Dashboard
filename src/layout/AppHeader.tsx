@@ -10,6 +10,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../store/store';
 // import { fetchnotification, } from '../store/SuperAdminDashboard/SperAdminDashboardSlice';
 import { fetchnotification, } from '../store/SocietySuperAdminDashboard/SocietySuperAdminDashboardSlice';
+import { fetchnotifications, } from '../store/SocietyAdminDashboard/societyAdminDashboardSlice';
+
 import { useNavigate } from 'react-router-dom';
 
 
@@ -27,6 +29,9 @@ const AppHeader: React.FC = () => {
     dispatch(fetchnotification({}));
   }, [dispatch]);
 
+    useEffect(() => {
+    dispatch(fetchnotifications({}));
+  }, [dispatch]);
 
   const handleToggle = () => {
     if (window.innerWidth >= 1024) {
@@ -124,7 +129,7 @@ const AppHeader: React.FC = () => {
             onClick={() => {
               dispatch(fetchnotification({}));
               const activeRole = sessionStorage.getItem("activeRole");
-              const basePath = activeRole === "staff" ? "staff" : "superadmin";
+              const basePath = activeRole === "staff" ? "admin" : "superadmin";
               navigate(`/${basePath}/society-notifications`);
             }}
           >

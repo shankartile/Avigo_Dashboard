@@ -23,29 +23,29 @@ import ToggleSwitch from '../../../ui/toggleswitch/ToggleSwitch';
 import Alert from '../../../ui/alert/Alert';
 import SweetAlert from '../../../ui/alert/SweetAlert';
 import { useDispatch, useSelector } from 'react-redux';
-import { addVisitorCategoryMaster, AddVisitorCategoryMasterPayload, fetchVisitorCategoryMaster, UpdateVisitorCategoryMasterPayload, updateVisitorCategoryMaster, deleteVisitorCategoryMaster, toggleVisitorCategoryMasterStatus } from '../../../../store/SocietyAdminMaster/VisitorCategoryMasterSlice';
-import { fetchVisitortype } from '../../../../store/SocietyAdminMaster/VisitorNameMasterSlice';
+import { addDocumentCategoryMaster, AddDocumentCategoryMasterPayload, fetchDocumentCategoryMaster, UpdateDocumentCategoryMasterPayload, updateDocumentCategoryMaster, deleteDocumentCategoryMaster, toggleDocumentCategoryMasterStatus } from '../../../../store/SocietyAdminMaster/DocumentCategoryMasterSlice';
+import { fetchDocumenttype } from '../../../../store/SocietyAdminMaster/DocumentNameMasterSlice';
 
 
 import { RootState, AppDispatch } from '../../../../store/store';
 import { title } from 'process';
 
 // Type definition
-type VisitorCategoryMaster = {
+type DocumentCategoryMaster = {
     id: string;
     category: string;
-    visitor_type_id: string;
+    document_type_id: string;
 }
 
-const VisitorCategoryMaster = () => {
-    const [newvisitorcategory, setnewvisitorcategory] = useState<VisitorCategoryMaster>({
+const DocumentCategoryMaster = () => {
+    const [newdocumentcategory, setnewdocumentcategory] = useState<DocumentCategoryMaster>({
 
         id: '',
         category: '',
-        visitor_type_id: ''
+        document_type_id: ''
 
     });
-    const [selectedvisitorcategory, setselectedvisitorcategory] = useState<VisitorCategoryMaster | null>(null);
+    const [selecteddocumentcategory, setselecteddocumentcategory] = useState<DocumentCategoryMaster | null>(null);
 
     const [editIndex, setEditIndex] = useState<number | null>(null);
     const [alertType, setAlertType] = useState<'success' | 'error' | 'warning' | 'info' | null>(null);
@@ -62,10 +62,10 @@ const VisitorCategoryMaster = () => {
     const [showToggleModal, setShowToggleModal] = useState(false);
 
     const dispatch = useDispatch<AppDispatch>();
-    const { VisitorCategoryMaster: rawList = [], totalItems } = useSelector((state: RootState) => state.VisitorCategoryMasters);
-    const { VisitorTypeMaster } = useSelector((state: RootState) => state.VisitorTypeMaster);
+    const { DocumentCategoryMaster: rawList = [], totalItems } = useSelector((state: RootState) => state.DocumentCategoryMasters);
+    const { DocumentTypeMaster } = useSelector((state: RootState) => state.DocumentTypeMaster);
 
-    const visitorcategorylist = rawList.map(item => ({
+    const documentcategorylist = rawList.map(item => ({
         ...item,
         id: item._id,
     }));
@@ -74,7 +74,7 @@ const VisitorCategoryMaster = () => {
     useEffect(() => {
         const delayDebounce = setTimeout(() => {
 
-            dispatch(fetchVisitorCategoryMaster({
+            dispatch(fetchDocumentCategoryMaster({
                 search: searchTerm,
                 page: pageIndex,
                 limit: pageSize,
@@ -88,7 +88,7 @@ const VisitorCategoryMaster = () => {
     useEffect(() => {
         const delayDebounce = setTimeout(() => {
 
-            dispatch(fetchVisitortype({
+            dispatch(fetchDocumenttype({
                 search: searchTerm,
                 page: pageIndex,
                 limit: pageSize,
@@ -104,41 +104,41 @@ const VisitorCategoryMaster = () => {
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
 
-        setnewvisitorcategory((prev) => ({
+        setnewdocumentcategory((prev) => ({
             ...prev,
             [name]: value, // clean number input
         }));
     };
 
     const isFormValid =
-        newvisitorcategory.category.trim() !== ""
+        newdocumentcategory.category.trim() !== ""
 
 
 
 
-    const handleAddVisitorCategoryMaster = async () => {
+    const handleAddDocumentCategoryMaster = async () => {
         try {
-            const payload: AddVisitorCategoryMasterPayload = {
+            const payload: AddDocumentCategoryMasterPayload = {
 
-                category: newvisitorcategory.category,
-                visitor_type_id: newvisitorcategory.visitor_type_id || ''
+                category: newdocumentcategory.category,
+                document_type_id: newdocumentcategory.document_type_id || ''
 
             };
 
-            const result = await dispatch(addVisitorCategoryMaster(payload)).unwrap();
+            const result = await dispatch(addDocumentCategoryMaster(payload)).unwrap();
 
             setAlertType('success');
-            setAlertMessage('Visitor Category Added successfully.');
+            setAlertMessage('Document Category Added successfully.');
             setShowAlert(true);
             setTimeout(() => setShowAlert(false), 3000);
-            dispatch(fetchVisitorCategoryMaster({
+            dispatch(fetchDocumentCategoryMaster({
                 search: searchTerm,
                 page: pageIndex,
                 limit: pageSize,
             })); setShowForm(false);
         } catch (err: any) {
             setAlertType('error');
-            setAlertMessage('Failed to add Visitor Category : ' + err);
+            setAlertMessage('Failed to add Document Category : ' + err);
             setShowAlert(true);
             setTimeout(() => setShowAlert(false), 3000);
 
@@ -146,50 +146,50 @@ const VisitorCategoryMaster = () => {
     };
 
 
-    const handleEdit = async (VisitorCategoryMaster: any, index: number) => {
+    const handleEdit = async (DocumentCategoryMaster: any, index: number) => {
         try {
-            setnewvisitorcategory({
-                id: VisitorCategoryMaster._id || '',
-                category: VisitorCategoryMaster.category || '',
-                visitor_type_id: VisitorCategoryMaster.visitor_type_id || ''
+            setnewdocumentcategory({
+                id: DocumentCategoryMaster._id || '',
+                category: DocumentCategoryMaster.category || '',
+                document_type_id: DocumentCategoryMaster.document_type_id || ''
 
             })
             setEditIndex(index);
             setShowForm(true);
         } catch (err) {
             setAlertType('error');
-            setAlertMessage('Unable to fetch Visitor Category details for editing.');
+            setAlertMessage('Unable to fetch Document Category details for editing.');
             setShowAlert(true);
         }
     };
 
 
-    const handleUpdateVisitorCategoryMaster = async () => {
+    const handleUpdateDocumentCategoryMaster = async () => {
         try {
-            const payload: UpdateVisitorCategoryMasterPayload = {
+            const payload: UpdateDocumentCategoryMasterPayload = {
 
-                _id: newvisitorcategory.id,
-                category: newvisitorcategory.category,
-                visitor_type_id: newvisitorcategory.visitor_type_id || ''
+                _id: newdocumentcategory.id,
+                category: newdocumentcategory.category,
+                document_type_id: newdocumentcategory.document_type_id || ''
 
 
             };
-            const result = await dispatch(updateVisitorCategoryMaster(payload)).unwrap();
+            const result = await dispatch(updateDocumentCategoryMaster(payload)).unwrap();
             setAlertType('success');
-            setAlertMessage('Visitor Category  updated successfully.');
+            setAlertMessage('Document Category  updated successfully.');
             setShowAlert(true);
             setTimeout(() => setShowAlert(false), 3000);
 
             setShowForm(false);
             setEditIndex(null);
-            dispatch(fetchVisitorCategoryMaster({
+            dispatch(fetchDocumentCategoryMaster({
                 search: searchTerm,
                 page: pageIndex,
                 limit: pageSize,
             }));
         } catch (err: any) {
             setAlertType('error');
-            setAlertMessage('Failed to update Visitor Category : ');
+            setAlertMessage('Failed to update Document Category : ');
             setShowAlert(true);
             setTimeout(() => setShowAlert(false), 3000);
 
@@ -206,13 +206,13 @@ const VisitorCategoryMaster = () => {
         if (!deleteId) return;
 
         try {
-            await dispatch(deleteVisitorCategoryMaster(deleteId)).unwrap();
+            await dispatch(deleteDocumentCategoryMaster(deleteId)).unwrap();
             setAlertType('error');
-            setAlertMessage('Visitor Category deleted successfully.');
+            setAlertMessage('Document Category deleted successfully.');
             setShowAlert(true);
             setTimeout(() => setShowAlert(false), 3000);
 
-            dispatch(fetchVisitorCategoryMaster({
+            dispatch(fetchDocumentCategoryMaster({
                 search: searchTerm,
                 page: pageIndex,
                 limit: pageSize,
@@ -244,16 +244,16 @@ const VisitorCategoryMaster = () => {
         if (!toggleUser) return;
 
         try {
-            await dispatch(toggleVisitorCategoryMasterStatus({
+            await dispatch(toggleDocumentCategoryMasterStatus({
                 _id: toggleUser._id,
                 isActive: !toggleUser.isActive
             })).unwrap();
 
             setAlertType('success');
-            setAlertMessage(`Visitor Category ${toggleUser.isActive ? 'deactivated' : 'activated'} successfully.`);
+            setAlertMessage(`Document Category ${toggleUser.isActive ? 'deactivated' : 'activated'} successfully.`);
             setShowAlert(true);
 
-            dispatch(fetchVisitorCategoryMaster({ search: searchTerm, page: pageIndex, limit: pageSize }));
+            dispatch(fetchDocumentCategoryMaster({ search: searchTerm, page: pageIndex, limit: pageSize }));
         } catch (err) {
             setAlertType('error');
             setAlertMessage('Status toggle failed: ' + err);
@@ -270,12 +270,12 @@ const VisitorCategoryMaster = () => {
         setToggleUser(null);
     };
 
-    const handleView = (VisitorCategoryMaster: VisitorCategoryMaster) => {
-        setselectedvisitorcategory(VisitorCategoryMaster);
+    const handleView = (DocumentCategoryMaster: DocumentCategoryMaster) => {
+        setselecteddocumentcategory(DocumentCategoryMaster);
     };
 
     const handleCloseModal = () => {
-        setselectedvisitorcategory(null);
+        setselecteddocumentcategory(null);
         setShowForm(false);
     };
 
@@ -291,9 +291,9 @@ const VisitorCategoryMaster = () => {
 
 
 
-    const VisitorCategoryMasterColumns: MRT_ColumnDef<any>[] = [
-        { accessorKey: 'category', header: 'Visitor category' },
-        { accessorKey: 'visitor_type_name', header: 'Visitor Type' },
+    const DocumentCategoryMasterColumns: MRT_ColumnDef<any>[] = [
+        { accessorKey: 'category', header: 'Document category' },
+        { accessorKey: 'document_type_name', header: 'Document Type' },
 
         {
             header: 'Actions',
@@ -338,7 +338,7 @@ const VisitorCategoryMaster = () => {
                 show={showToggleModal}
                 type="warning"
                 title="Confirm Status Change"
-                message={`Are you sure you want to ${toggleUser?.isActive ? 'deactivate' : 'activate'} this Visitor Category?`}
+                message={`Are you sure you want to ${toggleUser?.isActive ? 'deactivate' : 'activate'} this Document Category?`}
                 onConfirm={confirmToggle}
                 onCancel={cancelToggle}
                 confirmText="Yes"
@@ -349,7 +349,7 @@ const VisitorCategoryMaster = () => {
                 show={showModal}
                 type="error"
                 title="Confirm Deletion"
-                message="Are you sure you want to delete this Visitor Category ?"
+                message="Are you sure you want to delete this Document Category ?"
                 onConfirm={confirmDelete}
                 onCancel={cancelDelete}
                 confirmText="Yes"
@@ -390,25 +390,25 @@ const VisitorCategoryMaster = () => {
                                 fontWeight={500}
                                 className='font-outfit'
                             >
-                                Visitor Purpose Master
+                                Document Category Master
                             </Typography>
                         </Box>
                         <Button onClick={() => {
-                            setnewvisitorcategory({
+                            setnewdocumentcategory({
                                 id: '',
                                 category: '',
-                                visitor_type_id: ''
+                                document_type_id: ''
 
                             });
                             setEditIndex(null);
                             setShowForm(true);
-                        }}><AddIcon />Add New Visitor Category </Button>
+                        }}><AddIcon />Add New Document Category </Button>
                     </Box>
 
                     <DataTable
                         clickHandler={clickHandler}
-                        data={visitorcategorylist}
-                        columns={VisitorCategoryMasterColumns}
+                        data={documentcategorylist}
+                        columns={DocumentCategoryMasterColumns}
                         rowCount={totalItems}
                         pageIndex={pageIndex}
                         pageSize={pageSize}
@@ -435,7 +435,7 @@ const VisitorCategoryMaster = () => {
                     }}>
                     <Box sx={{ background: 'linear-gradient( #255593 103.05%)', height: 25, p: 4, position: 'relative' }}>
                         <DialogTitle className='font-outfit' sx={{ color: 'white', position: 'absolute', top: 5 }}>
-                            {editIndex !== null ? 'Edit Visitor Category' : 'Add Visitor Category'}
+                            {editIndex !== null ? 'Edit Document Category' : 'Add Document Category'}
                         </DialogTitle>
                         <IconButton sx={{ position: 'absolute', top: 12, right: 12, color: 'white' }} onClick={() => setShowForm(false)}><CloseIcon /></IconButton>
                     </Box>
@@ -468,34 +468,34 @@ const VisitorCategoryMaster = () => {
                         <div className="p-4 grid grid-cols-1 md:grid-cols-1 gap-4">
 
                             <div className="flex flex-col">
-                                <label className="text-sm text-gray-600 dark:text-white mb-1 block">Visitor Type <span className="text-error-500"> * </span>
+                                <label className="text-sm text-gray-600 dark:text-white mb-1 block">Document Type <span className="text-error-500"> * </span>
                                 </label>
 
                                 <select
-                                    name="visitor_type_id"
-                                    value={newvisitorcategory.visitor_type_id}
+                                    name="document_type_id"
+                                    value={newdocumentcategory.document_type_id}
                                     onChange={handleChange}
                                     className="mt-1 p-2 border rounded"
                                 >
-                                    <option value="">Select Visitor Type</option>
-                                    {VisitorTypeMaster?.filter((c) => c.isActive).map((visitortype) => (
-                                        <option key={visitortype._id} value={visitortype._id}>
-                                            {visitortype.visitor_type}
+                                    <option value="">Select Document Type</option>
+                                    {DocumentTypeMaster?.filter((c) => c.isActive).map((documenttype) => (
+                                        <option key={documenttype._id} value={documenttype._id}>
+                                            {documenttype.document_type}
                                         </option>
                                     ))}
                                 </select>
                             </div>
-                            <TextField label="Visitor Category " name="category" value={newvisitorcategory.category} onChange={handleChange} />
+                            <TextField label="Document Category " name="category" value={newdocumentcategory.category} onChange={handleChange} />
                         </div>
 
                         <Box display="flex" justifyContent="center" gap={6} mt={4}>
                             <Button
 
-                                onClick={editIndex !== null ? handleUpdateVisitorCategoryMaster : handleAddVisitorCategoryMaster}
+                                onClick={editIndex !== null ? handleUpdateDocumentCategoryMaster : handleAddDocumentCategoryMaster}
                                 className="rounded-[25px]"
                                 disabled={!isFormValid}
                             >
-                                {editIndex !== null ? 'Update Visitor Category ' : 'Add Visitor Category '}
+                                {editIndex !== null ? 'Update Document Category ' : 'Add Document Category '}
                             </Button>
                             <Button variant="secondary" onClick={() => setShowForm(false)} className="rounded-[25px]">
                                 Cancel
@@ -506,7 +506,7 @@ const VisitorCategoryMaster = () => {
                 </Dialog>
             )}
 
-            <Dialog open={!!selectedvisitorcategory} onClose={handleCloseModal} maxWidth="xs" fullWidth PaperProps={{ sx: { borderRadius: '25px' } }}
+            <Dialog open={!!selecteddocumentcategory} onClose={handleCloseModal} maxWidth="xs" fullWidth PaperProps={{ sx: { borderRadius: '25px' } }}
                 BackdropProps={{
                     sx: {
                         backdropFilter: 'blur(4px)',
@@ -527,16 +527,16 @@ const VisitorCategoryMaster = () => {
                         }}
                     >
                         <Typography className="font-outfit" variant="h6">
-                            Visitor Category Details
+                            Document Category Details
                         </Typography>
                         <IconButton sx={{ color: 'white' }} onClick={handleCloseModal}>
                             <CloseIcon />
                         </IconButton>
                     </Box>
                     <DialogContent>
-                        {selectedvisitorcategory && (
+                        {selecteddocumentcategory && (
                             <Box display="flex" flexDirection="column" gap={2}>
-                                <Typography className="font-outfit"><strong>Visitor Category :</strong> {selectedvisitorcategory.category}</Typography>
+                                <Typography className="font-outfit"><strong>Document Category :</strong> {selecteddocumentcategory.category}</Typography>
                             </Box>
                         )}
                     </DialogContent>
@@ -546,4 +546,4 @@ const VisitorCategoryMaster = () => {
     );
 };
 
-export default VisitorCategoryMaster;
+export default DocumentCategoryMaster;

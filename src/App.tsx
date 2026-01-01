@@ -37,6 +37,9 @@ const IncomeCategoryMaster = React.lazy(() => import("./pages/societyadmin/Incom
 const ComplaintCategoryMaster = React.lazy(() => import("./pages/societyadmin/ComplaintCategoryMaster"));
 const NoticeCategoryMaster = React.lazy(() => import("./pages/societyadmin/NoticeCategoryMaster"));
 const VendorMaster = React.lazy(() => import("./pages/societyadmin/VendorMaster"));
+const VisitorCategoryMaster = React.lazy(() => import("./pages/societyadmin/VisitorCategoryMaster"));
+const DocumentCategoryMaster = React.lazy(() => import("./pages/societyadmin/DocumentCategoryMaster"));
+
 
 
 
@@ -168,7 +171,7 @@ const App: React.FC = () => {
                 <Route path="supportticket-management/:id" element={<ProtectedRoute allowedRoles={["staff"]} requiredPermission="dashboard"><AdminSocietySupportticketDetails /></ProtectedRoute>} />
                 <Route path="document-vault-management" element={<ProtectedRoute allowedRoles={["staff"]} requiredPermission="dashboard"><DocumentVaultManagement /></ProtectedRoute>} />
                 <Route path="directory-management" element={<ProtectedRoute allowedRoles={["staff"]} requiredPermission="dashboard"><DirectoryManagement /></ProtectedRoute>} />
-                <Route path="notification-management" element={<ProtectedRoute allowedRoles={["staff"]} requiredPermission="dashboard"><Notification /></ProtectedRoute>} />
+                <Route path="society-notifications" element={<ProtectedRoute allowedRoles={["staff"]} requiredPermission="dashboard"><Notification /></ProtectedRoute>} />
 
                 {/*Society Admin Master */}
                 <Route path="expensecategorymaster" element={<ProtectedRoute allowedRoles={["staff"]} requiredPermission="dashboard"><ExpenseCategoryMaster /></ProtectedRoute>} />
@@ -176,6 +179,8 @@ const App: React.FC = () => {
                 <Route path="complaintcategorymaster" element={<ProtectedRoute allowedRoles={["staff"]} requiredPermission="dashboard"><ComplaintCategoryMaster /></ProtectedRoute>} />
                 <Route path="noticecategorymaster" element={<ProtectedRoute allowedRoles={["staff"]} requiredPermission="dashboard"><NoticeCategoryMaster /></ProtectedRoute>} />
                 <Route path="vendormaster" element={<ProtectedRoute allowedRoles={["staff"]} requiredPermission="dashboard"><VendorMaster /></ProtectedRoute>} />
+                <Route path="visitorpurposemaster" element={<ProtectedRoute allowedRoles={["staff"]} requiredPermission="dashboard"><VisitorCategoryMaster /></ProtectedRoute>} />
+                <Route path="documentcategorymaster" element={<ProtectedRoute allowedRoles={["staff"]} requiredPermission="dashboard"><DocumentCategoryMaster /></ProtectedRoute>} />
 
 
 

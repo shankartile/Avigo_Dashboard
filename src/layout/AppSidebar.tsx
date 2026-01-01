@@ -831,7 +831,7 @@ const adminNavItems: NavItem[] = [
   {
     icon: <NotificationsActiveIcon />,
     name: "Notification Management Module",
-    path: "/admin/notification-management",
+    path: "/admin/society-notifications",
   },
 
   // {
@@ -946,12 +946,12 @@ const superAdminNavItems: NavItem[] = [
     path: "/superadmin/society-staff-management",
   },
   {
-    icon: <MailIcon />,
+    icon: <NotificationsActiveIcon/>,
     name: "Notification Management",
     path: "/superadmin/society-notifications",
   },
   {
-    icon: <CouponIcon />,
+    icon: <SupportAgentIcon />,
     name: "Support Ticket",
     path: "/superadmin/society-supportticket-management",
   },

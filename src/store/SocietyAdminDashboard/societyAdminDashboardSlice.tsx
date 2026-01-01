@@ -100,7 +100,7 @@ export const fetchDashboardSummary = createAsyncThunk(
 // );
 
 
-export const fetchnotification = createAsyncThunk(
+export const fetchnotifications = createAsyncThunk(
   'dashboard/notificationsfilter',
   async (
     { page = 1, moduleKes }: { page?: number; moduleKes?: string },
@@ -225,11 +225,11 @@ const societydashboardSlice = createSlice({
       //   state.pagination = action.payload.pagination;
       // })
 
-      .addCase(fetchnotification.pending, (state) => {
+      .addCase(fetchnotifications.pending, (state) => {
         state.loading = true;
       })
 
-      .addCase(fetchnotification.fulfilled, (state, action) => {
+      .addCase(fetchnotifications.fulfilled, (state, action) => {
         state.loading = false;
 
         state.Notifications = action.payload.notifications; //  ALWAYS replace
@@ -241,7 +241,7 @@ const societydashboardSlice = createSlice({
         state.loadedPages = [];
       })
 
-      .addCase(fetchnotification.rejected, (state, action) => {
+      .addCase(fetchnotifications.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
       })

@@ -148,7 +148,6 @@ const MemberandUnitManagement = () => {
         rows.forEach((row, index) => {
             const rowNumber = index + 2; // Excel header = row 1
 
-            // ---------- REQUIRED FIELDS ----------
             if (!row.residentName) {
                 errors.push({ row: rowNumber, message: "Resident Name is required" });
                 return;
@@ -164,7 +163,6 @@ const MemberandUnitManagement = () => {
                 return;
             }
 
-            // ---------- OPTIONAL EMAIL ----------
             if (
                 row.email &&
                 !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(row.email))
@@ -173,7 +171,6 @@ const MemberandUnitManagement = () => {
                 return;
             }
 
-            // ---------- OPTIONAL FLAT SIZE ----------
             if (
                 row.residentFlatsize &&
                 (isNaN(row.residentFlatsize) || Number(row.residentFlatsize) <= 0)
@@ -182,7 +179,6 @@ const MemberandUnitManagement = () => {
                 return;
             }
 
-            // ---------- SANITIZE DATA ----------
             validRows.push({
                 residentName: String(row.residentName).trim(),
                 residentType: String(row.residentType).trim(),
@@ -209,24 +205,16 @@ const MemberandUnitManagement = () => {
             });
         });
 
-        // ---------- ERROR HANDLING ----------
+   
         if (errors.length) {
             console.error("Excel Validation Errors:", errors);
-
-            /*
-              Example:
-              Row 3 → Invalid mobile number
-              Row 5 → Resident Name is required
-            */
-
             return;
         }
 
-        // ---------- FINAL PAYLOAD ----------
+        
         console.log("Validated Excel Data:", validRows);
 
-        //  FINAL STEP: API CALL
-        // dispatch(uploadResidentsExcel(validRows));
+       
     };
 
 

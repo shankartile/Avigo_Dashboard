@@ -78,6 +78,9 @@ import visitorNameMasterReducer from './SocietyAdminMaster/VisitorNameMasterSlic
 import visitorCategoryMasterReducer from './SocietyAdminMaster/VisitorCategoryMasterSlice';
 import documentNameMasterReducer from './SocietyAdminMaster/DocumentNameMasterSlice';
 import documentCategoryMasterReducer from './SocietyAdminMaster/DocumentCategoryMasterSlice';
+import otherDropdownNameMasterReducer from './SocietyAdminMaster/OtherDropdownNameMasterSlice';
+import otherDropdownCategoryMasterReducer from './SocietyAdminMaster/OtherDropdownMasterSlice';
+
 
 
 
@@ -182,6 +185,9 @@ export const store = configureStore({
     DocumentNameMasters: documentNameMasterReducer,
     DocumentTypeMaster: documentNameMasterReducer,
     DocumentCategoryMasters: documentCategoryMasterReducer,
+    OtherDropdownNameMaster: otherDropdownNameMasterReducer,
+    OtherTypeMaster: otherDropdownNameMasterReducer,
+    OtherDropdownMaster: otherDropdownCategoryMasterReducer,
 
 
   },

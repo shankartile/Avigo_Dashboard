@@ -478,7 +478,7 @@
 //                                 label={row.original.status || ''}
 //                                 color={color}
 //                                 size="small"
-//                                 variant="outlined"
+//                                 variant="filled"
 //                             />
 //                         </Box>
 //                     );
@@ -963,7 +963,7 @@ const AdminSupportTicketManagement = () => {
               label={row.original.status}
               color={color}
               size="small"
-              variant="outlined"
+              variant="filled"
             />
           );
         },

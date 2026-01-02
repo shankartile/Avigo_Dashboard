@@ -39,6 +39,7 @@ const NoticeCategoryMaster = React.lazy(() => import("./pages/societyadmin/Notic
 const VendorMaster = React.lazy(() => import("./pages/societyadmin/VendorMaster"));
 const VisitorCategoryMaster = React.lazy(() => import("./pages/societyadmin/VisitorCategoryMaster"));
 const DocumentCategoryMaster = React.lazy(() => import("./pages/societyadmin/DocumentCategoryMaster"));
+const OtherDropdownMaster = React.lazy(() => import("./pages/societyadmin/OtherDropdownMaster"))
 
 
 
@@ -181,6 +182,7 @@ const App: React.FC = () => {
                 <Route path="vendormaster" element={<ProtectedRoute allowedRoles={["staff"]} requiredPermission="dashboard"><VendorMaster /></ProtectedRoute>} />
                 <Route path="visitorpurposemaster" element={<ProtectedRoute allowedRoles={["staff"]} requiredPermission="dashboard"><VisitorCategoryMaster /></ProtectedRoute>} />
                 <Route path="documentcategorymaster" element={<ProtectedRoute allowedRoles={["staff"]} requiredPermission="dashboard"><DocumentCategoryMaster /></ProtectedRoute>} />
+                <Route path="otherdropdownmaster" element={<ProtectedRoute allowedRoles={["staff"]} requiredPermission="dashboard"><OtherDropdownMaster /></ProtectedRoute>} />
 
 
 

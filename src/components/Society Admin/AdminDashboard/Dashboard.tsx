@@ -116,7 +116,7 @@ const Dashboard: React.FC = () => {
                             title="Total No. Flats"
                             tooltip="Total number of flats count"
                             value={(s?.numberResident || 0) + (s?.numberTenants || 0)}
-                            navigateLink="/superadmin/society-onboarding"
+                            navigateLink="/admin/membermanagement"
                             percentage=""
                             isIncrease={false}
                             hideChart
@@ -141,7 +141,7 @@ const Dashboard: React.FC = () => {
                             title="Total No. Complaints Raised"
                             tooltip="Total number of complaints raised"
                             value={(s?.numberPending || 0) + (s?.numberSolved || 0)}
-                            navigateLink="/superadmin/society-onboarding"
+                            // navigateLink="/admin/supportticket-management"
                             percentage=""
                             isIncrease={false}
                             hideChart
@@ -166,7 +166,7 @@ const Dashboard: React.FC = () => {
                             title="Total Amount. Maintenance"
                             tooltip="Total amount of Maintenance received this month"
                             value={(s?.numberPaid || 0) + (s?.numberUnpaid || 0)}
-                            navigateLink="/superadmin/society-onboarding"
+                            // navigateLink="/superadmin/society-onboarding"
                             percentage=""
                             isIncrease={false}
                             hideChart
@@ -219,7 +219,7 @@ const Dashboard: React.FC = () => {
                             title="Total No. of Support Tickets Raised"
                             tooltip="Support tickets"
                             value={s?.totalSupportTickets || 0}
-                            navigateLink="/superadmin/society-supportticket-management"
+                            navigateLink="/admin/supportticket-management"
                             percentage=""
                             isIncrease={false}
                             hideChart
@@ -234,7 +234,7 @@ const Dashboard: React.FC = () => {
                             title="Total No. Notices Published"
                             tooltip="Total no of notices published this month."
                             value={(s?.totalNoticesToday || 0) + (s?.totalNoticesMonth || 0)}
-                            navigateLink="/superadmin/society-onboarding"
+                            // navigateLink="/superadmin/society-onboarding"
                             percentage=""
                             isIncrease={false}
                             hideChart

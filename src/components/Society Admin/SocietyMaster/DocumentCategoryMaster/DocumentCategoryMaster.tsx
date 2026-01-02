@@ -207,7 +207,7 @@ const DocumentCategoryMaster = () => {
 
         try {
             await dispatch(deleteDocumentCategoryMaster(deleteId)).unwrap();
-            setAlertType('error');
+            setAlertType('success');
             setAlertMessage('Document Category deleted successfully.');
             setShowAlert(true);
             setTimeout(() => setShowAlert(false), 3000);

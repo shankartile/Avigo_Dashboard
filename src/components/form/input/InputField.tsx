@@ -65,7 +65,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(({
       case "brand":
       case "fueltype":
       case "ownership":
-  
+
 
         if (!value.trim()) return "Name must contain only letters";
         if (!/^[A-Za-z\s]+$/
@@ -392,6 +392,60 @@ const Input = forwardRef<HTMLInputElement, InputProps>(({
           return "Enter a valid email address";
         return "";
 
+      case "contact_name":
+        if (!value) return "Contact name is required";
+        if (value.length < 2) return "Contact name must be at least 2 characters";
+        return "";
+
+   
+
+      case "role_or_service":
+        if (!value) return "Role or service is required";
+        return "";
+
+  
+
+      case "alternate_phone":
+        if (!value) return "Alternate phone number is required";
+        if (!/^[6-9]\d{9}$/.test(value))
+          return "Enter a valid 10-digit alternate phone number";
+        return "";
+
+      case "description":
+        if (!value) return "Description is required";
+        if (value.length < 25)
+          return "Description must be at least 25 characters";
+        return "";
+
+      case "visibility":
+        if (!value) return "Visibility is required";
+        if (!["admin", "resident"].includes(value))
+          return "Invalid visibility option";
+        return "";
+
+      case "vendorName":
+        if (!value) return "Vendor name is required";
+        if (value.length < 2)
+          return "Vendor name must be at least 2 characters";
+        return "";
+
+      case "gstNumber":
+        if (!value) return "GST number is required";
+        if (
+          !/^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/.test(value)
+        )
+          return "Enter a valid GST number";
+        return "";
+
+   
+      case "purpose":
+        if (!value) return "Purpose is required";
+        if (value.length < 5)
+          return "Purpose must be at least 5 characters";
+        return "";
+
+
+
 
 
 
@@ -682,6 +736,60 @@ const Input = forwardRef<HTMLInputElement, InputProps>(({
       if (name === "secondresidentEmail") {
         sanitizedValue = sanitizedValue
           .replace(/[^a-zA-Z0-9@._-]/g, '')
+          .slice(0, 100);
+      }
+
+      if (name === "contact_name") {
+        sanitizedValue = sanitizedValue
+          .replace(/[^a-zA-Z\s]/g, "")
+          .slice(0, 50);
+      }
+
+
+      if (name === "role_or_service") {
+        sanitizedValue = sanitizedValue
+          .replace(/[^a-zA-Z0-9\s]/g, "")
+          .slice(0, 50);
+      }
+
+
+      if (name === "alternate_phone") {
+        sanitizedValue = sanitizedValue
+          .replace(/\D/g, "")
+          .slice(0, 10);
+      }
+
+
+      if (name === "description") {
+        sanitizedValue = sanitizedValue
+          .replace(/[^a-zA-Z0-9\s.,-_]/g, "")
+          .slice(0, 500);
+      }
+
+      if (name === "visibility") {
+        sanitizedValue = sanitizedValue
+          .replace(/[^a-z]/g, "")
+          .slice(0, 10);
+      }
+
+      if (name === "vendorName") {
+        sanitizedValue = sanitizedValue
+          .replace(/[^a-zA-Z\s]/g, "")
+          .slice(0, 50);
+      }
+
+      if (name === "gstNumber") {
+        sanitizedValue = sanitizedValue
+          .replace(/[^0-9A-Za-z]/g, "")
+          .slice(0, 15)
+          .toUpperCase();
+      }
+
+ 
+
+      if (name === "purpose") {
+        sanitizedValue = sanitizedValue
+          .replace(/[^a-zA-Z0-9\s]/g, "")
           .slice(0, 100);
       }
 

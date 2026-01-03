@@ -10,6 +10,8 @@ import {
 } from '@mui/material';
 
 import AddIcon from '@mui/icons-material/Add';
+import InfoIcon from "@mui/icons-material/Info";
+import CampaignIcon from '@mui/icons-material/Campaign';
 import DeleteIcon from '@mui/icons-material/Delete';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import CloseIcon from '@mui/icons-material/Close';
@@ -391,6 +393,12 @@ const NoticeCategoryMaster = () => {
                                 className='font-outfit'
                             >
                                 Notice Category Master
+                                <Tooltip
+                                    title="Manage General, Emergency, Finance, Event categories."
+                                    arrow
+                                >
+                                    <InfoIcon sx={{ color: "#245492", ml: 1 }} />
+                                </Tooltip>
                             </Typography>
                         </Box>
                         <Button onClick={() => {
@@ -402,7 +410,7 @@ const NoticeCategoryMaster = () => {
                             });
                             setEditIndex(null);
                             setShowForm(true);
-                        }}><AddIcon />Add New Notice Category </Button>
+                        }}><CampaignIcon />Add New Notice Category </Button>
                     </Box>
 
                     <DataTable

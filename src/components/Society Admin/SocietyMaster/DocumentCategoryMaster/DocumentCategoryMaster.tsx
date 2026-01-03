@@ -8,8 +8,9 @@ import {
     DialogTitle,
     Tooltip,
 } from '@mui/material';
-
+import {FileTextIcon} from "lucide-react";
 import AddIcon from '@mui/icons-material/Add';
+import InfoIcon from "@mui/icons-material/Info";
 import DeleteIcon from '@mui/icons-material/Delete';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import CloseIcon from '@mui/icons-material/Close';
@@ -391,6 +392,12 @@ const DocumentCategoryMaster = () => {
                                 className='font-outfit'
                             >
                                 Document Category Master
+                                <Tooltip
+                                    title="Manage categories for document vault."
+                                    arrow
+                                >
+                                    <InfoIcon sx={{ color: "#245492", ml: 1 }} />
+                                </Tooltip>
                             </Typography>
                         </Box>
                         <Button onClick={() => {

@@ -8,8 +8,10 @@ import {
     DialogTitle,
     Tooltip,
 } from '@mui/material';
+import {UserIcon} from "lucide-react";
 
 import AddIcon from '@mui/icons-material/Add';
+import InfoIcon from "@mui/icons-material/Info";
 import DeleteIcon from '@mui/icons-material/Delete';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import CloseIcon from '@mui/icons-material/Close';
@@ -391,6 +393,12 @@ const VisitorCategoryMaster = () => {
                                 className='font-outfit'
                             >
                                 Visitor Purpose Master
+                                <Tooltip
+                                    title="Add/modify visit types like Delivery, Guest, Service, Vendor."
+                                    arrow
+                                >
+                                    <InfoIcon sx={{ color: "#245492", ml: 1 }} />
+                                </Tooltip>
                             </Typography>
                         </Box>
                         <Button onClick={() => {
@@ -399,10 +407,11 @@ const VisitorCategoryMaster = () => {
                                 category: '',
                                 visitor_type_id: ''
 
+                                
                             });
                             setEditIndex(null);
                             setShowForm(true);
-                        }}><AddIcon />Add New Visitor Category </Button>
+                        }}><UserIcon />Add New Visitor Category </Button>
                     </Box>
 
                     <DataTable

@@ -13,7 +13,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import CloseIcon from "@mui/icons-material/Close";
 import EditIcon from "@mui/icons-material/Edit";
-
+import InfoIcon from "@mui/icons-material/Info";
 import { MRT_ColumnDef } from "material-react-table";
 import { useEffect, useState } from "react";
 import TextField from "../../../form/input/InputField";
@@ -226,9 +226,15 @@ const OtherDropdownMaster = () => {
 
             {!showForm ? (
                 <>
-                    <Box display="flex" justifyContent="space-between" mb={2}>
+                    <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
                         <Typography variant="h5" className="font-outfit">
                             Other Dropdown Master
+                            <Tooltip
+                                title="Relation Types, Payment Methods, Unit Types, etc."
+                                arrow
+                            >
+                                <InfoIcon sx={{ color: "#245492", ml: 1 }} />
+                            </Tooltip>
                         </Typography>
 
                         <Button onClick={() => {
@@ -236,7 +242,7 @@ const OtherDropdownMaster = () => {
                             setShowForm(true);
                             setEditIndex(null);
                         }}>
-                            <AddIcon /> Add New
+                            <AddIcon /> Add New Master
                         </Button>
                     </Box>
 

@@ -12,6 +12,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import InfoIcon from "@mui/icons-material/Info";
+import FileUploadIcon from '@mui/icons-material/FileUpload';
 
 import { MRT_ColumnDef } from "material-react-table";
 import { useDispatch, useSelector } from "react-redux";
@@ -440,7 +441,7 @@ const DocumentVaultManagement = () => {
                                 setShowForm(true);
                             }}
                         >
-                            <AddIcon /> Upload Document
+                            <FileUploadIcon /> Upload Document
                         </Button>
                     </Box>
 

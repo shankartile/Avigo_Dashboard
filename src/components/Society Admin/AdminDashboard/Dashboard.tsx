@@ -76,7 +76,15 @@ const Dashboard: React.FC = () => {
             )}
 
             <div className="p-6">
-                <Typography variant="h5" fontWeight={500} mb={2}>
+                <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
+                    <Typography variant="h5" fontWeight={500}>
+                        Dashboard{' '}
+                        <Tooltip title="Disply count of all modules,display graph and calculations !">
+                            <InfoIcon sx={{ color: '#245492' }} />
+                        </Tooltip>
+                    </Typography>
+                </Box>
+                {/* <Typography variant="h5" fontWeight={500} mb={2}>
                     Dashboard
                     <Tooltip
                         title="Disply count of all modules,display graph and calculations !"
@@ -104,7 +112,7 @@ const Dashboard: React.FC = () => {
                             onClick={(e) => e.stopPropagation()}
                         />
                     </Tooltip>
-                </Typography>
+                </Typography> */}
 
                 {showSkeleton || loading ? (
                     renderSkeletons()

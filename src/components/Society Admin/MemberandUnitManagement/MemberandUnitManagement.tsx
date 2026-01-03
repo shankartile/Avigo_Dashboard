@@ -12,6 +12,8 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import InfoIcon from "@mui/icons-material/Info";
+import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1';
+
 
 import { MRT_ColumnDef } from "material-react-table";
 import { useDispatch, useSelector } from "react-redux";
@@ -365,13 +367,14 @@ const MemberandUnitManagement = () => {
                             </Tooltip>
                         </Typography>
 
-                        <Button
+                        <Button 
                             onClick={() => {
                                 setSelectedResident(null);
                                 setShowForm(true);
                             }}
+                            
                         >
-                            <AddIcon /> Add Resident
+                            <PersonAddAlt1Icon/> Add Resident
                         </Button>
                     </Box>
 

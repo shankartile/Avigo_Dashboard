@@ -12,6 +12,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import InfoIcon from "@mui/icons-material/Info";
+import CampaignIcon from '@mui/icons-material/Campaign';
 
 import { MRT_ColumnDef } from "material-react-table";
 import { useDispatch, useSelector } from "react-redux";
@@ -335,7 +336,7 @@ const NoticesandAnnouncementManagement = () => {
                                 setShowForm(true);
                             }}
                         >
-                            <AddIcon /> Create Notice
+                            <CampaignIcon /> Create Notice
                         </Button>
                     </Box>
 

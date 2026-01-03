@@ -497,35 +497,15 @@ const Dashboard: React.FC = () => {
       )}
 
       <div className="p-6">
-        <Typography variant="h5" fontWeight={500} mb={2}>
-          Dashboard
-          <Tooltip
-            title="Disply count of all modules,display graph and calculations !"
-            arrow
-            slotProps={{
-              popper: {
-                sx: {
-                  '& .MuiTooltip-tooltip': {
-                    fontSize: '0.8rem',
-                    backgroundColor: '#245492',
-                    color: '#fff',
-                    fontFamily: 'Outfit',
-                    padding: '8px 12px',
-                  },
-                  '& .MuiTooltip-arrow': {
-                    color: '#245492',
-                  },
-                },
-              },
-            }}
-          >
-            <InfoIcon
-              fontSize="medium"
-              sx={{ color: '#245492', cursor: 'pointer' }}
-              onClick={(e) => e.stopPropagation()}
-            />
-          </Tooltip>
-        </Typography>
+        <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
+          <Typography variant="h5" fontWeight={500}>
+            Dashboard
+
+            <Tooltip title="Disply count of all modules,display graph and calculations !">
+              <InfoIcon sx={{ ml: 1, color: "#245492" }} />
+            </Tooltip>
+          </Typography>
+        </Box>
 
         {showSkeleton || loading ? (
           renderSkeletons()

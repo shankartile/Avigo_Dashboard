@@ -560,8 +560,10 @@ import {
     DialogContent,
     Tooltip,
 } from '@mui/material';
+import {TruckIcon} from "lucide-react";
 
 import AddIcon from '@mui/icons-material/Add';
+import InfoIcon from "@mui/icons-material/Info";
 import DeleteIcon from '@mui/icons-material/Delete';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import CloseIcon from '@mui/icons-material/Close';
@@ -868,9 +870,15 @@ const VendorMaster = () => {
 
             {!showForm ? (
                 <>
-                    <Box display="flex" justifyContent="space-between" mb={2}>
+                    <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
                         <Typography variant="h5" className="font-outfit">
                             Vendor Master
+                            <Tooltip
+                                title="Add vendor name, GST, contact, and purpose."
+                                arrow
+                            >
+                                <InfoIcon sx={{ color: "#245492", ml: 1 }} />
+                            </Tooltip>
                         </Typography>
 
                         <Button onClick={() => {
@@ -878,7 +886,7 @@ const VendorMaster = () => {
                             setEditIndex(null);
                             setShowForm(true);
                         }}>
-                            <AddIcon /> Add Vendor
+                            <TruckIcon /> Add Vendor
                         </Button>
                     </Box>
 

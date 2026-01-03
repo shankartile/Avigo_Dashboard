@@ -10,6 +10,8 @@ import {
 } from '@mui/material';
 
 import AddIcon from '@mui/icons-material/Add';
+import InfoIcon from "@mui/icons-material/Info";
+import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 import DeleteIcon from '@mui/icons-material/Delete';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import CloseIcon from '@mui/icons-material/Close';
@@ -391,6 +393,12 @@ const IncomeCategoryMaster = () => {
                                 className='font-outfit'
                             >
                                 Income Category Master
+                                <Tooltip
+                                    title="Add/edit items like Maintenance, Penalty, Interest, Event Income."
+                                    arrow
+                                >
+                                    <InfoIcon sx={{ color: "#245492", ml: 1 }} />
+                                </Tooltip>
                             </Typography>
                         </Box>
                         <Button onClick={() => {
@@ -402,7 +410,7 @@ const IncomeCategoryMaster = () => {
                             });
                             setEditIndex(null);
                             setShowForm(true);
-                        }}><AddIcon />Add New Income Category </Button>
+                        }}><AccountBalanceIcon />Add New Income Category </Button>
                     </Box>
 
                     <DataTable

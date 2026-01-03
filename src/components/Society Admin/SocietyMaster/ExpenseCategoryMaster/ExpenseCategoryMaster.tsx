@@ -10,6 +10,8 @@ import {
 } from '@mui/material';
 
 import AddIcon from '@mui/icons-material/Add';
+import PriceChangeIcon from '@mui/icons-material/PriceChange';
+import InfoIcon from "@mui/icons-material/Info";
 import DeleteIcon from '@mui/icons-material/Delete';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import CloseIcon from '@mui/icons-material/Close';
@@ -391,6 +393,12 @@ const ExpenseCategoryMaster = () => {
                                 className='font-outfit'
                             >
                                 Expense Category Master
+                                <Tooltip
+                                    title="Add/edit categories like Repairs, Electricity, Housekeeping, Security, etc."
+                                    arrow
+                                >
+                                    <InfoIcon sx={{ color: "#245492", ml: 1 }} />
+                                </Tooltip>
                             </Typography>
                         </Box>
                         <Button onClick={() => {
@@ -402,7 +410,7 @@ const ExpenseCategoryMaster = () => {
                             });
                             setEditIndex(null);
                             setShowForm(true);
-                        }}><AddIcon />Add New Expense Category </Button>
+                        }}><PriceChangeIcon/>Add New Expense Category </Button>
                     </Box>
 
                     <DataTable

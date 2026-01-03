@@ -549,7 +549,7 @@ const DataTable = <T extends Record<string, any>>({
           alignItems: 'center',
           gap: 2,
           p: 0,
-          mt: -1
+          mt: 0
         }}
       >
         {customTopLeftContent && (
@@ -794,13 +794,13 @@ const DataTable = <T extends Record<string, any>>({
               <Tooltip title="Date Filter" arrow>
                 <IconButton
                   onClick={() => setShowDateFilter((prev) => !prev)}
-                  size="small" style={{ marginBottom: '-10px' }}
+                  size="small" style={{ marginBottom: '-2px' }}
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    height="24px"
+                    height="28px"
                     viewBox="0 0 24 24"
-                    width="24px"
+                    width="28px"
                     fill="gray"
                   >
                     <path d="M0 0h24v24H0z" fill="none" />

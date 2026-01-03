@@ -733,6 +733,7 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import CloseIcon from '@mui/icons-material/Close';
 import AddIcon from '@mui/icons-material/Add';
 import InfoIcon from '@mui/icons-material/Info';
+import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 
 import { useMemo, useState } from 'react';
 import { MRT_ColumnDef } from 'material-react-table';
@@ -974,7 +975,7 @@ const SubAdminManagement = () => {
                 setShowForm(true);
               }}
             >
-              <AddIcon /> Add Role
+              <ManageAccountsIcon/> Add Role
             </Button>
           </Box>
 

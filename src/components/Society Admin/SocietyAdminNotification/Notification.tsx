@@ -381,6 +381,7 @@ import {
     HelpCircleIcon,
     CheckCircleIcon,
 } from 'lucide-react';
+import InfoIcon from "@mui/icons-material/Info";
 
 
 
@@ -578,9 +579,24 @@ const Notification: React.FC = () => {
 
     return (
         <div className="p-6 bg-gray-50 min-h-screen">
-            <h2 className="font-outfit text-2xl font-bold text-gray-800 mb-4">
-                Notifications
-            </h2>
+            <Box
+                        display="flex"
+                        justifyContent="space-between"
+                        alignItems="center"
+                        mb={2}
+                    >
+                        <Typography variant="h5" fontWeight={500} className="font-outfit">
+                            Notification Module
+                            <Tooltip
+                                title="All user notification related to there complaint and other tasks."
+                                arrow
+                            >
+                                <InfoIcon sx={{ color: "#245492", ml: 1 }} />
+                            </Tooltip>
+                        </Typography>
+
+                      
+                    </Box>
 
             {/* FILTER CHIPS */}
             <Box className="bg-white rounded-xl p-4 flex flex-wrap gap-4 mb-6 border border-gray-200 sticky top-0 z-10">

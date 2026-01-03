@@ -10,6 +10,8 @@ import {
 } from '@mui/material';
 
 import AddIcon from '@mui/icons-material/Add';
+import InfoIcon from "@mui/icons-material/Info";
+import ReportProblemIcon from '@mui/icons-material/ReportProblem';
 import DeleteIcon from '@mui/icons-material/Delete';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import CloseIcon from '@mui/icons-material/Close';
@@ -391,6 +393,12 @@ const ComplaintCategoryMaster = () => {
                                 className='font-outfit'
                             >
                                 Complaint Category Master
+                                <Tooltip
+                                    title="Manage categories like Plumbing, Electrical, Maintenance, etc."
+                                    arrow
+                                >
+                                    <InfoIcon sx={{ color: "#245492", ml: 1 }} />
+                                </Tooltip>
                             </Typography>
                         </Box>
                         <Button onClick={() => {
@@ -402,7 +410,7 @@ const ComplaintCategoryMaster = () => {
                             });
                             setEditIndex(null);
                             setShowForm(true);
-                        }}><AddIcon />Add New Complaint Category </Button>
+                        }}><ReportProblemIcon  />Add New Complaint Category </Button>
                     </Box>
 
                     <DataTable

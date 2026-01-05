@@ -590,9 +590,7 @@ import {
 
 import { RootState, AppDispatch } from '../../../../store/store';
 
-/* =======================
-   TYPES
-======================= */
+
 
 type VendorMasterType = {
     id: string;
@@ -602,9 +600,7 @@ type VendorMasterType = {
     purpose: string;
 };
 
-/* =======================
-   COMPONENT
-======================= */
+
 
 const VendorMaster = () => {
     const [vendor, setVendor] = useState<VendorMasterType>({
@@ -644,9 +640,7 @@ const VendorMaster = () => {
         id: item._id,
     }));
 
-    /* =======================
-       FETCH
-    ======================= */
+
 
     useEffect(() => {
         const delay = setTimeout(() => {
@@ -660,9 +654,7 @@ const VendorMaster = () => {
         return () => clearTimeout(delay);
     }, [searchTerm, pageIndex, pageSize]);
 
-    /* =======================
-       HANDLERS
-    ======================= */
+
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
@@ -732,9 +724,7 @@ const VendorMaster = () => {
         }
     };
 
-    /* =======================
-       DELETE
-    ======================= */
+
 
     const confirmDelete = async () => {
         if (!deleteId) return;
@@ -757,9 +747,7 @@ const VendorMaster = () => {
         setDeleteId(null);
     };
 
-    /* =======================
-       TOGGLE
-    ======================= */
+
 
     const confirmToggle = async () => {
         if (!toggleUser) return;
@@ -787,9 +775,6 @@ const VendorMaster = () => {
         setToggleUser(null);
     };
 
-    /* =======================
-       TABLE COLUMNS
-    ======================= */
 
     const columns: MRT_ColumnDef<any>[] = [
         { accessorKey: 'vendorName', header: 'Vendor Name' },

@@ -354,7 +354,6 @@ import dayjs from 'dayjs';
 import PieChartCard from '../../ui/charts/PieChartCard';
 import DateTimeField from '../../form/input/DateTimeField';
 
-/* ===================== DUMMY DATA ===================== */
 
 const dummySocietyOnboarded = [
   { date: '2025-09-10', name: '10 Sep', count: 5 },
@@ -394,7 +393,7 @@ const dummyCitywiseSociety = [
   { city: 'Nagpur', count: 10 },
 ];
 
-/* ===================== COMPONENT ===================== */
+
 
 const GraphicalData = () => {
   const [chartType, setChartType] = useState<'society' | 'users' | 'citywise'>(
@@ -413,7 +412,7 @@ const GraphicalData = () => {
     return () => clearTimeout(t);
   }, []);
 
-  /* ===================== FILTER LOGIC (FIXED) ===================== */
+
 
 const filterByTime = (data: any[]) => {
   if (!Array.isArray(data)) return [];
@@ -461,7 +460,7 @@ const filterByTime = (data: any[]) => {
 };
 
 
-  /* ===================== BAR DATA ===================== */
+ 
 
   const reportData = useMemo(() => {
     if (chartType === 'society') {
@@ -501,7 +500,7 @@ const filterByTime = (data: any[]) => {
     }));
   }, [chartType, timeFilter, fromDate, toDate, userCategory]);
 
-  /* ===================== PIE DATA (FOR ALL) ===================== */
+
 
   const pieData = useMemo(() => {
     if (chartType === 'society') {
@@ -536,7 +535,7 @@ const filterByTime = (data: any[]) => {
     }));
   }, [chartType, timeFilter, fromDate, toDate]);
 
-  /* ===================== RENDER ===================== */
+
 
   if (loading) {
     return (

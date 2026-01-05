@@ -742,6 +742,8 @@
 
 
 
+
+
 import {
   Box,
   Typography,
@@ -772,7 +774,7 @@ import HourglassEmptyIcon from '@mui/icons-material/HourglassEmpty';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 
 
-/* ===================== TYPES ===================== */
+
 
 type SupportTicket = {
   _id: string;
@@ -789,7 +791,7 @@ type SupportTicket = {
   updatedAt: string;
 };
 
-/* ===================== DUMMY DATA ===================== */
+
 
 const dummySupportTickets: SupportTicket[] = [
   {
@@ -833,7 +835,7 @@ const dummySupportTickets: SupportTicket[] = [
   },
 ];
 
-/* ===================== COMPONENT ===================== */
+
 
 const AdminSupportTicketManagement = () => {
   const [supportticket, setSupportTicket] = useState(dummySupportTickets);
@@ -855,7 +857,6 @@ const AdminSupportTicketManagement = () => {
 
   const navigate = useNavigate();
 
-  /* ===================== FILTER LOGIC ===================== */
 
   const filteredTickets = useMemo(() => {
     return supportticket.filter((t) => {
@@ -890,7 +891,7 @@ const AdminSupportTicketManagement = () => {
     });
   }, [supportticket, filtertype, searchTerm, columnFilters, fromDate, toDate]);
 
-  /* ===================== HANDLERS ===================== */
+ 
 
   const clickHandler = (search: string) => {
     setSearchTerm(search);
@@ -916,7 +917,6 @@ const AdminSupportTicketManagement = () => {
     (t) => t.status === 'Resolved'
   ).length;
 
-  /* ===================== COLUMNS ===================== */
 
   const columns = useMemo<MRT_ColumnDef<any>[]>(() => {
     const cols: MRT_ColumnDef<any>[] = [
@@ -1009,7 +1009,6 @@ const AdminSupportTicketManagement = () => {
     return cols;
   }, [filtertype]);
 
-  /* ===================== RENDER ===================== */
 
   return (
     <>

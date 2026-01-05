@@ -192,36 +192,38 @@ const VisitorLogsManagement = () => {
                 summary={summary}
             />
             {/* VIEW POPUP */}
-            <ViewVisitor
-                open={showView}
-                data={selectedVisitor}
-                onClose={() => {
-                    setShowView(false);
-                    setSelectedVisitor(null);
-                }}
-            />
+            {showView && selectedVisitor && (
+                <ViewVisitor
+                    data={selectedVisitor}
+                    onClose={() => {
+                        setShowView(false);
+                        setSelectedVisitor(null);
+                    }}
+                />
+            )}
 
-
-            {/* HEADER */}
-            <Box
-                display="flex"
-                justifyContent="space-between"
-                alignItems="center"
-                mb={2}
-            >
-                {/* LEFT TITLE */}
-                <Typography variant="h5" fontWeight={500} className="font-outfit">
-                    Visitor Logs Module
-                    <Tooltip
-                        title="Monitor daily visitor activity recorded by guards"
-                        arrow
+            {!showView && (
+                <>
+                    {/* HEADER */}
+                    <Box
+                        display="flex"
+                        justifyContent="space-between"
+                        alignItems="center"
+                        mb={2}
                     >
-                        <InfoIcon sx={{ color: "#245492", ml: 1 }} />
-                    </Tooltip>
-                </Typography>
+                        {/* LEFT TITLE */}
+                        <Typography variant="h5" fontWeight={500} className="font-outfit">
+                            Visitor Logs Module
+                            <Tooltip
+                                title="Monitor daily visitor activity recorded by guards"
+                                arrow
+                            >
+                                <InfoIcon sx={{ color: "#245492", ml: 1 }} />
+                            </Tooltip>
+                        </Typography>
 
-                {/* RIGHT TOTAL COUNT */}
-                {/* <Box
+                        {/* RIGHT TOTAL COUNT */}
+                        {/* <Box
                     display="flex"
                     alignItems="center"
                     gap={1.5}
@@ -249,95 +251,96 @@ const VisitorLogsManagement = () => {
                         {totalItems}
                     </Typography>
                 </Box> */}
-            </Box>
-
-
-
-            {/* TABLE */}
-            <DataTable
-                key={filterType}
-                data={visitors}
-                columns={columns}
-                rowCount={totalItems}
-                pageIndex={pageIndex}
-                pageSize={pageSize}
-                enableColumnFilters
-                columnFilters={columnFilters}
-                onColumnFiltersChange={handleColumnFilterChange}
-                clickHandler={handleSearch}
-
-                /* ✅ TOTAL COUNT BEFORE VISITOR TYPE */
-                customTopLeftContent={
-                    <Box
-                        display="flex"
-                        alignItems="center"
-                        gap={1.5}
-                        sx={{
-                            backgroundColor: "#f1f5f9",
-                            px: 2,
-                            py: 0.96,
-                            borderRadius: "8px",
-                            border: "1px solid #e2e8f0",
-                        }}
-                    >
-                        <GroupIcon sx={{ color: "#245492" }} />
-                        <Typography
-                            className="font-outfit"
-                            sx={{ fontSize: "14px", fontWeight: 500 }}
-                        >
-                            Total Visitor Count:
-                        </Typography>
-                        <Typography
-                            className="font-outfit"
-                            sx={{ fontSize: "16px", fontWeight: 700, color: "#245492" }}
-                        >
-                            {totalItems}
-                        </Typography>
                     </Box>
-                }
-
-                /* EXISTING FILTER */
-                enableProducttypeFilter
-                productTypeValue={filterType}
-                onProducttypeChange={(type: string) => {
-                    setFilterType(type as any);
-                    setPageIndex(0);
-
-                    dispatch(
-                        fetchVisitorLogs({
-                            search: searchTerm,
-                            filters: type !== "all" ? { type } : undefined,
-                            fromDate,
-                            toDate,
-                            page: 0,
-                            limit: pageSize,
-                        })
-                    );
-                }}
-
-                fromDate={fromDate}
-                toDate={toDate}
-                onFromDateChange={setFromDate}
-                onToDateChange={setToDate}
-
-                onPaginationChange={({ pageIndex, pageSize }) => {
-                    setPageIndex(pageIndex);
-                    setPageSize(pageSize);
-                    dispatch(
-                        fetchVisitorLogs({
-                            search: searchTerm,
-                            filters:
-                                filterType !== "all" ? { type: filterType } : undefined,
-                            page: pageIndex,
-                            limit: pageSize,
-                        })
-                    );
-                }}
-            />
 
 
 
+                    {/* TABLE */}
+                    <DataTable
+                        key={filterType}
+                        data={visitors}
+                        columns={columns}
+                        rowCount={totalItems}
+                        pageIndex={pageIndex}
+                        pageSize={pageSize}
+                        enableColumnFilters
+                        columnFilters={columnFilters}
+                        onColumnFiltersChange={handleColumnFilterChange}
+                        clickHandler={handleSearch}
 
+                        /* ✅ TOTAL COUNT BEFORE VISITOR TYPE */
+                        customTopLeftContent={
+                            <Box
+                                display="flex"
+                                alignItems="center"
+                                gap={1.5}
+                                sx={{
+                                    backgroundColor: "#f1f5f9",
+                                    px: 2,
+                                    py: 0.96,
+                                    borderRadius: "8px",
+                                    border: "1px solid #e2e8f0",
+                                }}
+                            >
+                                <GroupIcon sx={{ color: "#245492" }} />
+                                <Typography
+                                    className="font-outfit"
+                                    sx={{ fontSize: "14px", fontWeight: 500 }}
+                                >
+                                    Total Visitor Count:
+                                </Typography>
+                                <Typography
+                                    className="font-outfit"
+                                    sx={{ fontSize: "16px", fontWeight: 700, color: "#245492" }}
+                                >
+                                    {totalItems}
+                                </Typography>
+                            </Box>
+                        }
+
+                        /* EXISTING FILTER */
+                        enableProducttypeFilter
+                        productTypeValue={filterType}
+                        onProducttypeChange={(type: string) => {
+                            setFilterType(type as any);
+                            setPageIndex(0);
+
+                            dispatch(
+                                fetchVisitorLogs({
+                                    search: searchTerm,
+                                    filters: type !== "all" ? { type } : undefined,
+                                    fromDate,
+                                    toDate,
+                                    page: 0,
+                                    limit: pageSize,
+                                })
+                            );
+                        }}
+
+                        fromDate={fromDate}
+                        toDate={toDate}
+                        onFromDateChange={setFromDate}
+                        onToDateChange={setToDate}
+
+                        onPaginationChange={({ pageIndex, pageSize }) => {
+                            setPageIndex(pageIndex);
+                            setPageSize(pageSize);
+                            dispatch(
+                                fetchVisitorLogs({
+                                    search: searchTerm,
+                                    filters:
+                                        filterType !== "all" ? { type: filterType } : undefined,
+                                    page: pageIndex,
+                                    limit: pageSize,
+                                })
+                            );
+                        }}
+                    />
+
+
+
+                </>
+            )}
 
         </>
     );

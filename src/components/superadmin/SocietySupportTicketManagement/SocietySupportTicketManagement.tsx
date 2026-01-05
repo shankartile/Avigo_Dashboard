@@ -75,7 +75,7 @@
 //     const dispatch = useDispatch<AppDispatch>();
 //     const navigate = useNavigate();
 
- 
+
 
 
 //     const dummySupportTickets = [
@@ -765,7 +765,14 @@ import Alert from '../../ui/alert/Alert';
 import SweetAlert from '../../ui/alert/SweetAlert';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
-/* ===================== TYPES ===================== */
+
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import ConfirmationNumberIcon from '@mui/icons-material/ConfirmationNumber';
+import HourglassEmptyIcon from '@mui/icons-material/HourglassEmpty';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+
+
 
 type SupportTicket = {
   _id: string;
@@ -782,7 +789,7 @@ type SupportTicket = {
   updatedAt: string;
 };
 
-/* ===================== DUMMY DATA ===================== */
+
 
 const dummySupportTickets: SupportTicket[] = [
   {
@@ -826,7 +833,7 @@ const dummySupportTickets: SupportTicket[] = [
   },
 ];
 
-/* ===================== COMPONENT ===================== */
+
 
 const SocietySupportTicketManagement = () => {
   const [supportticket, setSupportTicket] = useState(dummySupportTickets);
@@ -848,7 +855,6 @@ const SocietySupportTicketManagement = () => {
 
   const navigate = useNavigate();
 
-  /* ===================== FILTER LOGIC ===================== */
 
   const filteredTickets = useMemo(() => {
     return supportticket.filter((t) => {
@@ -883,7 +889,7 @@ const SocietySupportTicketManagement = () => {
     });
   }, [supportticket, filtertype, searchTerm, columnFilters, fromDate, toDate]);
 
-  /* ===================== HANDLERS ===================== */
+
 
   const clickHandler = (search: string) => {
     setSearchTerm(search);
@@ -898,7 +904,18 @@ const SocietySupportTicketManagement = () => {
     );
   };
 
-  /* ===================== COLUMNS ===================== */
+
+  const totalTickets = filteredTickets.length;
+
+  const pendingTickets = filteredTickets.filter(
+    (t) => t.status === 'Open' || t.status === 'In Progress'
+  ).length;
+
+  const solvedTickets = filteredTickets.filter(
+    (t) => t.status === 'Resolved'
+  ).length;
+
+ 
 
   const columns = useMemo<MRT_ColumnDef<any>[]>(() => {
     const cols: MRT_ColumnDef<any>[] = [
@@ -991,7 +1008,7 @@ const SocietySupportTicketManagement = () => {
     return cols;
   }, [filtertype]);
 
-  /* ===================== RENDER ===================== */
+
 
   return (
     <>
@@ -1013,6 +1030,120 @@ const SocietySupportTicketManagement = () => {
           </Tooltip>
         </Typography>
       </Box>
+
+      <Box
+        mb={2}
+        mx="auto"
+        maxWidth="1500px"
+      >
+        <Box
+          display="grid"
+          gridTemplateColumns={{
+            xs: '1fr',
+            sm: '1fr 1fr',
+            md: '1fr 1fr 1fr',
+          }}
+          gap={2}
+        >
+          {/* TOTAL TICKETS */}
+          <Card sx={{ borderRadius: 3 }}>
+            <CardContent sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+              {/* ICON */}
+              <Box
+                sx={{
+                  backgroundColor: 'rgba(25, 118, 210, 0.1)',
+                  color: '#1976d2',
+                  height: 56,
+                  width: 56,
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  borderRadius: '12px',
+                  flexShrink: 0,
+                }}
+              >
+                <ConfirmationNumberIcon sx={{ fontSize: 28 }} />
+              </Box>
+
+              {/* TEXT */}
+              <Box>
+                <Typography variant="h6" fontWeight={600}>
+                  {totalTickets}
+                </Typography>
+                <Typography variant="body2" color="text.secondary">
+                  Total Tickets
+                </Typography>
+              </Box>
+            </CardContent>
+          </Card>
+
+          {/* PENDING TICKETS */}
+          <Card sx={{ borderRadius: 3 }}>
+            <CardContent sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+              {/* ICON */}
+              <Box
+                sx={{
+                  backgroundColor: 'rgba(237, 108, 2, 0.1)',
+                  color: '#ed6c02',
+                  height: 56,
+                  width: 56,
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  borderRadius: '12px',
+                  flexShrink: 0,
+                }}
+              >
+                <HourglassEmptyIcon sx={{ fontSize: 28 }} />
+              </Box>
+
+              {/* TEXT */}
+              <Box>
+                <Typography variant="h6" fontWeight={600}>
+                  {pendingTickets}
+                </Typography>
+                <Typography variant="body2" color="text.secondary">
+                  Pending Tickets
+                </Typography>
+              </Box>
+            </CardContent>
+          </Card>
+
+          {/* SOLVED TICKETS */}
+          <Card sx={{ borderRadius: 3 }}>
+            <CardContent sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+              {/* ICON */}
+              <Box
+                sx={{
+                  backgroundColor: 'rgba(46, 125, 50, 0.1)',
+                  color: '#2e7d32',
+                  height: 56,
+                  width: 56,
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  borderRadius: '12px',
+                  flexShrink: 0,
+                }}
+              >
+                <CheckCircleIcon sx={{ fontSize: 28 }} />
+              </Box>
+
+              {/* TEXT */}
+              <Box>
+                <Typography variant="h6" fontWeight={600}>
+                  {solvedTickets}
+                </Typography>
+                <Typography variant="body2" color="text.secondary">
+                  Solved Tickets
+                </Typography>
+              </Box>
+            </CardContent>
+          </Card>
+        </Box>
+      </Box>
+
+
 
       <DataTable
         key={filtertype}

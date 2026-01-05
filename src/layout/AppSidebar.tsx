@@ -952,7 +952,7 @@ const superAdminNavItems: NavItem[] = [
   },
   {
     icon: <SupportAgentIcon />,
-    name: "Support Ticket",
+    name: "Support Ticket Management",
     path: "/superadmin/society-supportticket-management",
   },
   {

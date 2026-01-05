@@ -29,6 +29,7 @@ const ViewSociety: React.FC<Props> = ({ data, onClose }) => {
       : [
           {
             url: "/images/societyimage/building.jpg",
+            
           },
         ];
 

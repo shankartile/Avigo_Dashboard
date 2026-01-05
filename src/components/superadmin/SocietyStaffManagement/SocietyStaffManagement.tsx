@@ -743,7 +743,6 @@ import Button from '../../ui/button/Button';
 import ToggleSwitch from '../../ui/toggleswitch/ToggleSwitch';
 import SocietyStaffForm from './SocietyStaffForm';
 
-/* ===================== TYPES ===================== */
 
 type PermissionType = {
   permissionId: string;
@@ -762,7 +761,7 @@ type StaffManagementType = {
   permissions?: PermissionType[];
 };
 
-/* ===================== DUMMY DATA ===================== */
+
 
 const dummyPermissions = [
   { _id: 'p1', label: 'Dashboard Access' },
@@ -798,7 +797,7 @@ const dummyStaff: StaffManagementType[] = [
   },
 ];
 
-/* ===================== COMPONENT ===================== */
+
 
 const StaffManagement = () => {
   const [staff, setStaff] = useState(dummyStaff);
@@ -824,12 +823,12 @@ const StaffManagement = () => {
   const [fromDate, setFromDate] = useState('');
   const [toDate, setToDate] = useState('');
 
-  /* ===================== HELPERS ===================== */
+
 
   const getPermissionLabel = (id: string) =>
     permissions.find((p) => p._id === id)?.label || 'Unknown';
 
-  /* ===================== FILTER ===================== */
+
 
   const filteredStaffList = useMemo(() => {
     return staff.filter((s) => {
@@ -842,7 +841,7 @@ const StaffManagement = () => {
     });
   }, [staff, fromDate, toDate]);
 
-  /* ===================== ACTIONS ===================== */
+
 
   const confirmDelete = () => {
     setStaff((prev) => prev.filter((s) => s._id !== deleteId));
@@ -873,7 +872,7 @@ const StaffManagement = () => {
     setShowForm(true);
   };
 
-  /* ===================== COLUMNS ===================== */
+
 
   const userColumns: MRT_ColumnDef<any>[] = [
     { accessorKey: 'name', header: 'Society Staff Name', filterVariant: 'text' },
@@ -883,10 +882,25 @@ const StaffManagement = () => {
     {
       accessorKey: 'isActive',
       header: 'Account Status',
-      Cell: ({ cell }) => (cell.getValue() ? 'Active' : 'Inactive'),
       filterVariant: 'select',
       filterSelectOptions: ['Active', 'Inactive'],
+      Cell: ({ cell }) => {
+        const isActive = cell.getValue<boolean>();
+
+        return (
+          <Chip
+            label={isActive ? 'Active' : 'Inactive'}
+            color={isActive ? 'success' : 'error'}
+            size="small"
+            variant="filled"
+            sx={{
+              borderRadius: '999px', // pill shape
+            }}
+          />
+        );
+      },
     },
+
     {
       accessorKey: 'createdAt',
       header: 'Registration Date',
@@ -934,7 +948,7 @@ const StaffManagement = () => {
     },
   ];
 
-  /* ===================== RENDER ===================== */
+
 
   return (
     <>
@@ -1040,7 +1054,7 @@ const StaffManagement = () => {
                   <strong>Module Permissions:</strong>
                   <Box display="grid" gridTemplateColumns="repeat(2,1fr)" gap={1} mt={1}>
                     {SelectedStaff.permissions?.filter(p => p.allowed).map((p, i) => (
-                      <Chip key={i} label={getPermissionLabel(p.permissionId)} size="small" />
+                      <Chip key={i} label={getPermissionLabel(p.permissionId)} size="small" color='primary' />
                     ))}
                   </Box>
                 </Typography>

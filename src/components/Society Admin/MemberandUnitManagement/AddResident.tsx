@@ -195,7 +195,7 @@ const AddResident: React.FC<Props> = ({
             {/* RESIDENT TYPE */}
             <div>
               <label className="text-sm text-gray-600 mb-1 block">
-                Resident Type
+                Resident Type <span className="text-error-500">*</span>
               </label>
               <select
                 name="residentType"
@@ -229,7 +229,7 @@ const AddResident: React.FC<Props> = ({
             {/* FLAT SIZE */}
             <div>
               <label className="text-sm text-gray-600 mb-1 block">
-                Resident Flat Size
+                Resident Flat Size <span className="text-error-500">*</span>
               </label>
               <select
                 name="residentFlatsize"

@@ -61,6 +61,9 @@ const AddDirectoryContact: React.FC<Props> = ({
         useState<"success" | "error" | null>(null);
     const [alertMessage, setAlertMessage] = useState("");
     const [showAlert, setShowAlert] = useState(false);
+    const [categoryError, setCategoryError] = useState("");
+    const [visibilityError, setVisibilityError] = useState("");
+
 
     /* INIT DATA */
     useEffect(() => {
@@ -86,12 +89,43 @@ const AddDirectoryContact: React.FC<Props> = ({
         >
     ) => {
         const { name, value } = e.target;
+
+        if (name === "category") {
+            if (!value) {
+                setCategoryError("Category is required");
+            } else {
+                setCategoryError("");
+            }
+        }
+
+        if (name === "visibility") {
+            if (!["resident", "admin"].includes(value)) {
+                setVisibilityError("Invalid visibility option");
+            } else {
+                setVisibilityError("");
+            }
+        }
+
         setFormData((prev) => ({ ...prev, [name]: value }));
     };
 
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+
+        if (!formData.category) {
+            setCategoryError("Category is required");
+            setIsSubmitting(false);
+            return;
+        }
+
+        if (!["resident", "admin"].includes(formData.visibility)) {
+            setVisibilityError("Invalid visibility option");
+            setIsSubmitting(false);
+            return;
+        }
+
+
         if (isSubmitting) return;
 
         setIsSubmitting(true);
@@ -130,7 +164,10 @@ const AddDirectoryContact: React.FC<Props> = ({
         formData.contact_name &&
         formData.category &&
         formData.role_or_service &&
-        formData.phone;
+        formData.phone &&
+        ["resident", "admin"].includes(formData.visibility) &&
+        !categoryError;
+        !visibilityError;
 
     return (
         <>
@@ -219,14 +256,16 @@ const AddDirectoryContact: React.FC<Props> = ({
                         {/* CATEGORY */}
                         <div>
                             <label className="text-sm text-gray-600 mb-1 block">
-                                Category
+                                Category <span className="text-error-500">*</span>
                             </label>
+
                             <select
                                 name="category"
                                 value={formData.category}
                                 onChange={handleChange}
                                 disabled={isViewMode}
-                                className="w-full p-2 border rounded"
+                                className={`w-full p-2 rounded ${categoryError ? "border border-error-500" : "border border-gray-300"
+                                    }`}
                             >
                                 <option value="">Select Category</option>
                                 {CATEGORIES.map((cat) => (
@@ -235,24 +274,39 @@ const AddDirectoryContact: React.FC<Props> = ({
                                     </option>
                                 ))}
                             </select>
+
+                            {categoryError && (
+                                <p className="mt-1 text-xs text-error-500">
+                                    {categoryError}
+                                </p>
+                            )}
                         </div>
 
                         {/* VISIBILITY */}
                         <div>
                             <label className="text-sm text-gray-600 mb-1 block">
-                                Visibility
+                                Visibility <span className="text-error-500">*</span>
                             </label>
+
                             <select
                                 name="visibility"
                                 value={formData.visibility}
                                 onChange={handleChange}
                                 disabled={isViewMode}
-                                className="w-full p-2 border rounded"
+                                className={`w-full p-2 rounded ${visibilityError ? "border-error-500" : "border-gray-300"
+                                    }`}
                             >
                                 <option value="resident">Visible to Residents</option>
                                 <option value="admin">Admin Only</option>
                             </select>
+
+                            {visibilityError && (
+                                <p className="mt-1 text-xs text-error-500">
+                                    {visibilityError}
+                                </p>
+                            )}
                         </div>
+
                     </div>
 
                     {/* DESCRIPTION */}

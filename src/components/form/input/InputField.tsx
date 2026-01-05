@@ -276,7 +276,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(({
         if (!value.trim()) return "CTA Link is required";
         const urlPattern = /^(https?:\/\/)?([\w\-]+\.)+[a-z]{2,}(\/\S*)?$/i;
         if (!urlPattern.test(value)) return "Link must be a valid URL";
-        if (value.length > 500) return "Link cannot exceed 500 characters";
+        if (value.length > 500) return "Link cannot exceed 500 characters";                  
         return "";
 
 
@@ -406,9 +406,8 @@ const Input = forwardRef<HTMLInputElement, InputProps>(({
   
 
       case "alternate_phone":
-        if (!value) return "Alternate phone number is required";
-        if (!/^[6-9]\d{9}$/.test(value))
-          return "Enter a valid 10-digit alternate phone number";
+        if (!value.trim()) return "Mobile number is required";
+        if (!/^[6-9]\d{9}$/.test(value)) return "Mobile must start with 6/7/8/9 and be exactly 10 digits";
         return "";
 
       case "description":

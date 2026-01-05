@@ -173,7 +173,7 @@ const DealerViewPage = () => {
               >
                 {selectedDealer.name?.[0] || "U"}
               </Box>
-{/* 
+              {/* 
               <Typography variant="h4" className="font-outfit">
                 {selectedDealer.name}
               </Typography>

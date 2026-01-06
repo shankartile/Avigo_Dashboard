@@ -912,27 +912,33 @@ const superAdminNavItems: NavItem[] = [
   //   path: "/superadmin/society-onboarding",
   // },
 
-  {
-    icon: <GroupIcon />,
-    name: "Society Onboarding & Management",
-    children: [
-      {
-        icon: <ApartmentIcon />,
-        name: "Add Society",
+    {
+    icon: <ApartmentIcon />,
+        name: "Society Onboarding & Management",
         path: "/superadmin/society-onboarding",
-      },
-      {
-        icon: <AdminPanelSettingsIcon />,
-        name: "Assign Society Admin",
-        path: "/superadmin/assign-society-admin",
-      },
-      {
-        icon: <PersonAddIcon />,
-        name: "Add Resident",
-        path: "/superadmin/society-resident",
-      },
-    ]
   },
+
+  // {
+  //   icon: <GroupIcon />,
+  //   name: "Society Onboarding & Management",
+  //   children: [
+  //     {
+  //       icon: <ApartmentIcon />,
+  //       name: "Add Society",
+  //       path: "/superadmin/society-onboarding",
+  //     },
+  //     {
+  //       icon: <AdminPanelSettingsIcon />,
+  //       name: "Assign Society Admin",
+  //       path: "/superadmin/assign-society-admin",
+  //     },
+  //     {
+  //       icon: <PersonAddIcon />,
+  //       name: "Add Resident",
+  //       path: "/superadmin/society-resident",
+  //     },
+  //   ]
+  // },
 
   // {
   //   icon: <UserCircleIcon />,

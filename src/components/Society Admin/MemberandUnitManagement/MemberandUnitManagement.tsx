@@ -207,16 +207,16 @@ const MemberandUnitManagement = () => {
             });
         });
 
-   
+
         if (errors.length) {
             console.error("Excel Validation Errors:", errors);
             return;
         }
 
-        
+
         console.log("Validated Excel Data:", validRows);
 
-       
+
     };
 
 
@@ -334,52 +334,56 @@ const MemberandUnitManagement = () => {
                 onCancel={() => setToggleId(null)}
             />
 
-            <ViewResident
-                open={showView}
-                data={selectedResident}
-                onClose={() => {
-                    setShowView(false);
-                    setSelectedResident(null);
-                }}
-            />
-
-
-            {showForm ? (
+            {showView ? (
+                <ViewResident
+                    data={selectedResident}
+                    onClose={() => {
+                        setShowView(false);
+                        setSelectedResident(null);
+                    }}
+                />
+            ) : showForm ? (
                 <AddResident
                     society={selectedSociety}
                     editData={selectedResident}
-                    isEditMode={!viewOnly && Boolean(selectedResident)} // ✏️ edit only
-                    viewOnly={viewOnly}                                  // 👁️ view only
+                    isEditMode={!viewOnly && Boolean(selectedResident)}
+                    viewOnly={viewOnly}
                     onCancel={() => {
                         setShowForm(false);
                         setSelectedResident(null);
                         setViewOnly(false);
                     }}
                 />
-
             ) : (
                 <>
-                    <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
+                    {/* HEADER */}
+                    <Box
+                        display="flex"
+                        justifyContent="space-between"
+                        alignItems="center"
+                        mb={2}
+                    >
                         <Typography variant="h5" fontWeight={500} className="font-outfit">
                             Member And Unit Management Module
-                            <Tooltip title="This module allows the Society Admin to manage all flats/units and residents." arrow>
+                            <Tooltip
+                                title="This module allows the Society Admin to manage all flats/units and residents."
+                                arrow
+                            >
                                 <InfoIcon sx={{ color: "#245492", ml: 1 }} />
                             </Tooltip>
                         </Typography>
 
-                        <Button 
+                        <Button
                             onClick={() => {
                                 setSelectedResident(null);
                                 setShowForm(true);
                             }}
-                            
                         >
-                            <PersonAddAlt1Icon/> Add Resident
+                            <PersonAddAlt1Icon /> Add Resident
                         </Button>
                     </Box>
 
-
-
+                    {/* TABLE */}
                     <DataTable
                         data={residents}
                         columns={columns}
@@ -408,9 +412,9 @@ const MemberandUnitManagement = () => {
                         }}
                         onFileUpload={handleResidentExcelData}
                     />
-
                 </>
             )}
+
         </>
     );
 };

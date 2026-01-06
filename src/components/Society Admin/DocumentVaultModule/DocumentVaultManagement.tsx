@@ -417,6 +417,7 @@ const DocumentVaultManagement = () => {
                         setSelectedDocument(null);
                     }}
                 />
+                
             ) : (
                 <>
                     <Box

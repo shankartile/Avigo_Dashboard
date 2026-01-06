@@ -293,7 +293,7 @@ const ViewVisitor: React.FC<Props> = ({ data, onClose }) => {
             )}
           </div>
 
-          <div className="grid grid-cols-4 gap-2">
+          {/* <div className="grid grid-cols-4 gap-2">
             {images.map((img: any, idx: number) => (
               <img
                 key={idx}
@@ -306,7 +306,7 @@ const ViewVisitor: React.FC<Props> = ({ data, onClose }) => {
                 }}
               />
             ))}
-          </div>
+          </div> */}
 
           <Lightbox
             open={lightboxOpen}

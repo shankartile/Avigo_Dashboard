@@ -1,142 +1,142 @@
-import React, { useState } from "react";
-import { Typography, Divider } from "@mui/material";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import CloseIcon from "@mui/icons-material/Close";
-import { ChevronLeft, ChevronRight } from "lucide-react";
-import Lightbox from "yet-another-react-lightbox";
-import "yet-another-react-lightbox/styles.css";
-import Fullscreen from "yet-another-react-lightbox/plugins/fullscreen";
-import Thumbnails from "yet-another-react-lightbox/plugins/thumbnails";
-import Zoom from "yet-another-react-lightbox/plugins/zoom";
-import Download from "yet-another-react-lightbox/plugins/download";
+// import React, { useState } from "react";
+// import { Typography, Divider } from "@mui/material";
+// import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+// import CloseIcon from "@mui/icons-material/Close";
+// import { ChevronLeft, ChevronRight } from "lucide-react";
+// import Lightbox from "yet-another-react-lightbox";
+// import "yet-another-react-lightbox/styles.css";
+// import Fullscreen from "yet-another-react-lightbox/plugins/fullscreen";
+// import Thumbnails from "yet-another-react-lightbox/plugins/thumbnails";
+// import Zoom from "yet-another-react-lightbox/plugins/zoom";
+// import Download from "yet-another-react-lightbox/plugins/download";
 
-import "yet-another-react-lightbox/plugins/thumbnails.css";
+// import "yet-another-react-lightbox/plugins/thumbnails.css";
 
-interface Props {
-  data: any;
-  onClose: () => void;
-}
+// interface Props {
+//   data: any;
+//   onClose: () => void;
+// }
 
-const ViewSociety: React.FC<Props> = ({ data, onClose }) => {
-  const [lightboxOpen, setLightboxOpen] = useState(false);
-  const [photoIndex, setPhotoIndex] = useState(0);
+// const ViewSociety: React.FC<Props> = ({ data, onClose }) => {
+//   const [lightboxOpen, setLightboxOpen] = useState(false);
+//   const [photoIndex, setPhotoIndex] = useState(0);
 
-  if (!data) return null;
+//   if (!data) return null;
 
-  const images =
-    data.images?.length > 0
-      ? data.images
-      : [
-          {
-            url: "/images/societyimage/building.jpg",
-            
-          },
-        ];
+//   const images =
+//     data.images?.length > 0
+//       ? data.images
+//       : [
+//           {
+//             url: "/images/societyimage/building.jpg",
 
-  const detailFields = [
-    ["Society Name", data.societyName],
-    ["State", data.state],
-    ["City", data.city],
-    ["Address", data.address || data.detailAddress],
-    ["Total Wings", data.totalWings],
-    ["Floors per Wing", data.floorsPerWing],
-    ["Flats per Floor", data.flatsPerFloor],
-    ["Created On",new Date(data.createdAt).toLocaleString("en-IN", {day: "2-digit",month: "short",year: "numeric",hour: "2-digit",minute: "2-digit",hour12: true,}),],
-    ["Active", data.isActive ? "Yes" : "No"],
-  ];
+//           },
+//         ];
 
-  return (
-    <>
+//   const detailFields = [
+//     ["Society Name", data.societyName],
+//     ["State", data.state],
+//     ["City", data.city],
+//     ["Address", data.address || data.detailAddress],
+//     ["Total Wings", data.totalWings],
+//     ["Floors per Wing", data.floorsPerWing],
+//     ["Flats per Floor", data.flatsPerFloor],
+//     ["Created On",new Date(data.createdAt).toLocaleString("en-IN", {day: "2-digit",month: "short",year: "numeric",hour: "2-digit",minute: "2-digit",hour12: true,}),],
+//     ["Active", data.isActive ? "Yes" : "No"],
+//   ];
 
-      <div className="px-6 pt-6 bg-white flex items-center gap-2">
-        <button
-          onClick={onClose}
-          className="flex items-center text-[#255593] hover:underline"
-        >
-          <ArrowBackIcon fontSize="small" />
-          <span className="ml-1 font-medium">Back</span>
-        </button>
-      </div>
+//   return (
+//     <>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-10 px-6 py-10 bg-white">
+// <div className="px-6 pt-6 bg-white flex items-center gap-2">
+//   <button
+//     onClick={onClose}
+//     className="flex items-center text-[#255593] hover:underline"
+//   >
+//     <ArrowBackIcon fontSize="small" />
+//     <span className="ml-1 font-medium">Back</span>
+//   </button>
+// </div>
 
-        <div>
-          <div className="w-full h-[400px] rounded-lg overflow-hidden mb-4">
-            {images[0] && (
-              <img
-                src={images[0].url}
-                alt="society"
-                className="w-full h-full object-contain cursor-pointer"
-                onClick={() => {
-                  setPhotoIndex(0);
-                  setLightboxOpen(true);
-                }}
-              />
-            )}
-          </div>
+//       <div className="grid grid-cols-1 md:grid-cols-2 gap-10 px-6 py-10 bg-white">
 
-          <div className="grid grid-cols-4 gap-2">
-            {images.map((img: any, idx: number) => (
-              <img
-                key={idx}
-                src={img.url}
-                alt={`thumb-${idx}`}
-                className="h-20 w-full object-cover border rounded cursor-pointer"
-                onClick={() => {
-                  setPhotoIndex(idx);
-                  setLightboxOpen(true);
-                }}
-              />
-            ))}
-          </div>
+//         <div>
+//           <div className="w-full h-[400px] rounded-lg overflow-hidden mb-4">
+//             {images[0] && (
+//               <img
+//                 src={images[0].url}
+//                 alt="society"
+//                 className="w-full h-full object-contain cursor-pointer"
+//                 onClick={() => {
+//                   setPhotoIndex(0);
+//                   setLightboxOpen(true);
+//                 }}
+//               />
+//             )}
+//           </div>
 
-          
-          <Lightbox
-            open={lightboxOpen}
-            close={() => setLightboxOpen(false)}
-            index={photoIndex}
-            slides={images.map((img: any) => ({
-              src: img.url,
-              title: "Society Image",
-            }))}
-            plugins={[Fullscreen, Thumbnails, Zoom, Download]}
-            zoom={{ maxZoomPixelRatio: 3 }}
-          />
-        </div>
+//           <div className="grid grid-cols-4 gap-2">
+//             {images.map((img: any, idx: number) => (
+//               <img
+//                 key={idx}
+//                 src={img.url}
+//                 alt={`thumb-${idx}`}
+//                 className="h-20 w-full object-cover border rounded cursor-pointer"
+//                 onClick={() => {
+//                   setPhotoIndex(idx);
+//                   setLightboxOpen(true);
+//                 }}
+//               />
+//             ))}
+//           </div>
 
 
-        <div className="bg-gray-50 p-6 rounded-lg shadow">
-          <Typography
-            variant="h5"
-            className="font-bold text-gray-700 mb-4"
-          >
-            SOCIETY DETAILS
-          </Typography>
+//           <Lightbox
+//             open={lightboxOpen}
+//             close={() => setLightboxOpen(false)}
+//             index={photoIndex}
+//             slides={images.map((img: any) => ({
+//               src: img.url,
+//               title: "Society Image",
+//             }))}
+//             plugins={[Fullscreen, Thumbnails, Zoom, Download]}
+//             zoom={{ maxZoomPixelRatio: 3 }}
+//           />
+//         </div>
 
-          <Divider
-            sx={{
-              borderColor: "#255593",
-              borderBottomWidth: "2px",
-            }}
-          />
 
-          <div className="grid grid-cols-2 gap-y-4 gap-x-6 mt-4">
-            {detailFields.map(([label, value], index) => (
-              <div key={index}>
-                <p className="text-gray-500 text-sm">{label}</p>
-                <p className="text-gray-800 font-medium">
-                  {value || "-"}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-    </>
-  );
-};
+//         <div className="bg-gray-50 p-6 rounded-lg shadow">
+//           <Typography
+//             variant="h5"
+//             className="font-bold text-gray-700 mb-4"
+//           >
+//             SOCIETY DETAILS
+//           </Typography>
 
-export default ViewSociety;
+//           <Divider
+//             sx={{
+//               borderColor: "#255593",
+//               borderBottomWidth: "2px",
+//             }}
+//           />
+
+//           <div className="grid grid-cols-2 gap-y-4 gap-x-6 mt-4">
+//             {detailFields.map(([label, value], index) => (
+//               <div key={index}>
+//                 <p className="text-gray-500 text-sm">{label}</p>
+//                 <p className="text-gray-800 font-medium">
+//                   {value || "-"}
+//                 </p>
+//               </div>
+//             ))}
+//           </div>
+//         </div>
+//       </div>
+//     </>
+//   );
+// };
+
+// export default ViewSociety;
 
 
 
@@ -174,7 +174,7 @@ export default ViewSociety;
 
 //   return (
 //     <Box className="flex flex-col items-center px-4 pt-2 pb-6 bg-[#f5f7fb] min-h-screen">
-  
+
 //       <Box className="w-full max-w-8xl mb-2">
 //         <button
 //           onClick={onClose}
@@ -185,7 +185,7 @@ export default ViewSociety;
 //         </button>
 //       </Box>
 
-   
+
 //       <Box
 //         className="bg-white rounded-2xl shadow-md p-5 w-full max-w-8xl"
 //         sx={{
@@ -194,7 +194,7 @@ export default ViewSociety;
 //           gap: 4,
 //         }}
 //       >
-        
+
 //         <Box
 //           sx={{
 //             display: "flex",
@@ -243,7 +243,7 @@ export default ViewSociety;
 //           </Typography>
 //         </Box>
 
-       
+
 //         <Box
 //           sx={{
 //             flex: 1,
@@ -323,3 +323,198 @@ export default ViewSociety;
 // };
 
 // export default ViewSociety;
+
+
+
+
+import React, { useState } from "react";
+import {
+  Box,
+  Typography,
+  Divider,
+  Tabs,
+  Tab,
+} from "@mui/material";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+
+import Lightbox from "yet-another-react-lightbox";
+import Fullscreen from "yet-another-react-lightbox/plugins/fullscreen";
+import Thumbnails from "yet-another-react-lightbox/plugins/thumbnails";
+import Zoom from "yet-another-react-lightbox/plugins/zoom";
+import Download from "yet-another-react-lightbox/plugins/download";
+
+import "yet-another-react-lightbox/styles.css";
+import "yet-another-react-lightbox/plugins/thumbnails.css";
+
+/*  MANAGEMENT MODULES (IMPORTANT) */
+import ResidentManagement from "./ResidentManagement";
+import SocietyAdminManagement from "./SocietyAdminManagement";
+
+interface Props {
+  data: any;
+  onClose: () => void;
+}
+
+const ViewSociety: React.FC<Props> = ({ data, onClose }) => {
+  const [selectedTab, setSelectedTab] = useState(0);
+  const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [photoIndex, setPhotoIndex] = useState(0);
+
+  if (!data) return null;
+
+  const images =
+    data.images?.length > 0
+      ? data.images
+      : [{ url: "/images/societyimage/building.jpg" }];
+
+  const detailFields = [
+    ["Society Name", data.societyName],
+    ["State", data.state],
+    ["City", data.city],
+    ["Address", data.address || data.detailAddress],
+    ["Total Wings", data.totalWings],
+    ["Floors per Wing", data.floorsPerWing],
+    ["Flats per Floor", data.flatsPerFloor],
+    [
+      "Created On",
+      new Date(data.createdAt).toLocaleString("en-IN", {
+        day: "2-digit",
+        month: "short",
+        year: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: true,
+      }),
+    ],
+    ["Active", data.isActive ? "Yes" : "No"],
+  ];
+
+  return (
+    <Box className="bg-gray-100 min-h-screen">
+
+      {/*  BACK */}
+      {/* <Box className="px-6 pt-6 bg-white flex items-center">
+        <button
+          onClick={onClose}
+          className="flex items-center text-[#255593] hover:underline"
+        >
+          <ArrowBackIcon fontSize="small" />
+          <span className="ml-1 font-medium">Back</span>
+        </button>
+      </Box> */}
+
+      <button
+        onClick={onClose}
+        className="flex items-center text-[#255593] hover:underline"
+      >
+        <ArrowBackIcon fontSize="small" />
+        <span className="ml-1 font-medium">Back</span>
+      </button>
+
+      {/*  HEADER */}
+      {/* <Box className="px-6 py-4 bg-white">
+        <Typography variant="h4" className="font-bold">
+          {data.societyName}
+        </Typography>
+        <Typography color="text.secondary">
+          {data.city}, {data.state}
+        </Typography>
+      </Box> */}
+
+      {/*  OVERVIEW */}
+      <Box className="px-6 py-6 bg-white mt-4 rounded-xl shadow grid grid-cols-1 md:grid-cols-2 gap-10">
+
+
+
+        {/* IMAGES */}
+        <div>
+
+          <div className="w-full h-[400px] rounded-lg overflow-hidden mb-4">
+            <img
+              src={images[0].url}
+              alt="Society"
+              className="w-full h-full object-contain cursor-pointer"
+              onClick={() => {
+                setPhotoIndex(0);
+                setLightboxOpen(true);
+              }}
+            />
+          </div>
+
+          <div className="grid grid-cols-4 gap-2">
+            {images.map((img: any, idx: number) => (
+              <img
+                key={idx}
+                src={img.url}
+                alt={`society-${idx}`}
+                className="h-20 w-full object-cover border rounded cursor-pointer"
+                onClick={() => {
+                  setPhotoIndex(idx);
+                  setLightboxOpen(true);
+                }}
+              />
+            ))}
+          </div>
+
+          <Lightbox
+            open={lightboxOpen}
+            close={() => setLightboxOpen(false)}
+            index={photoIndex}
+            slides={images.map((img: any) => ({ src: img.url }))}
+            plugins={[Fullscreen, Thumbnails, Zoom, Download]}
+          />
+        </div>
+
+        {/* DETAILS */}
+        <div className="bg-gray-50 p-6 rounded-lg">
+          <Typography variant="h6" className="font-bold mb-2">
+            Society Details
+          </Typography>
+
+          <Divider sx={{ borderColor: "#255593", borderBottomWidth: 2 }} />
+
+          <div className="grid grid-cols-2 gap-4 mt-4">
+            {detailFields.map(([label, value], index) => (
+              <div key={index}>
+                <p className="text-gray-500 text-sm">{label}</p>
+                <p className="font-medium">{value || "-"}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </Box>
+
+
+      <Box className="px-6 mt-6">
+        <Box className="bg-white rounded-xl shadow">
+          <Tabs
+            value={selectedTab}
+            onChange={(_, v) => setSelectedTab(v)}
+            variant="fullWidth"
+          >
+            {/* <Tab label="Overview" /> */}
+            <Tab label="Residents" />
+            <Tab label="Society Admins" />
+          </Tabs>
+        </Box>
+
+        <Box className="mt-4">
+          {/* {selectedTab === 0 && (
+            <Box className="bg-white p-6 rounded-xl shadow">
+              <Typography color="text.secondary">
+                Society overview is shown above.
+              </Typography>
+            </Box>
+          )} */}
+
+          {selectedTab === 0 && <ResidentManagement />}
+
+          {selectedTab === 1 && <SocietyAdminManagement />}
+        </Box>
+      </Box>
+
+    </Box>
+  );
+};
+
+export default ViewSociety;

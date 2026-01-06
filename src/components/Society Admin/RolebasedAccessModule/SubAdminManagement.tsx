@@ -1041,7 +1041,7 @@ const SubAdminManagement = () => {
                   <strong>Module Permissions:</strong>
                   <Box display="grid" gridTemplateColumns="repeat(2,1fr)" gap={1} mt={1}>
                     {SelectedStaff.permissions?.filter(p => p.allowed).map((p, i) => (
-                      <Chip key={i} label={getPermissionLabel(p.permissionId)} size="small" />
+                      <Chip key={i} label={getPermissionLabel(p.permissionId)} size="small" color="primary" />
                     ))}
                   </Box>
                 </Typography>

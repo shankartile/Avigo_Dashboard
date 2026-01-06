@@ -20,7 +20,16 @@ const LayoutContent: React.FC = () => {
   const { isExpanded, isHovered, isMobileOpen } = useSidebar();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
-  const sidebarWidth = isExpanded || isHovered ? 290 : 90;
+  const isTablet = useMediaQuery(theme.breakpoints.between("sm", "md"));
+  const sidebarWidth =
+    isMobile || isTablet
+      ? isMobileOpen
+        ? 290
+        : 0
+      : isExpanded || isHovered
+        ? 290
+        : 90;
+
 
 
 
@@ -52,7 +61,7 @@ const LayoutContent: React.FC = () => {
           minWidth: isMobile ? 0 : sidebarWidth,
           transition: "width 0.3s ease, min-width 0.3s ease",
           zIndex: 20,
-          position: isMobile ? "absolute" : "relative",
+          position: isMobile || isTablet ? "absolute" : "relative",
           height: "100vh",
           backgroundColor: "background.paper",
           boxShadow: isMobile ? 4 : "none",
@@ -81,8 +90,8 @@ const LayoutContent: React.FC = () => {
           sx={{
             position: "fixed",
             top: 0,
-            left: 0,
-            width: "100%",
+            left: isMobile || isTablet ? 0 : sidebarWidth,
+            width: isMobile || isTablet ? "100%" : `calc(100% - ${sidebarWidth}px)`,
             height: "100vh",
             backgroundColor: "#d2e0f6",
             // backgroundImage: "url('/images/logo/food doodles (6568x2976).jpg')",
@@ -106,13 +115,28 @@ const LayoutContent: React.FC = () => {
             flexGrow: 1,
           }}
         >
-          <Box
+          {/* <Box
             sx={{
               mx: "auto",
-              maxWidth: "var(--breakpoint-2xl)",
-              width: "100%",
+              maxWidth: {
+                xs: "100%",
+                sm: "100%",
+                md: "900px",
+                lg: "1200px",
+              },
+              px: { xs: 2, sm: 3 },
             }}
-          >
+          > */}
+
+            <Box
+              sx={{
+                mx: "auto",
+                maxWidth: "var(--breakpoint-2xl)",
+                width: "100%",
+                 px: { xs: 2, sm: 3 },
+              }}
+            >
+
             {user && user.role === "hoteladmin" && <OffcanvasSidebar />}
             {alerts.length > 0 && (
               <Box

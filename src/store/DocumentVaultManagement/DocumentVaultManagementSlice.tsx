@@ -335,8 +335,10 @@ const DUMMY_DOCUMENTS: Document[] = [
     _id: "1",
     title: "Society Bylaws 2024",
     category: "Bylaws",
-    description: "Official society bylaws document Official society bylaws document Official society bylaws document Official society bylaws document Official society bylaws document Official society bylaws document Official society bylaws document Official society bylaws document Official society bylaws document",
-    attachments: ["bylaws.pdf"],
+    description: "First you edit your source .tex file. In LATEX you compile it using the latex command to a .dvi file (which stands for device-independent). The .dvi file can be converted to any device-dependent format you like using an appropriate driver, for example dvips. When producing .pdf files you should use pdflatex, which produces directly .pdf files out of .tex sources. Note that in the .tex file you may need to use some PDF specific packages.First you edit your source .tex file. In LATEX you compile it using the latex command to a .dvi file (which stands for device-independent). The .dvi file can be converted to any device-dependent format you like using an appropriate driver, for example dvips. When producing .pdf files you should use pdflatex, which produces directly .pdf files out of .tex sources. Note that in the .tex file you may need to use some PDF specific packages.",
+      attachments: [
+      "https://www.aeee.in/wp-content/uploads/2020/08/Sample-pdf.pdf"
+    ],
     isActive: true,
     isDeleted: false,
     createdAt: "2024-01-10",
@@ -347,7 +349,7 @@ const DUMMY_DOCUMENTS: Document[] = [
     title: "Fire Safety Circular",
     category: "Circulars",
     description: "Important fire safety instructions",
-    attachments: ["fire-safety.pdf"],
+    attachments: ["https://calibre-ebook.com/downloads/demos/demo.docx"],
     isActive: true,
     isDeleted: false,
     createdAt: "2024-02-15",

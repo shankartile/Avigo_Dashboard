@@ -136,7 +136,7 @@ const DocumentVaultManagement = () => {
             filterVariant: "text",
             Cell: ({ cell }) => {
                 const value = cell.getValue<string>() || "";
-                const limit = 60; // 🔹 change length if needed
+                const limit = 60; //  change length if needed
 
                 return (
                     <span title={value}>
@@ -398,17 +398,19 @@ const DocumentVaultManagement = () => {
                 /> */}
 
             {/* VIEW POPUP (always mounted) */}
-            <ViewDocument
-                open={showView}
+      
+
+            {/* EDIT / CREATE */}
+            {showView ? (
+                  <ViewDocument
+              
                 data={selectedDocument}
                 onClose={() => {
                     setShowView(false);
                     setSelectedDocument(null);
                 }}
             />
-
-            {/* EDIT / CREATE */}
-            {showForm ? (
+             ): showForm ? (
                 <UploadDocument
                     editData={selectedDocument}
                     isEditMode={Boolean(selectedDocument)}
